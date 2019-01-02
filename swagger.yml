@@ -276,7 +276,11 @@ paths:
       - name: orgId
         in: query
         description: 组织ID
-        required: true
+        schema:
+          type: integer
+      - name: teamId
+        in: query
+        description: team ID
         schema:
           type: integer
       - name: per_page
@@ -297,7 +301,7 @@ paths:
     get:
       tags:
       - Directory
-      summary: 列出某组织的成员
+      summary: 列出某组织/团队的成员, orgId和teamId必须有一个
       security:
       - ApiKeyAuth: []
       - ApiRootKeyAuth: []
@@ -771,49 +775,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Member'
-
-  /directory/teams/{teamId}/members/search:
-    parameters:
-      - name: teamId
-        in: path
-        description: 团队ID
-        required: true
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        description: 分页大小
-        schema:
-          type: integer
-      - name: page
-        in: query
-        description: 分页index
-        schema:
-          type: integer
-      - name: keyword
-        in: query
-        description: keyword
-        schema:
-          type: string
-    get:
-      security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
-      tags:
-      - Directory
-      summary: 列出某团队的所有成员
-      responses:
-        '200':
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Member'
+                $ref: '#/components/schemas/ActionResult'
 
   /ac/measuresHistory/byOrg:
     parameters:
@@ -1170,12 +1132,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  resultCode:
-                    type: integer
-                  errorMsg:
-                    type: string
+                $ref: '#/components/schemas/ActionResult'
 
   /ac/codehost/{id}/syncRepos:
     parameters:
@@ -1289,6 +1246,9 @@ components:
           description: 是否组织管理员
         isSuperUser:
           type: boolean
+        isTeamLeader:
+          type: boolean
+          description: 仅当根据teamId搜索时有意义
         teams:
           type: array
           items:
