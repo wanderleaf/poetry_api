@@ -305,75 +305,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-  /directory/members/batch:
-    parameters:
-      - name: teamId
-        in: query
-        description: 团队ID
-        required: true
-        schema:
-          type: integer
-    post:
-      security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
-      tags:
-      - Directory
-      summary: 更新团队成员
-      requestBody:
-        description: 更新团队成员数据
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/MemberAction'
-      responses:
-        '200':
-          description: 更新成功
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Member'
-
-  /directory/members/search:
-    parameters:
-      - name: teamId
-        in: query
-        description: 团队ID
-        required: true
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        description: 分页大小
-        schema:
-          type: integer
-      - name: page
-        in: query
-        description: 分页index
-        schema:
-          type: integer
-    get:
-      security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
-      tags:
-      - Directory
-      summary: 列出某团队的所有成员
-      responses:
-        '200':
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Member'
-
   /directory/codehost/{id}:
     parameters:
       - name: id
@@ -709,7 +640,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Team'
 
-  /directory/team/{teamId}:
+  /directory/teams/{teamId}:
     parameters:
       - name: teamId
         in: path
@@ -764,6 +695,75 @@ paths:
       responses:
         '200':
           description: 删除成功
+
+  /directory/teams/{teamId}/members/batch:
+    parameters:
+      - name: teamId
+        in: path
+        description: 团队ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+      - ApiKeyAuth: []
+      - ApiRootKeyAuth: []
+      tags:
+      - Directory
+      summary: 更新团队成员
+      requestBody:
+        description: 更新团队成员数据
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MemberAction'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
+
+  /directory/teams/{teamId}/members/search:
+    parameters:
+      - name: teamId
+        in: path
+        description: 团队ID
+        required: true
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: 分页大小
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: 分页index
+        schema:
+          type: integer
+    get:
+      security:
+      - ApiKeyAuth: []
+      - ApiRootKeyAuth: []
+      tags:
+      - Directory
+      summary: 列出某团队的所有成员
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
 
   /ac/measuresHistory/byOrg:
     parameters:
