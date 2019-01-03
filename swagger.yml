@@ -1100,7 +1100,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ActionResult"
 
-  /ac/codehost/{id}/syncRepos:
+  /ac/codehosts/{id}/syncRepos:
     parameters:
       - name: id
         in: path
