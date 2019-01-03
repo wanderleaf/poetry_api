@@ -497,17 +497,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum: [ad, ldap]
-                address:
-                  type: string
-                username:
-                  type: string
-                password:
-                  type: string
+              $ref: "#/components/schemas/Ad"
       responses:
         "200":
           description: "创建成功"
@@ -571,17 +561,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum: [ad, ldap]
-                address:
-                  type: string
-                username:
-                  type: string
-                password:
-                  type: string
+              $ref: "#/components/schemas/Ad"
       responses:
         "200":
           description: Ad
@@ -1362,12 +1342,20 @@ components:
       properties:
         id:
           type: integer
+          description: 在请求体中无效
         type:
           type: string
           enum: [ad, ldap]
         address:
           type: string
+        port:
+          type: integer
         username:
+          type: string
+        password:
+          type: string
+          description: 在响应体隐藏
+        dn:
           type: string
     CodeCoverage:
       type: object
