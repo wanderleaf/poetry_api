@@ -314,7 +314,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-  /directory/codehost/{id}:
+  /directory/codehosts/{id}:
     parameters:
       - name: id
         in: path
@@ -358,15 +358,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum: [gitlab, github]
-                address:
-                  type: string
-                namespace:
-                  type: string
+              $ref: '#/components/schemas/Codehost'
       responses:
         "200":
           description: "更新成功"
@@ -375,7 +367,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Codehost"
 
-  /directory/codehost/{id}/auth:
+  /directory/codehosts/{id}/auth:
     parameters:
       - name: id
         in: path
@@ -394,7 +386,7 @@ paths:
         "302":
           description: "跳转"
 
-  /directory/codehost/search:
+  /directory/codehosts/search:
     parameters:
       - name: orgId
         in: query
@@ -428,7 +420,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Codehost"
-  /directory/codehost/callback:
+
+  /directory/codehosts/callback:
     parameters:
       - name: state
         in: query
@@ -456,7 +449,7 @@ paths:
               schema:
                 type: string
 
-  /directory/codehost:
+  /directory/codehosts:
     parameters:
       - name: orgId
         in: query
@@ -476,17 +469,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                type:
-                  type: string
-                  enum: [gitlab]
-                address:
-                  type: string
-                namespace:
-                  type: string
+              $ref: '#/components/schemas/Codehost'
       responses:
         "200":
           description: "创建成功"
@@ -514,17 +497,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum: [ad, ldap]
-                address:
-                  type: string
-                username:
-                  type: string
-                password:
-                  type: string
+              $ref: "#/components/schemas/Ad"
       responses:
         "200":
           description: "创建成功"
@@ -588,17 +561,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum: [ad, ldap]
-                address:
-                  type: string
-                username:
-                  type: string
-                password:
-                  type: string
+              $ref: "#/components/schemas/Ad"
       responses:
         "200":
           description: Ad
@@ -1204,6 +1167,55 @@ paths:
               schema:
                 $ref: "#/components/schemas/ActionResult"
 
+  /ac/qualityGates/query:
+    post:
+      security:
+        - ApiOrgTokenAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取repository设置(用于CI脚本)
+      requestBody:
+        description: repository信息
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                projectPath:
+                  type: string
+                namespace:
+                  type: string
+                branch:
+                  type: string
+      responses:
+        "200":
+          description: "成功获取sample:coverageCheck=false/true\nsonarSettings=xxxx\nrepoId=1"
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ac/analyzeSonar:
+    parameters:
+      - name: repoId
+        in: query
+        schema:
+          type: string
+        description: 收集指定repo的sonar质量报告
+    post:
+      security:
+        - ApiOrgTokenAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 发送分析sonar指令
+      responses:
+        "200":
+          description: "成功获取"
+          content:
+            text/plain:
+              schema:
+                type: string
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1266,21 +1278,6 @@ components:
         directory:
           type: string
           description: "可以是 system 或者 AD的名称"
-    Member:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: user id
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        isTeamLeader:
-          type: boolean
-          description: 是否团队leader
     MemberAction:
       type: object
       properties:
@@ -1299,7 +1296,7 @@ components:
           type: integer
         name:
           type: string
-        admins:
+        leaders:
           type: array
           items:
             type: object
@@ -1315,6 +1312,7 @@ components:
       properties:
         id:
           type: integer
+          description: 请求体中无效
         name:
           type: string
         type:
@@ -1326,24 +1324,38 @@ components:
         ready:
           type: boolean
           description: 是否已经授权完毕
-        access_token:
+        accessToken:
           type: string
-        refresh_token:
+          description: 请求体中无效
+        refreshToken:
           type: string
+          description: 请求体中无效
         namespace:
           type: string
           description: 代码库的命名空间(对应gitlab里的user或者group)
+        applicationId:
+          type: string
+        clientSecret:
+          type: string
     Ad:
       type: object
       properties:
         id:
           type: integer
+          description: 在请求体中无效
         type:
           type: string
           enum: [ad, ldap]
         address:
           type: string
+        port:
+          type: integer
         username:
+          type: string
+        password:
+          type: string
+          description: 在响应体隐藏
+        dn:
           type: string
     CodeCoverage:
       type: object
@@ -1487,7 +1499,12 @@ components:
         team:
           $ref: "#/components/schemas/Team"
         codehost:
-          $ref: "#/components/schemas/Codehost"
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
 
     QualityGate:
       type: object
