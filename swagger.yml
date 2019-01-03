@@ -14,7 +14,7 @@ paths:
     put:
       summary: 更新组织Token
       tags:
-      - Directory
+        - Directory
       requestBody:
         content:
           application/json:
@@ -25,17 +25,17 @@ paths:
                   type: string
                   description: 原来的组织Token
       responses:
-        '404':
+        "404":
           description: 查找失败
-        '200':
+        "200":
           description: 查找成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
 
   /directory/organization/findByOrgToken:
-    parameters: 
+    parameters:
       - name: orgToken
         in: query
         description: 组织Token
@@ -44,22 +44,22 @@ paths:
           type: string
     get:
       tags:
-      - Directory
+        - Directory
       summary: 用组织Token寻找企业信息
       responses:
-        '404':
+        "404":
           description: 查找失败
-        '200':
+        "200":
           description: 查找成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
 
   /directory/organization:
     post:
       tags:
-      - Directory
+        - Directory
       summary: 创建一个新的组织
       requestBody:
         description: 组织注册信息
@@ -82,7 +82,7 @@ paths:
                 adminPassword:
                   type: string
       responses:
-        '200':
+        "200":
           description: 创建成功
           content:
             application/json:
@@ -93,9 +93,9 @@ paths:
                     type: string
                     description: admin userToken
                   organization:
-                    $ref: '#/components/schemas/Organization'
+                    $ref: "#/components/schemas/Organization"
   /directory/organization/{orgId}:
-    parameters: 
+    parameters:
       - name: orgId
         in: path
         description: 组织ID
@@ -104,25 +104,25 @@ paths:
           type: integer
     get:
       tags:
-      - Directory
+        - Directory
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       summary: 获取一个组织信息
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
     put:
       tags:
-      - Directory
+        - Directory
       summary: 更新组织信息
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       requestBody:
         description: 组织信息
         required: true
@@ -136,21 +136,21 @@ paths:
                 website:
                   type: string
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
   /directory/user/detail:
     get:
       tags:
-      - Directory
+        - Directory
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       summary: 获取user详情
       responses:
-        '200':
+        "200":
           description: user详情
           content:
             application/json:
@@ -158,7 +158,7 @@ paths:
                 type: object
                 properties:
                   info:
-                    $ref: '#/components/schemas/User'
+                    $ref: "#/components/schemas/User"
                   teams:
                     type: array
                     items:
@@ -172,15 +172,15 @@ paths:
                         isTeamLeader:
                           type: boolean
                   organization:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                          description: 组织名称
-                        isAdmin:
-                          type: boolean
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                        description: 组织名称
+                      isAdmin:
+                        type: boolean
 
   /directory/user/login:
     parameters:
@@ -192,7 +192,7 @@ paths:
           type: integer
     post:
       tags:
-      - Directory
+        - Directory
       summary: 用户登录
       requestBody:
         description: email,密码
@@ -207,7 +207,7 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
@@ -218,7 +218,7 @@ paths:
                     type: string
                     description: admin userToken
                   user:
-                    $ref: '#/components/schemas/User'
+                    $ref: "#/components/schemas/User"
                   org:
                     type: object
                     properties:
@@ -236,20 +236,20 @@ paths:
           type: integer
     delete:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 删除user
       responses:
-        '200':
+        "200":
           description: 删除成功
     put:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 更新user
       requestBody:
         content:
@@ -264,12 +264,12 @@ paths:
                 phone:
                   type: string
       responses:
-        '200':
+        "200":
           description: 更新成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 
   /directory/users/search:
     parameters:
@@ -300,20 +300,20 @@ paths:
           type: string
     get:
       tags:
-      - Directory
+        - Directory
       summary: 列出某组织/团队的成员, orgId和teamId必须有一个
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
   /directory/codehost/{id}:
     parameters:
       - name: id
@@ -324,35 +324,35 @@ paths:
           type: integer
     get:
       tags:
-      - Directory
+        - Directory
       summary: 列出codehost详情
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       responses:
-        '200':
-          description: 'codehost详情'
+        "200":
+          description: "codehost详情"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Codehost'
+                $ref: "#/components/schemas/Codehost"
     delete:
       tags:
-      - Directory
+        - Directory
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       summary: 删除codehost
       responses:
-        '200':
-          description: '删除成功k'
+        "200":
+          description: "删除成功k"
     put:
       tags:
-      - Directory
+        - Directory
       summary: 更新codehost
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       requestBody:
         description: codehost 参数
         content:
@@ -368,12 +368,12 @@ paths:
                 namespace:
                   type: string
       responses:
-        '200':
-          description: '更新成功'
+        "200":
+          description: "更新成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Codehost'
+                $ref: "#/components/schemas/Codehost"
 
   /directory/codehost/{id}/auth:
     parameters:
@@ -385,14 +385,14 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 跳转到指定codehost进行授权
       responses:
-        '302':
-          description: '跳转'
+        "302":
+          description: "跳转"
 
   /directory/codehost/search:
     parameters:
@@ -414,20 +414,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 列出组织所有的codehost
       responses:
-        '200':
-          description: 'codehost列表'
+        "200":
+          description: "codehost列表"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Codehost'
+                  $ref: "#/components/schemas/Codehost"
   /directory/codehost/callback:
     parameters:
       - name: state
@@ -444,12 +444,12 @@ paths:
           type: string
     get:
       tags:
-      - Directory
+        - Directory
       summary: codehost授权回调
       responses:
-        '302':
+        "302":
           description: "授权成功"
-        '400':
+        "400":
           description: "授权失败, 返回失败原因"
           content:
             text/html:
@@ -466,10 +466,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 创建一个新的codehost
       requestBody:
         description: codehost 参数
@@ -482,18 +482,18 @@ paths:
                   type: string
                 type:
                   type: string
-                  enum: [gitlab, ]
+                  enum: [gitlab]
                 address:
                   type: string
                 namespace:
                   type: string
       responses:
-        '200':
-          description: '创建成功'
+        "200":
+          description: "创建成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Codehost'
+                $ref: "#/components/schemas/Codehost"
   /directory/ad:
     parameters:
       - name: orgId
@@ -504,10 +504,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 创建一个新的AD配置
       requestBody:
         description: AD配置参数
@@ -526,12 +526,12 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
-          description: '创建成功'
+        "200":
+          description: "创建成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ad'
+                $ref: "#/components/schemas/Ad"
   /directory/ad/default/test:
     parameters:
       - name: orgId
@@ -542,10 +542,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 测试AD设置,发送同步AD命令
       responses:
         200:
@@ -553,7 +553,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActionResult'
+                $ref: "#/components/schemas/ActionResult"
   /directory/ad/default:
     parameters:
       - name: orgId
@@ -564,25 +564,25 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 获取企业的AD配置
       responses:
-        '200':
+        "200":
           description: AD配置
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ad'
+                $ref: "#/components/schemas/Ad"
     put:
       tags:
-      - Directory
+        - Directory
       summary: 更新企业的AD配置
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       requestBody:
         description: AD配置参数
         content:
@@ -600,21 +600,21 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
+        "200":
           description: Ad
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ad'
+                $ref: "#/components/schemas/Ad"
     delete:
       tags:
-      - Directory
+        - Directory
       summary: 删除企业的AD配置
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       responses:
-        '200':
+        "200":
           description: 删除成功
 
   /directory/team:
@@ -627,10 +627,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 创建一个新的team
       requestBody:
         description: team参数
@@ -641,13 +641,15 @@ paths:
               properties:
                 name:
                   type: string
+                desc:
+                  type: string
       responses:
-        '200':
-          description: '创建成功'
+        "200":
+          description: "创建成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                $ref: "#/components/schemas/Team"
 
   /directory/teams/search:
     parameters:
@@ -674,20 +676,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 获取team列表
       responses:
-        '200':
-          description: '获取成功'
+        "200":
+          description: "获取成功"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Team'
+                  $ref: "#/components/schemas/Team"
 
   /directory/teams/{teamId}:
     parameters:
@@ -699,24 +701,24 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 获取team详情
       responses:
-        '200':
-          description: '获取成功'
+        "200":
+          description: "获取成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                $ref: "#/components/schemas/Team"
     put:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 更新team
       requestBody:
         description: team参数
@@ -727,22 +729,24 @@ paths:
               properties:
                 name:
                   type: string
+                desc:
+                  type: string
       responses:
-        '200':
-          description: '更新成功'
+        "200":
+          description: "更新成功"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                $ref: "#/components/schemas/Team"
     delete:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 删除team
       responses:
-        '200':
+        "200":
           description: 删除成功
 
   /directory/teams/{teamId}/members/batch:
@@ -755,10 +759,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - Directory
+        - Directory
       summary: 更新团队成员
       requestBody:
         description: 更新团队成员数据
@@ -768,14 +772,14 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/MemberAction'
+                $ref: "#/components/schemas/MemberAction"
       responses:
-        '200':
+        "200":
           description: 更新成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActionResult'
+                $ref: "#/components/schemas/ActionResult"
 
   /ac/measuresHistory/byOrg:
     parameters:
@@ -798,19 +802,19 @@ paths:
     get:
       summary: 列出组织质效历史记录
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       responses:
-        '200':
+        "200":
           description: 组织质效历史列表
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Measure'
+                  $ref: "#/components/schemas/Measure"
 
   /ac/measuresHistory/byTeam:
     parameters:
@@ -833,19 +837,19 @@ paths:
     get:
       summary: 列出团队质效历史纪录
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       responses:
-        '200':
+        "200":
           description: 团队质效历史列表
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Measure'
+                  $ref: "#/components/schemas/Measure"
 
   /ac/measuresHistory/byRepo:
     parameters:
@@ -868,19 +872,19 @@ paths:
     get:
       summary: 列出代码库质效历史纪录
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       responses:
-        '200':
+        "200":
           description: 代码库质效历史列表
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Measure'
+                  $ref: "#/components/schemas/Measure"
 
   /ac/measures/byOrg:
     parameters:
@@ -892,20 +896,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出组织所有团队的质效列表
       responses:
-        '200':
+        "200":
           description: 团队质效列表
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TeamMeasure'
+                  $ref: "#/components/schemas/TeamMeasure"
 
   /ac/measures/byTeam:
     parameters:
@@ -918,26 +922,26 @@ paths:
     get:
       summary: 列出团队的代码库质效
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       responses:
-        '200':
+        "200":
           description: 代码库质效列表
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepoMeasure'
+                  $ref: "#/components/schemas/RepoMeasure"
 
   /ac/codeCoverage/collect:
     post:
       security:
-      - ApiOrgTokenAuth: []
+        - ApiOrgTokenAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 收集覆盖率报告
       requestBody:
         description: 覆盖率报告以及其他信息
@@ -955,17 +959,16 @@ paths:
                   format: binary
                 langauge:
                   type: string
-                  enum: [java, ]
+                  enum: [java]
                 commitHash:
                   type: string
       responses:
-        '200':
+        "200":
           description: 分析成功
           content:
             text/plain:
               schema:
                 type: string
-
 
   /ac/codeCoverageDetails/search:
     parameters:
@@ -977,20 +980,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出覆盖率报告的详情
       responses:
-        '200':
+        "200":
           description: 覆盖率详情
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CodeCoverageDetail'
+                  $ref: "#/components/schemas/CodeCoverageDetail"
 
   /ac/securityMesureCount/{reportId}:
     parameters:
@@ -1002,20 +1005,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出某代码库的安全扫描个数列表
       responses:
-        '200':
+        "200":
           description: 安全扫描个数
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SecurityMeasureCount'
+                  $ref: "#/components/schemas/SecurityMeasureCount"
 
   /ac/securityMesureDetails/search:
     parameters:
@@ -1033,20 +1036,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出安全扫描报告详情
       responses:
-        '200':
+        "200":
           description: 报告详情
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SecurityMeasureDetail'
+                  $ref: "#/components/schemas/SecurityMeasureDetail"
 
   /ac/issueMeasures/search:
     parameters:
@@ -1058,21 +1061,21 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出缺陷报告详情
       responses:
-        '200':
+        "200":
           description: 缺陷报告详情
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/IssueMeasure'
-  
+                  $ref: "#/components/schemas/IssueMeasure"
+
   /ac/repositories/search:
     parameters:
       - name: orgId
@@ -1089,20 +1092,20 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 列出该组织/团队的所有Repo
       responses:
-        '200':
+        "200":
           description: 所有Repo详情
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Repository'
+                  $ref: "#/components/schemas/Repository"
 
   /ac/team/{teamId}/modifyRepositories:
     parameters:
@@ -1114,10 +1117,10 @@ paths:
           type: integer
     post:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 向team添加Repo/从Team删除Repo
       requestBody:
         content:
@@ -1125,14 +1128,14 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/ModifyRepositoryAction'
+                $ref: "#/components/schemas/ModifyRepositoryAction"
       responses:
-        '200':
+        "200":
           description: 更新结果
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActionResult'
+                $ref: "#/components/schemas/ActionResult"
 
   /ac/codehost/{id}/syncRepos:
     parameters:
@@ -1147,10 +1150,10 @@ paths:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 同步某个codehost的代码库
       responses:
-        '200':
+        "200":
           description: 发送同步命令成功
 
   /ac/qualityGate:
@@ -1167,39 +1170,39 @@ paths:
           type: integer
     get:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 获取团队/repo质量门设置
       responses:
-        '200':
+        "200":
           description: 团队质量门设置
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QualityGate'
+                $ref: "#/components/schemas/QualityGate"
 
     put:
       security:
-      - ApiKeyAuth: []
-      - ApiRootKeyAuth: []
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
       tags:
-      - AnalysisCenter
+        - AnalysisCenter
       summary: 更新团队/Repo质量门设置
       requestBody:
         description: 质量门设置
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QualityGate'
+              $ref: "#/components/schemas/QualityGate"
       responses:
-        '200':
+        "200":
           description: 更新结果
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActionResult'
+                $ref: "#/components/schemas/ActionResult"
 
 components:
   securitySchemes:
@@ -1262,7 +1265,7 @@ components:
           type: integer
         directory:
           type: string
-          description: '可以是 system 或者 AD的名称'
+          description: "可以是 system 或者 AD的名称"
     Member:
       type: object
       properties:
@@ -1305,6 +1308,8 @@ components:
                 type: integer
               name:
                 type: string
+              desc:
+                type: string
     Codehost:
       type: object
       properties:
@@ -1314,7 +1319,7 @@ components:
           type: string
         type:
           type: string
-          enum: [gitlab, ]
+          enum: [gitlab]
         address:
           type: string
           description: gitlab地址
@@ -1399,27 +1404,27 @@ components:
       type: object
       properties:
         codeCoverage:
-          $ref: '#/components/schemas/CodeCoverage'
+          $ref: "#/components/schemas/CodeCoverage"
         securityReport:
-          $ref: '#/components/schemas/SecurityReport'
+          $ref: "#/components/schemas/SecurityReport"
         issueReport:
-          $ref: '#/components/schemas/IssueReport'
+          $ref: "#/components/schemas/IssueReport"
         buildReport:
-          $ref: '#/components/schemas/BuildReport'
+          $ref: "#/components/schemas/BuildReport"
     TeamMeasure:
       type: object
       properties:
         team:
-          $ref: '#/components/schemas/Team'
+          $ref: "#/components/schemas/Team"
         measures:
-          $ref: '#/components/schemas/Measure'
+          $ref: "#/components/schemas/Measure"
     RepoMeasure:
       type: object
       properties:
         repo:
-          $ref: '#/components/schemas/Repository'
+          $ref: "#/components/schemas/Repository"
         measures:
-          $ref: '#/components/schemas/Measure'
+          $ref: "#/components/schemas/Measure"
     SecurityMeasureCount:
       type: object
       properties:
@@ -1480,9 +1485,9 @@ components:
         url:
           type: string
         team:
-          $ref: '#/components/schemas/Team'
+          $ref: "#/components/schemas/Team"
         codehost:
-          $ref: '#/components/schemas/Codehost'
+          $ref: "#/components/schemas/Codehost"
 
     QualityGate:
       type: object
@@ -1494,7 +1499,7 @@ components:
         rules:
           type: array
           items:
-            $ref: '#/components/schemas/QualityGateRule'
+            $ref: "#/components/schemas/QualityGateRule"
 
     QualityGateRule:
       type: object
