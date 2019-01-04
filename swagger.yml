@@ -375,13 +375,19 @@ paths:
         required: true
         schema:
           type: integer
+      - name: redirect
+        in: query
+        description: 授权完成后回跳地址
+        required: true
+        schema:
+          type: string
     get:
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
       tags:
         - Directory
-      summary: 跳转到指定codehost进行授权
+      summary: 跳转到指定codehost进行授权，授权完成后回跳到redirect地址，并带上errCode，errMessage（如果有code则用errCode，未知错误则用errMessage），如无错误，则无需带上这两个query
       responses:
         "302":
           description: "跳转"
