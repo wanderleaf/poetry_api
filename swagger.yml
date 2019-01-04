@@ -1119,7 +1119,29 @@ paths:
         "200":
           description: 发送同步命令成功
 
-  /ac/qualityGate:
+  /ac/teamQualityGates/search:
+    parameters:
+      - name: teamId
+        in: query
+        description: team id
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取团队质量门设置
+      responses:
+        "200":
+          description: 团队质量门设置
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamQualityGate"
+
+  /ac/qualityGates/update:
     parameters:
       - name: teamId
         in: query
@@ -1131,21 +1153,6 @@ paths:
         description: repo id
         schema:
           type: integer
-    get:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - AnalysisCenter
-      summary: 获取团队/repo质量门设置
-      responses:
-        "200":
-          description: 团队质量门设置
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/QualityGate"
-
     put:
       security:
         - ApiKeyAuth: []
@@ -1521,6 +1528,8 @@ components:
     QualityGateRule:
       type: object
       properties:
+        id:
+          type: integer
         name:
           type: string
         intValue:
@@ -1534,3 +1543,26 @@ components:
           description: 0 is good, other is bad
         errorMsg:
           type: string
+
+    RepoQualityGate:
+      type: object
+      properties:
+        detail:
+          $ref: "#/components/schemas/QualityGate"
+        repo:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+
+    TeamQualityGate:
+      type: object
+      properties:
+        detail:
+          $ref: "#/components/schemas/QualityGate"
+        repos:
+          type: array
+          items:
+            $ref: "#/components/schemas/RepoQualityGate"
