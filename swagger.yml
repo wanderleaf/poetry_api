@@ -283,6 +283,11 @@ paths:
         description: team ID
         schema:
           type: integer
+      - name: excludeTeamId
+        in: query
+        description: 不包含的 team ID
+        schema:
+          type: integer
       - name: per_page
         in: query
         description: 分页大小
