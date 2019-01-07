@@ -1543,6 +1543,7 @@ components:
           type: integer
         name:
           type: string
+          enum: [CCT, CCBTL]
         intValue:
           type: integer
 
