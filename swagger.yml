@@ -285,7 +285,7 @@ paths:
           type: integer
       - name: excludeTeamId
         in: query
-        description: 不包含的 team ID
+        description: 排除在指定team(id={excludeTeamId})里面的user
         schema:
           type: integer
       - name: per_page
@@ -1025,6 +1025,31 @@ paths:
                 items:
                   $ref: "#/components/schemas/SecurityMeasureDetail"
 
+  /ac/buildDetails/search:
+    parameters:
+      - name: reportId
+        in: query
+        description: report Id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出CI耗时详情
+      responses:
+        "200":
+          description: 报告详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BuildDetail"
+
   /ac/issueMeasures/search:
     parameters:
       - name: reportId
@@ -1398,6 +1423,19 @@ components:
         noStmt:
           type: integer
         noMissedStmt:
+          type: integer
+    BuildDetail:
+      type: object
+      properties:
+        link:
+          type: string
+        succeed:
+          type: boolean
+        duration:
+          type: integer
+        time:
+          type: string
+        id:
           type: integer
     SecurityReport:
       type: object
