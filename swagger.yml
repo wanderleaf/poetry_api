@@ -969,7 +969,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/CodeCoverageDetail"
 
-  /ac/securityMesureCount/{reportId}:
+  /ac/securityMeasureCount/{reportId}:
     parameters:
       - name: reportId
         in: path
@@ -994,7 +994,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/SecurityMeasureCount"
 
-  /ac/securityMesureDetails/search:
+  /ac/securityMeasureDetails/search:
     parameters:
       - name: reportId
         in: query
