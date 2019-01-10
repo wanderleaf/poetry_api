@@ -1350,6 +1350,8 @@ components:
                 type: string
         desc:
           type: string
+        orgId:
+          type: integer
     Codehost:
       type: object
       properties:
