@@ -1358,6 +1358,9 @@ components:
         id:
           type: integer
           description: 请求体中无效
+        orgId:
+          type: string
+          description: 组织ID
         name:
           type: string
         type:
