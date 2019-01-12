@@ -392,7 +392,7 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - Directory
-      summary: 跳转到指定codehost进行授权，授权完成后回跳到redirect地址，并带上errCode，errMessage（如果有code则用errCode，未知错误则用errMessage），如无错误，则无需带上这两个query
+      summary: 跳转到指定codehost进行授权，授权完成后回跳到redirect地址，如成功，则传succeed=true，如失败，传errCode=someCode，errMessage=someMessage（优先使用errCode，无code用errMessage，无errMessage则界面显示未知错误）
       responses:
         "302":
           description: "跳转"
@@ -863,7 +863,7 @@ paths:
   /ac/measures/byOrg:
     parameters:
       - name: orgId
-        in: path
+        in: query
         description: 组织Id
         required: true
         schema:
