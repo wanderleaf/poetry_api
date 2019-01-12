@@ -34,7 +34,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Organization"
 
-  /directory/organization/findByOrgToken:
+  /directory/organizations/findByOrgToken:
     parameters:
       - name: orgToken
         in: query
