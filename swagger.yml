@@ -516,7 +516,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Ad"
-  /directory/ad/default/test:
+  /directory/ads/test:
     parameters:
       - name: orgId
         in: query
