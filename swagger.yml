@@ -243,6 +243,19 @@ paths:
                         type: integer
                       name:
                         type: string
+        "400":
+          description: 用户名或密码错误
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
+        "500":
+          description: 服务不可用
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
+
   /directory/user/{userId}:
     parameters:
       - name: userId
