@@ -1615,6 +1615,9 @@ components:
           type: string
         team:
           $ref: "#/components/schemas/Team"
+        withStats:
+          type: boolean
+          description: 是否有CI数据
         codehost:
           type: object
           properties:
