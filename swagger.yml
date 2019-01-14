@@ -1618,6 +1618,9 @@ components:
         withStats:
           type: boolean
           description: 是否有CI数据
+        ciBranch:
+          type: string
+          description: CI数据上报分支
         codehost:
           type: object
           properties:
