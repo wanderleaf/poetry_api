@@ -1192,6 +1192,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/ActionResult"
 
+  /ac/team/{teamId}/removeRepos:
+    parameters:
+      - name: teamId
+        in: path
+        description: team id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 将team下的所有repo移出该team
+      responses:
+        "200":
+          description: 移除结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
+
   /ac/codehosts/{id}/syncRepos:
     parameters:
       - name: id
@@ -1210,6 +1232,32 @@ paths:
       responses:
         "200":
           description: 发送同步命令成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
+
+  /ac/codehosts/{id}/removeRepos:
+    parameters:
+      - name: id
+        in: path
+        description: codehost id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 删除codehost下的所有代码库
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
 
   /ac/teamQualityGates/search:
     parameters:
