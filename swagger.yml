@@ -586,9 +586,35 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - Directory
-      summary: 测试AD设置,发送同步AD命令
+      summary: 测试AD设置,发送联通测试和用户名密码验证
       responses:
-        200:
+        "400":
+          description: 10002:AD connect failed,400:username or password error
+        "200":
+          description: 测试结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResult"
+  /directory/ads/sync:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 测试AD设置,根据用户输入的用户名拉取域内的所有成员
+      responses:
+        "400":
+          description: 10002:AD connect failed,400:username or password error,10004:query AD user failed
+        "200":
           description: 测试结果
           content:
             application/json:
