@@ -1,0 +1,33 @@
+parameters:
+  - in: query
+    name: repoId
+    description: 代码库Id
+    required: true
+    schema:
+      type: integer
+  - in: query
+    name: startTime
+    description: 开始时间
+    schema:
+      type: string
+  - in: query
+    name: endTime
+    description: 结束时间
+    schema:
+      type: string
+get:
+  summary: 列出代码库质效历史纪录
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  responses:
+    '200':
+      description: 代码库质效历史列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Measure'

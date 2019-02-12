@@ -1,0 +1,7 @@
+type: object
+properties:
+  resultCode:
+    type: integer
+    description: '0 is good, other is bad'
+  errorMsg:
+    type: string

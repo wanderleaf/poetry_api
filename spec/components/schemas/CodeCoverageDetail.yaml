@@ -1,0 +1,8 @@
+type: object
+properties:
+  packageName:
+    type: string
+  noStmt:
+    type: integer
+  noMissedStmt:
+    type: integer

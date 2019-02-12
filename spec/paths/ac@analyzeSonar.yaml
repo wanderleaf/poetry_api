@@ -1,0 +1,19 @@
+parameters:
+  - name: repoId
+    in: query
+    schema:
+      type: string
+    description: 收集指定repo的sonar质量报告
+post:
+  security:
+    - ApiOrgTokenAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 发送分析sonar指令
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        text/plain:
+          schema:
+            type: string

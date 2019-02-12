@@ -1,0 +1,23 @@
+parameters:
+  - name: reportId
+    in: path
+    description: report id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出某代码库的安全扫描个数列表
+  responses:
+    '200':
+      description: 安全扫描个数
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SecurityMeasureCount'

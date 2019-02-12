@@ -1,0 +1,33 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+  - name: per_page
+    in: query
+    description: 分页大小
+    schema:
+      type: integer
+  - name: page
+    in: query
+    description: 分页index
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 列出组织所有的codehost
+  responses:
+    '200':
+      description: codehost列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Codehost'

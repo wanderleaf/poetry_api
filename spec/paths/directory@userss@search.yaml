@@ -1,0 +1,47 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    schema:
+      type: integer
+  - name: teamId
+    in: query
+    description: team ID
+    schema:
+      type: integer
+  - name: excludeTeamId
+    in: query
+    description: '排除在指定team(id={excludeTeamId})里面的user'
+    schema:
+      type: integer
+  - name: per_page
+    in: query
+    description: 分页大小
+    schema:
+      type: integer
+  - name: page
+    in: query
+    description: 分页index
+    schema:
+      type: integer
+  - name: keyword
+    in: query
+    description: keyword
+    schema:
+      type: string
+get:
+  tags:
+    - Directory
+  summary: '列出某组织/团队的成员, orgId和teamId必须有一个'
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'

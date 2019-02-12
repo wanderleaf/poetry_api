@@ -1,0 +1,47 @@
+parameters:
+  - name: orgId
+    in: path
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+get:
+  tags:
+    - Directory
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  summary: 获取一个组织信息
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organization'
+put:
+  tags:
+    - Directory
+  summary: 更新组织信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: 组织信息
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            website:
+              type: string
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organization'

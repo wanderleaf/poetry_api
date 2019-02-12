@@ -1,0 +1,8 @@
+type: object
+properties:
+  detail:
+    $ref: '#/components/schemas/QualityGate'
+  repos:
+    type: array
+    items:
+      $ref: '#/components/schemas/RepoQualityGate'

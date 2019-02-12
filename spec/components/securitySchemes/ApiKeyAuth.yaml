@@ -1,0 +1,4 @@
+type: apiKey
+in: header
+name: X-API-KEY
+description: '普通用户使用的API-KEY, [a-zA-Z0-9]{16}'

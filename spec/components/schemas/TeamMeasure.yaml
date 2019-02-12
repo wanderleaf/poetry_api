@@ -1,0 +1,6 @@
+type: object
+properties:
+  team:
+    $ref: '#/components/schemas/Team'
+  measures:
+    $ref: '#/components/schemas/Measure'

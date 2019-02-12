@@ -1,0 +1,51 @@
+parameters:
+  - name: id
+    in: path
+    description: codehost Id
+    required: true
+    schema:
+      type: integer
+get:
+  tags:
+    - Directory
+  summary: 列出codehost详情
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: codehost详情
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Codehost'
+delete:
+  tags:
+    - Directory
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  summary: 删除codehost
+  responses:
+    '200':
+      description: 删除成功k
+put:
+  tags:
+    - Directory
+  summary: 更新codehost
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: codehost 参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Codehost'
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Codehost'

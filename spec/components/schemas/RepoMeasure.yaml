@@ -1,0 +1,6 @@
+type: object
+properties:
+  repo:
+    $ref: '#/components/schemas/Repository'
+  measures:
+    $ref: '#/components/schemas/Measure'

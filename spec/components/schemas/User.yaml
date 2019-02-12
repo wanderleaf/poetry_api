@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  email:
+    type: string
+  phone:
+    type: string
+  isAdmin:
+    type: boolean
+    description: 是否组织管理员
+  isSuperUser:
+    type: boolean
+  isTeamLeader:
+    type: boolean
+    description: 仅当根据teamId搜索时有意义
+  teams:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+  lastLogin:
+    type: integer
+  directory:
+    type: string
+    description: 可以是 system 或者 AD的名称

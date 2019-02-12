@@ -1,0 +1,55 @@
+parameters:
+  - name: orgId
+    in: query
+    description: '组织ID, 如果为空, 则只限管理员登录'
+    required: false
+    schema:
+      type: integer
+post:
+  tags:
+    - Directory
+  summary: 用户登录
+  requestBody:
+    description: 'email,密码'
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+                description: admin userToken
+              user:
+                $ref: '#/components/schemas/User'
+              org:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+    '400':
+      description: 用户名或密码错误
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+    '500':
+      description: 服务不可用
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

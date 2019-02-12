@@ -1,0 +1,33 @@
+parameters:
+  - in: query
+    name: teamId
+    description: 团队Id
+    required: true
+    schema:
+      type: integer
+  - in: query
+    name: startTime
+    description: 开始时间
+    schema:
+      type: string
+  - in: query
+    name: endTime
+    description: 结束时间
+    schema:
+      type: string
+get:
+  summary: 列出团队质效历史纪录
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  responses:
+    '200':
+      description: 团队质效历史列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Measure'

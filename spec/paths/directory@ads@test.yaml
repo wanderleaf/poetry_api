@@ -1,0 +1,30 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: '测试AD设置,发送联通测试和用户名密码验证'
+  responses:
+    '200':
+      description: 测试结果
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+    '400':
+      description: |
+        错误码(resultCode):
+        10002:AD connect failed
+        400:username or password error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

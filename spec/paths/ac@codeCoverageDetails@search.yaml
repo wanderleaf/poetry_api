@@ -1,0 +1,23 @@
+parameters:
+  - name: codeCoverageId
+    in: query
+    description: CodeCoverage的ID
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出覆盖率报告的详情
+  responses:
+    '200':
+      description: 覆盖率详情
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CodeCoverageDetail'

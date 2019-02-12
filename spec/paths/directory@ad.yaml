@@ -1,0 +1,27 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建一个新的AD配置
+  requestBody:
+    description: AD配置参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Ad'
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'

@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  namespace:
+    type: string
+  mainBranch:
+    type: string
+  branches:
+    type: array
+    items:
+      type: string
+  codehostId:
+    type: integer
+  url:
+    type: string
+  team:
+    $ref: '#/components/schemas/Team'
+  withStats:
+    type: boolean
+    description: 是否有CI数据
+  ciBranch:
+    type: string
+    description: CI数据上报分支
+  codehost:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string

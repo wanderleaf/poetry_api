@@ -1,0 +1,19 @@
+type: object
+properties:
+  id:
+    type: integer
+  count:
+    type: integer
+  category:
+    type: string
+    enum:
+      - owasp-a1
+      - owasp-a2
+      - owasp-a3
+      - owasp-a4
+      - owasp-a5
+      - owasp-a6
+      - owasp-a7
+      - owasp-a8
+      - owasp-a9
+      - owasp-a10

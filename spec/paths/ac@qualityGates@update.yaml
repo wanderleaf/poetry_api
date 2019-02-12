@@ -1,0 +1,31 @@
+parameters:
+  - name: teamId
+    in: query
+    description: team id
+    schema:
+      type: integer
+  - name: repoId
+    in: query
+    description: repo id
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 更新团队/Repo质量门设置
+  requestBody:
+    description: 质量门设置
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/QualityGate'
+  responses:
+    '200':
+      description: 更新结果
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

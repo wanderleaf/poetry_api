@@ -1,0 +1,29 @@
+post:
+  security:
+    - ApiOrgTokenAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 获取repository设置(用于CI脚本)
+  requestBody:
+    description: repository信息
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            projectPath:
+              type: string
+            namespace:
+              type: string
+            branch:
+              type: string
+  responses:
+    '200':
+      description: |-
+        成功获取sample:coverageCheck=false/true
+        sonarSettings=xxxx
+        repoId=1
+      content:
+        text/plain:
+          schema:
+            type: string

@@ -1,0 +1,37 @@
+post:
+  tags:
+    - Directory
+  summary: 创建一个新的组织
+  requestBody:
+    description: 组织注册信息
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            website:
+              type: string
+            adminName:
+              type: string
+            adminEmail:
+              type: string
+            adminPhone:
+              type: string
+            adminPassword:
+              type: string
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              access_token:
+                type: string
+                description: admin userToken
+              organization:
+                $ref: '#/components/schemas/Organization'
