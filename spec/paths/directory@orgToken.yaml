@@ -1,0 +1,22 @@
+put:
+  summary: 更新组织Token
+  tags:
+    - Directory
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            originOrgToken:
+              type: string
+              description: 原来的组织Token
+  responses:
+    '200':
+      description: 查找成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organization'
+    '404':
+      description: 查找失败

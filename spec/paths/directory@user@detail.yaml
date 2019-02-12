@@ -1,0 +1,38 @@
+get:
+  tags:
+    - Directory
+  security:
+    - ApiKeyAuth: []
+  summary: 获取user详情
+  responses:
+    '200':
+      description: user详情
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              info:
+                $ref: '#/components/schemas/User'
+              teams:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      description: 团队名称
+                    isTeamLeader:
+                      type: boolean
+              organization:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    description: 组织名称
+                  isAdmin:
+                    type: boolean

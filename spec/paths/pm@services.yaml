@@ -1,0 +1,27 @@
+parameters:
+  - name: productId
+    in: query
+    description: 产品ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 添加服务
+  requestBody:
+    description: 添加服务请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ServiceCreateRequest"
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Service'

@@ -1,0 +1,7 @@
+post:
+  tags:
+    - Directory
+  summary: 退出登录（该接口由proxy实现，清除用户的客户端cookie）
+  responses:
+    '200':
+      description: 成功

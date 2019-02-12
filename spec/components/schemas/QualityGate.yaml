@@ -1,0 +1,10 @@
+type: object
+properties:
+  codeScan:
+    type: boolean
+  shouldReport:
+    type: boolean
+  rules:
+    type: array
+    items:
+      $ref: '#/components/schemas/QualityGateRule'

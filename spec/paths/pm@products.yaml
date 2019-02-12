@@ -1,0 +1,21 @@
+parameters:
+  - name: orgId
+    in: query
+    description: org Id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 获取产品列表
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductListResponse'

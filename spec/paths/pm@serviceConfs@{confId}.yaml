@@ -1,0 +1,41 @@
+parameters:
+  - name: confId
+    in: path
+    description: 服务配置ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 更新服务配置
+  requestBody:
+    description: 更新服务配置请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ServiceConfUpsertRequest"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 删除服务配置
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

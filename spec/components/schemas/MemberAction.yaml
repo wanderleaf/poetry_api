@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: user id
+  action:
+    type: string
+    enum:
+      - add
+      - remove
+      - update
+  isTeamleader:
+    type: boolean

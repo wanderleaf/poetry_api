@@ -1,0 +1,22 @@
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+    description: 配置名称
+  keys:
+    type: array
+    description: 配置项关键字列表
+    items:
+      type: string
+      description: "[a-z][a-z0-9A-Z_]+"
+  content:
+    type: string
+    description: 服务配置模板内容
+  updated:
+    type: string
+    description: 更新时间
+  revision:
+    type: string
+    description: 配置模板版本

@@ -1,0 +1,15 @@
+type: object
+description: "产品全局变量"
+properties:
+  id:
+    type: integer
+    description: 变量ID (在更新，添加方法的请求体中无效)
+  key:
+    type: string
+    description: "变量名称 [a-z][a-z0-9A-Z_]+"
+  defaultValue:
+    type: string
+    description: 变量默认值 
+  encrypted:
+    type: boolean
+    description: 是否加密

@@ -1,0 +1,15 @@
+type: object
+description: "环境参数"
+properties:
+  productVarId:
+    type: integer
+    description: 产品变量ID
+  key:
+    type: string
+    description: "变量名称 [a-z][a-z0-9A-Z_]+"
+  value:
+    type: string
+    description: 值
+  isDefault:
+    type: boolean
+    description: 是否默认值

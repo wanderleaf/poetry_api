@@ -1,0 +1,27 @@
+parameters:
+  - name: productId
+    in: query
+    description: 产品ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 添加产品环境变量
+  requestBody:
+    description: 添加产品环境变量请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ProductVar"
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductVar'

@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 应用包ID
+  name:
+    type: string
+    description: 名称
+  created:
+    type: string
+    description: 生成日期
+  link:
+    type: string
+    description: 应用包地址

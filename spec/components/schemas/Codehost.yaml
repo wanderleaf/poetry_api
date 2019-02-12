@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 请求体中无效
+  orgId:
+    type: string
+    description: 组织ID
+  name:
+    type: string
+  type:
+    type: string
+    enum:
+      - gitlab
+  address:
+    type: string
+    description: gitlab地址
+  ready:
+    type: boolean
+    description: 是否已经授权完毕
+  accessToken:
+    type: string
+    description: 请求体中无效
+  refreshToken:
+    type: string
+    description: 请求体中无效
+  namespace:
+    type: string
+    description: 代码库的命名空间(对应gitlab里的user或者group)
+  applicationId:
+    type: string
+  clientSecret:
+    type: string

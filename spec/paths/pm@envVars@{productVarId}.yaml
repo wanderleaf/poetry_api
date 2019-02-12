@@ -1,0 +1,47 @@
+parameters:
+  - name: envId
+    in: query
+    description: 环境ID
+    required: true
+    schema:
+      type: string
+  - name: productVarId
+    in: path
+    description: 产品环境变量ID
+    required: true
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 更新环境变量, 覆盖默认值
+  requestBody:
+    description: 更新环境变量请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/EnvVarUpdateRequest"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 删除环境变量, 重置为默认值
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

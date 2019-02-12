@@ -1,0 +1,41 @@
+parameters:
+  - name: varId
+    in: path
+    description: 产品变量ID
+    required: true
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 更新产品环境变量
+  requestBody:
+    description: 更新产品环境变量请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ProductVar"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 删除产品环境变量
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

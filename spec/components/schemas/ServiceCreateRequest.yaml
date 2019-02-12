@@ -1,0 +1,8 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 服务名称
+  containerized:
+    type: boolean
+    description: 是否容器化 (true = 容器化)

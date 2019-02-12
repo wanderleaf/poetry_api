@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 服务ID
+  name:
+    type: string
+    description: 服务名称
+  containerized:
+    type: boolean
+    description: 是否容器化 (true = 容器化)
+  confs:
+    type: array
+    items:
+      $ref: "#/components/schemas/ServiceConf"
+  latestArtifact:
+    $ref: "#/components/schemas/Artifact"

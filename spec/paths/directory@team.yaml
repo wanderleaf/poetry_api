@@ -1,0 +1,32 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建一个新的team
+  requestBody:
+    description: team参数
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            desc:
+              type: string
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Team'

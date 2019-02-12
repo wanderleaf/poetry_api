@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 产品唯一ID
+  name:
+    type: string
+    description: 产品名称
+  desc:
+    type: string
+    description: 产品描述
+  teams:
+    type: array
+    items:
+      $ref: "#/components/schemas/TeamLite"
+  publisher:
+    type: array
+    items:
+      $ref: "#/components/schemas/UserLite"
+  services:
+    type: array
+    items:
+      $ref: "#/components/schemas/Service"
+  vars:
+    type: array
+    items:
+      $ref: "#/components/schemas/ProductVar"
+  envs:
+    type: array
+    items:
+      $ref: "#/components/schemas/Env"

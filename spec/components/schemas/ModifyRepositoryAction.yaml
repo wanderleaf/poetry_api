@@ -1,0 +1,9 @@
+type: object
+properties:
+  repositoryId:
+    type: integer
+  action:
+    type: string
+    enum:
+      - add
+      - remove

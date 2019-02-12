@@ -1,0 +1,51 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取企业的AD配置
+  responses:
+    '200':
+      description: AD配置
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'
+put:
+  tags:
+    - Directory
+  summary: 更新企业的AD配置
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: AD配置参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Ad'
+  responses:
+    '200':
+      description: Ad
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'
+delete:
+  tags:
+    - Directory
+  summary: 删除企业的AD配置
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

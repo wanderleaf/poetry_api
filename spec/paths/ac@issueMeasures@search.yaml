@@ -1,0 +1,23 @@
+parameters:
+  - name: reportId
+    in: query
+    description: report id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出缺陷报告详情
+  responses:
+    '200':
+      description: 缺陷报告详情
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/IssueMeasure'

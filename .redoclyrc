@@ -1,0 +1,8 @@
+specFileName: swagger.yml
+apiTitle: Poetry API
+splitSpec: true
+codeSamples: true
+swaggerUI: true
+travis: true
+repo: OwnDogFood/poetry_api
+oasVersion: 3.0.0

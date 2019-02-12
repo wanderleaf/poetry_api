@@ -1,0 +1,29 @@
+parameters:
+  - name: orgId
+    in: query
+    description: org id
+    required: false
+    schema:
+      type: integer
+  - name: teamId
+    in: query
+    description: team id
+    required: false
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出该组织/团队的所有Repo
+  responses:
+    '200':
+      description: 所有Repo详情
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Repository'

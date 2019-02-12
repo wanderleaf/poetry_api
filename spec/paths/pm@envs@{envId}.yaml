@@ -1,0 +1,41 @@
+parameters:
+  - name: envId
+    in: path
+    description: 环境ID
+    required: true
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 更新产品环境
+  requestBody:
+    description: 更新产品环境请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/Env"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProductManager
+  summary: 删除产品环境
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

@@ -1,0 +1,21 @@
+parameters:
+  - name: id
+    in: path
+    description: codehost id
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 同步某个codehost的代码库
+  responses:
+    '200':
+      description: 发送同步命令成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

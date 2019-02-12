@@ -1,0 +1,23 @@
+parameters:
+  - name: teamId
+    in: query
+    description: 团队Id
+    required: true
+    schema:
+      type: integer
+get:
+  summary: 列出团队的代码库质效
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  responses:
+    '200':
+      description: 代码库质效列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RepoMeasure'

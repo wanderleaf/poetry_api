@@ -1,0 +1,20 @@
+parameters:
+  - name: orgToken
+    in: query
+    description: 组织Token
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Directory
+  summary: 用组织Token寻找企业信息
+  responses:
+    '200':
+      description: 查找成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organization'
+    '404':
+      description: 查找失败

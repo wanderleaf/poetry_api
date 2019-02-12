@@ -1,0 +1,26 @@
+parameters:
+  - name: state
+    in: query
+    description: 回调参数
+    required: true
+    schema:
+      type: string
+  - name: code
+    in: query
+    description: oauth2 code
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Directory
+  summary: codehost授权回调
+  responses:
+    '302':
+      description: 授权成功
+    '400':
+      description: '授权失败, 返回失败原因. 10006:用户拒绝了授权, 10007:appid或者secret不正确，授权失败'
+      content:
+        text/html:
+          schema:
+            type: string

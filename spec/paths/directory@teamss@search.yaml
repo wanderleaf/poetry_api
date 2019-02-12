@@ -1,0 +1,38 @@
+parameters:
+  - name: orgId
+    in: query
+    description: org Id
+    required: true
+    schema:
+      type: integer
+  - name: keyword
+    in: query
+    description: keyword
+    schema:
+      type: string
+  - name: per_page
+    in: query
+    description: 分页大小
+    schema:
+      type: integer
+  - name: page
+    in: query
+    description: 分页index
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取team列表
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Team'

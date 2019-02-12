@@ -1,0 +1,12 @@
+type: object
+properties:
+  link:
+    type: string
+  succeed:
+    type: boolean
+  duration:
+    type: integer
+  time:
+    type: string
+  id:
+    type: integer

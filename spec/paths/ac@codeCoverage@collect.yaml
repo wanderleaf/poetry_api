@@ -1,0 +1,33 @@
+post:
+  security:
+    - ApiOrgTokenAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 收集覆盖率报告
+  requestBody:
+    description: 覆盖率报告以及其他信息
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            projectPath:
+              type: string
+            namespace:
+              type: string
+            coverage:
+              type: string
+              format: binary
+            langauge:
+              type: string
+              enum:
+                - java
+            commitHash:
+              type: string
+  responses:
+    '200':
+      description: 分析成功
+      content:
+        text/plain:
+          schema:
+            type: string

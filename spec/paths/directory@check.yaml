@@ -1,0 +1,15 @@
+get:
+  summary: 检查系统是否初始化成功（是否有至少一个组织）
+  tags:
+    - Directory
+  responses:
+    '200':
+      description: 查询成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              inited:
+                type: boolean
+                description: 系统是否已初始化

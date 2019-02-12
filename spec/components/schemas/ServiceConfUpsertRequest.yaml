@@ -1,0 +1,8 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 配置名称
+  content:
+    type: string
+    description: 服务配置模板内容

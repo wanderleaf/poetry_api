@@ -1,0 +1,10 @@
+type: object
+properties:
+  codeCoverage:
+    $ref: '#/components/schemas/CodeCoverage'
+  securityReport:
+    $ref: '#/components/schemas/SecurityReport'
+  issueReport:
+    $ref: '#/components/schemas/IssueReport'
+  buildReport:
+    $ref: '#/components/schemas/BuildReport'

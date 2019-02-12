@@ -1,0 +1,23 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织Id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出组织所有团队的质效列表
+  responses:
+    '200':
+      description: 团队质效列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TeamMeasure'
