@@ -1368,6 +1368,34 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+  /pm/artifacts:
+    parameters:
+      - name: serviceId
+        in: query
+        description: 服务ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - ProductManager
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      summary: 服务的应用包列表(支持分页)
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactListResponse'
+          headers:
+            X-Total:
+              $ref: '#/components/headers/X-Total'
   /pm/envs:
     parameters:
       - name: productId
@@ -1471,7 +1499,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
-  '/pm/envVars/{productVarId}':
+  /pm/envVars:
     parameters:
       - name: envId
         in: query
@@ -1479,25 +1507,19 @@ paths:
         required: true
         schema:
           type: string
-      - name: productVarId
-        in: path
-        description: 产品环境变量ID
-        required: true
-        schema:
-          type: integer
     put:
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
       tags:
         - ProductManager
-      summary: '更新环境变量, 覆盖默认值'
+      summary: '全量更新环境变量, 覆盖默认值'
       requestBody:
         description: 更新环境变量请求
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvVarUpdateRequest'
+              $ref: '#/components/schemas/EnvVarBatchUpdateRequest'
       responses:
         '200':
           description: 更新成功
@@ -1505,20 +1527,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
-    delete:
+  /pm/pipelines:
+    parameters:
+      - name: productId
+        in: query
+        description: 产品Id
+        required: true
+        schema:
+          type: integer
+    get:
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
       tags:
         - ProductManager
-      summary: '删除环境变量, 重置为默认值'
+      summary: 获取工作流列表
       responses:
         '200':
-          description: 删除成功
+          description: 获取成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActionResult'
+                $ref: '#/components/schemas/PipelineListResponse'
   /pm/products:
     parameters:
       - name: orgId
@@ -1605,64 +1635,22 @@ paths:
         required: true
         schema:
           type: integer
-    post:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - ProductManager
-      summary: 添加产品环境变量
-      requestBody:
-        description: 添加产品环境变量请求
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductVar'
-      responses:
-        '200':
-          description: 添加成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVar'
-  '/pm/productVars/{varId}':
-    parameters:
-      - name: varId
-        in: path
-        description: 产品变量ID
-        required: true
-        schema:
-          type: integer
     put:
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
       tags:
         - ProductManager
-      summary: 更新产品环境变量
+      summary: 更新产品环境变量(全量)
       requestBody:
-        description: 更新产品环境变量请求
+        description: 添加产品环境变量请求
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductVar'
+              $ref: '#/components/schemas/ProductVarBatchUpdateRequest'
       responses:
         '200':
-          description: 更新成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ActionResult'
-    delete:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - ProductManager
-      summary: 删除产品环境变量
-      responses:
-        '200':
-          description: 删除成功
+          description: 添加成功
           content:
             application/json:
               schema:
@@ -1780,7 +1768,10 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - ProductManager
-      summary: 服务配置历史纪录
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      summary: 服务配置历史纪录(支持分页)
       responses:
         '200':
           description: 服务配置历史记录列表
@@ -1788,6 +1779,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceConfRevisionListResponse'
+          headers:
+            X-Total:
+              $ref: '#/components/headers/X-Total'
   /pm/services:
     parameters:
       - name: productId
@@ -1863,6 +1857,10 @@ components:
         link:
           type: string
           description: 应用包地址
+    ArtifactListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Artifact'
     BuildDetail:
       type: object
       properties:
@@ -1963,24 +1961,26 @@ components:
       type: object
       description: 环境参数
       properties:
-        productVarId:
-          type: integer
-          description: 产品变量ID
         key:
           type: string
-          description: '变量名称 [a-z][a-z0-9A-Z_]+'
+          description: '变量名称 [a-z][a-z0-9A-Z_\-]+'
         value:
           type: string
           description: 值
         isDefault:
           type: boolean
           description: 是否默认值
-    EnvVarUpdateRequest:
-      type: object
-      properties:
-        value:
-          type: string
-          description: 值
+    EnvVarBatchUpdateRequest:
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            description: '变量名称 [a-z][a-z0-9A-Z_\-]+'
+          value:
+            type: string
+            description: 值
     IssueMeasure:
       type: object
       properties:
@@ -1999,6 +1999,145 @@ components:
           type: string
         id:
           type: integer
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 任务ID
+        type:
+          type: string
+          enum:
+            - test
+            - build
+            - deploy
+          description: 任务类型
+        services:
+          type: array
+          description: '任务类型为deploy时,最多只能有一个service'
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: 服务ID
+              name:
+                type: string
+                description: 服务名称
+        timeout:
+          type: integer
+          description: 超时时间(秒)
+        vars:
+          description: 自定义变量
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: '变量名称 [a-z][a-z0-9A-Z_\-]+'
+              value:
+                type: string
+                description: 值
+              secured:
+                type: boolean
+                description: 是否敏感信息
+        buildConf:
+          type: object
+          description: 构建任务配置
+          properties:
+            caches:
+              type: array
+              items:
+                type: string
+            scripts:
+              description: 运行脚本
+              type: array
+              items:
+                type: string
+            packaging:
+              type: object
+              description: |
+                打包方式.
+                如打包成压缩文件 apache-tomcat-8.5.38.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar
+                如打包成镜像 registry.example.com/foo/bar:20190101121100, 则name=foo/bar, versioning=timestamp, type=image
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - image
+                    - zip
+                    - tar
+                  description: image表示打包成镜像，tar和zip表示打包成压缩文件
+                name:
+                  type: string
+                  description: '打包名称前缀, 如 tomcat'
+                versioning:
+                  type: string
+                  enum:
+                    - ref
+                    - timestamp
+                    - custom
+                  description: '包版本生成模式，ref表示依赖代码库的分支或者tag名称, custom为自定义版本号'
+                version:
+                  type: string
+                  description: 自定义版本号
+            repository:
+              type: object
+              description: 代码库
+              properties:
+                codehost:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 代码库ID
+                    address:
+                      type: string
+                      description: 代码库地址
+                    type:
+                      type: string
+                      enum:
+                        - gitlab
+                        - github
+                namespace:
+                  type: string
+                  description: 命名空间 (user/group)
+                name:
+                  type: string
+                  description: 代码库名称
+                branch:
+                  type: string
+                  description: 分支名
+                submodule:
+                  type: boolean
+                  description: 是否同步子模块
+                preClear:
+                  type: boolean
+                  description: 是否在同步代码前清空子目录
+        deployConf:
+          type: object
+          description: 部署配置
+          properties:
+            containerized:
+              type: boolean
+              description: 容器化部署
+            scripts:
+              description: 运行脚本 (仅当containerized=false时有效)
+              type: array
+              items:
+                type: string
+            k8sTemplates:
+              description: k8syaml文件 (仅当containerized=true时有效)
+              type: array
+              items:
+                type: string
+            useLatestArtifact:
+              type: boolean
+              description: 使用最新的应用包
+            artifact:
+              $ref: '#/components/schemas/Artifact'
+              description: 仅当useLatestArtifact=false时有效
     Measure:
       type: object
       properties:
@@ -2045,6 +2184,28 @@ components:
           type: string
         orgToken:
           type: string
+    Pipeline:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 工作流ID
+        name:
+          type: string
+          description: 工作流名称
+        desc:
+          type: string
+          description: 工作流描述
+        env:
+          $ref: '#/components/schemas/Env'
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stage'
+    PipelineListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pipeline'
     Product:
       type: object
       properties:
@@ -2102,18 +2263,20 @@ components:
       type: object
       description: 产品全局变量
       properties:
-        id:
-          type: integer
-          description: 变量ID (在更新，添加方法的请求体中无效)
         key:
           type: string
-          description: '变量名称 [a-z][a-z0-9A-Z_]+'
+          description: '变量名称 [a-z][a-z0-9A-Z_\-]+'
         defaultValue:
           type: string
           description: 变量默认值
-        encrypted:
+        secured:
           type: boolean
           description: 是否加密
+    ProductVarBatchUpdateRequest:
+      type: array
+      description: 更新产品全局变量请求(全量)
+      items:
+        $ref: '#/components/schemas/ProductVar'
     QualityGate:
       type: object
       properties:
@@ -2259,12 +2422,6 @@ components:
         name:
           type: string
           description: 配置名称
-        keys:
-          type: array
-          description: 配置项关键字列表
-          items:
-            type: string
-            description: '[a-z][a-z0-9A-Z_]+'
         content:
           type: string
           description: 服务配置模板内容
@@ -2296,6 +2453,20 @@ components:
         containerized:
           type: boolean
           description: 是否容器化 (true = 容器化)
+    Stage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 步骤ID
+        name:
+          type: string
+          description: 步骤名称
+        jobs:
+          type: array
+          description: 任务列表
+          items:
+            $ref: '#/components/schemas/Job'
     Team:
       type: object
       properties:
@@ -2379,6 +2550,24 @@ components:
           type: integer
         name:
           type: string
+  parameters:
+    page:
+      name: page
+      in: query
+      description: 分页index
+      schema:
+        type: integer
+    per_page:
+      name: per_page
+      in: query
+      description: 分页大小
+      schema:
+        type: integer
+  headers:
+    X-Total:
+      description: 总数
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
