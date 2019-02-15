@@ -2650,6 +2650,42 @@
             }
           }
         }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "创建工作流",
+        "requestBody": {
+          "description": "添加产品请求",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PipelineUpsertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "创建成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pipeline"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/pm/products": {
@@ -2684,6 +2720,42 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProductListResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "新建产品",
+        "requestBody": {
+          "description": "添加产品请求",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUpsertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "添加成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -2747,7 +2819,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductUpdateRequest"
+                "$ref": "#/components/schemas/ProductUpsertRequest"
               }
             }
           }
@@ -3180,6 +3252,14 @@
           "link": {
             "type": "string",
             "description": "应用包地址"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "object"
+            ],
+            "description": "image为镜像，object为压缩文件"
           }
         }
       },
@@ -3500,49 +3580,48 @@
                   }
                 }
               },
-              "repository": {
-                "type": "object",
-                "description": "代码库",
-                "properties": {
-                  "codehost": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "description": "代码库ID"
-                      },
-                      "address": {
-                        "type": "string",
-                        "description": "代码库地址"
-                      },
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "gitlab",
-                          "github"
-                        ]
+              "repositories": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "description": "代码库",
+                  "properties": {
+                    "codehost": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "代码库ID"
+                        },
+                        "address": {
+                          "type": "string",
+                          "description": "代码库地址"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "gitlab",
+                            "github"
+                          ]
+                        }
                       }
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "description": "命名空间 (user/group)"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "代码库名称"
+                    },
+                    "branch": {
+                      "type": "string",
+                      "description": "分支名"
+                    },
+                    "submodule": {
+                      "type": "boolean",
+                      "description": "是否同步子模块"
                     }
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "命名空间 (user/group)"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "代码库名称"
-                  },
-                  "branch": {
-                    "type": "string",
-                    "description": "分支名"
-                  },
-                  "submodule": {
-                    "type": "boolean",
-                    "description": "是否同步子模块"
-                  },
-                  "preClear": {
-                    "type": "boolean",
-                    "description": "是否在同步代码前清空子目录"
                   }
                 }
               }
@@ -3580,6 +3659,12 @@
               }
             }
           }
+        }
+      },
+      "JobListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "/components/schemas/Job"
         }
       },
       "Measure": {
@@ -3683,6 +3768,28 @@
           "$ref": "#/components/schemas/Pipeline"
         }
       },
+      "PipelineUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工作流名称"
+          },
+          "desc": {
+            "type": "string",
+            "description": "工作流描述"
+          },
+          "envId": {
+            "type": "integer"
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StageUpdate"
+            }
+          }
+        }
+      },
       "Product": {
         "type": "object",
         "properties": {
@@ -3736,7 +3843,7 @@
           "$ref": "#/components/schemas/Product"
         }
       },
-      "ProductUpdateRequest": {
+      "ProductUpsertRequest": {
         "type": "object",
         "properties": {
           "name": {
@@ -3750,13 +3857,13 @@
           "teams": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TeamLite"
+              "type": "integer"
             }
           },
           "publisher": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserLite"
+              "type": "integer"
             }
           }
         }
@@ -4049,10 +4156,6 @@
       "Stage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "description": "步骤ID"
-          },
           "name": {
             "type": "string",
             "description": "步骤名称"
@@ -4062,6 +4165,22 @@
             "description": "任务列表",
             "items": {
               "$ref": "#/components/schemas/Job"
+            }
+          }
+        }
+      },
+      "StageUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "步骤名称"
+          },
+          "jobs": {
+            "type": "array",
+            "description": "任务列表",
+            "items": {
+              "type": "integer"
             }
           }
         }
