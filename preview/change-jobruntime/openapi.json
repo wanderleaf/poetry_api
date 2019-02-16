@@ -3934,7 +3934,7 @@
           },
           "packaging": {
             "type": "object",
-            "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成镜像 registry.example.com/foo/bar:20190101121100, 则name=foo/bar, versioning=timestamp, type=image\n",
+            "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38-20190101-1.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成压缩文件 tomcat-pr/1-20190101-1.zip, 则name=tomcat, versioning=ref, type=zip\n如打包成镜像 registry.example.com/foo/bar:20190101-1, 则name=foo/bar, versioning=none, type=image\n",
             "properties": {
               "type": {
                 "type": "string",
@@ -3952,11 +3952,15 @@
               "versioning": {
                 "type": "string",
                 "enum": [
+                  "none",
                   "ref",
-                  "timestamp",
                   "custom"
                 ],
-                "description": "包版本生成模式，ref表示依赖代码库的分支或者tag名称, custom为自定义版本号"
+                "description": "包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号"
+              },
+              "location": {
+                "type": "string",
+                "description": "打包类型为 zip或者tar时有效，相对构建根目录的包位置"
               },
               "version": {
                 "type": "string",
