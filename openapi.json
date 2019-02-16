@@ -2384,6 +2384,62 @@
         }
       }
     },
+    "/pm/buildTools": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "构建工具列表",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildToolListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pm/caps": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "运算能力列表",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/pm/envs": {
       "parameters": [
         {
@@ -2602,6 +2658,182 @@
         "responses": {
           "200": {
             "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pm/jobs": {
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "query",
+          "description": "产品Id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "获取任务列表",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobListResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "新建任务",
+        "requestBody": {
+          "description": "添加任务请求",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobUpsertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "添加成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pm/jobs/{jobId}": {
+      "parameters": [
+        {
+          "name": "jobId",
+          "in": "path",
+          "description": "任务Id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "获取任务详情",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "更新任务",
+        "requestBody": {
+          "description": "更新任务请求",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobUpsertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProductManager"
+        ],
+        "summary": "删除任务",
+        "responses": {
+          "200": {
+            "description": "删除成功",
             "content": {
               "application/json": {
                 "schema": {
@@ -3410,6 +3642,55 @@
           }
         }
       },
+      "BuildTool": {
+        "type": "object",
+        "description": "构建工具列表",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工具名称如 golang:1.11"
+          },
+          "desc": {
+            "type": "string",
+            "description": "工具描述"
+          },
+          "os": {
+            "type": "string",
+            "description": "操作系统如 ubuntu:14.04"
+          }
+        }
+      },
+      "BuildToolListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/BuildTool"
+        }
+      },
+      "Cap": {
+        "type": "object",
+        "description": "运算能力",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "high",
+              "median",
+              "low"
+            ]
+          },
+          "desc": {
+            "type": "string",
+            "description": "CPU和内存配置, 如 high: 4 Core 8G Memory, medium: 2 Core 4G Memory, low: 1Core 2G Memory"
+          }
+        }
+      },
+      "CapListResponse": {
+        "type": "array",
+        "description": "运算能力列表",
+        "items": {
+          "$ref": "#/components/schemas/Cap"
+        }
+      },
       "CodeCoverage": {
         "type": "object",
         "properties": {
@@ -3581,14 +3862,12 @@
             "type": "integer",
             "description": "任务ID"
           },
-          "type": {
+          "name": {
             "type": "string",
-            "enum": [
-              "test",
-              "build",
-              "deploy"
-            ],
-            "description": "任务类型"
+            "description": "任务名称"
+          },
+          "type": {
+            "$ref": "#/components/schemas/JobType"
           },
           "services": {
             "type": "array",
@@ -3611,161 +3890,258 @@
             "type": "integer",
             "description": "超时时间(秒)"
           },
+          "runtime": {
+            "$ref": "#/components/schemas/JobRuntime"
+          },
           "vars": {
-            "description": "自定义变量",
+            "$ref": "#/components/schemas/JobVars"
+          },
+          "buildConf": {
+            "$ref": "#/components/schemas/JobBuildConf"
+          },
+          "deployConf": {
+            "$ref": "#/components/schemas/JobDeployConf"
+          },
+          "testConf": {
+            "$ref": "#/components/schemas/JobTestConf"
+          }
+        }
+      },
+      "JobBuildConf": {
+        "type": "object",
+        "description": "构建任务配置",
+        "properties": {
+          "caches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scripts": {
+            "description": "运行脚本",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cleanWorkspace": {
+            "description": "设置是否清空工作目录",
+            "type": "boolean"
+          },
+          "packaging": {
+            "type": "object",
+            "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成镜像 registry.example.com/foo/bar:20190101121100, 则name=foo/bar, versioning=timestamp, type=image\n",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "image",
+                  "zip",
+                  "tar"
+                ],
+                "description": "image表示打包成镜像，tar和zip表示打包成压缩文件"
+              },
+              "name": {
+                "type": "string",
+                "description": "打包名称前缀, 如 tomcat"
+              },
+              "versioning": {
+                "type": "string",
+                "enum": [
+                  "ref",
+                  "timestamp",
+                  "custom"
+                ],
+                "description": "包版本生成模式，ref表示依赖代码库的分支或者tag名称, custom为自定义版本号"
+              },
+              "version": {
+                "type": "string",
+                "description": "自定义版本号"
+              }
+            }
+          },
+          "repositories": {
             "type": "array",
             "items": {
               "type": "object",
+              "description": "代码库",
               "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "变量名称 [a-z][a-z0-9A-Z_\\-]+"
-                },
-                "value": {
-                  "type": "string",
-                  "description": "值"
-                },
-                "secured": {
-                  "type": "boolean",
-                  "description": "是否敏感信息"
-                }
-              }
-            }
-          },
-          "buildConf": {
-            "type": "object",
-            "description": "构建任务配置",
-            "properties": {
-              "caches": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "scripts": {
-                "description": "运行脚本",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "packaging": {
-                "type": "object",
-                "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成镜像 registry.example.com/foo/bar:20190101121100, 则name=foo/bar, versioning=timestamp, type=image\n",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "enum": [
-                      "image",
-                      "zip",
-                      "tar"
-                    ],
-                    "description": "image表示打包成镜像，tar和zip表示打包成压缩文件"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "打包名称前缀, 如 tomcat"
-                  },
-                  "versioning": {
-                    "type": "string",
-                    "enum": [
-                      "ref",
-                      "timestamp",
-                      "custom"
-                    ],
-                    "description": "包版本生成模式，ref表示依赖代码库的分支或者tag名称, custom为自定义版本号"
-                  },
-                  "version": {
-                    "type": "string",
-                    "description": "自定义版本号"
-                  }
-                }
-              },
-              "repositories": {
-                "type": "array",
-                "items": {
+                "codehost": {
                   "type": "object",
-                  "description": "代码库",
                   "properties": {
-                    "codehost": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "代码库ID"
-                        },
-                        "address": {
-                          "type": "string",
-                          "description": "代码库地址"
-                        },
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "gitlab",
-                            "github"
-                          ]
-                        }
-                      }
+                    "id": {
+                      "type": "integer",
+                      "description": "代码库ID"
                     },
-                    "namespace": {
+                    "address": {
                       "type": "string",
-                      "description": "命名空间 (user/group)"
+                      "description": "代码库地址"
                     },
-                    "name": {
+                    "type": {
                       "type": "string",
-                      "description": "代码库名称"
-                    },
-                    "branch": {
-                      "type": "string",
-                      "description": "分支名"
-                    },
-                    "submodule": {
-                      "type": "boolean",
-                      "description": "是否同步子模块"
+                      "enum": [
+                        "gitlab",
+                        "github"
+                      ]
                     }
                   }
+                },
+                "namespace": {
+                  "type": "string",
+                  "description": "命名空间 (user/group)"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "代码库名称"
+                },
+                "branch": {
+                  "type": "string",
+                  "description": "分支名"
+                },
+                "submodule": {
+                  "type": "boolean",
+                  "description": "是否同步子模块"
                 }
               }
+            }
+          }
+        }
+      },
+      "JobDeployConf": {
+        "type": "object",
+        "description": "部署配置",
+        "properties": {
+          "containerized": {
+            "type": "boolean",
+            "description": "容器化部署"
+          },
+          "scripts": {
+            "description": "运行脚本 (仅当containerized=false时有效)",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           },
-          "deployConf": {
-            "type": "object",
-            "description": "部署配置",
-            "properties": {
-              "containerized": {
-                "type": "boolean",
-                "description": "容器化部署"
-              },
-              "scripts": {
-                "description": "运行脚本 (仅当containerized=false时有效)",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "k8sTemplates": {
-                "description": "k8syaml文件 (仅当containerized=true时有效)",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "useLatestArtifact": {
-                "type": "boolean",
-                "description": "使用最新的应用包"
-              },
-              "artifact": {
-                "$ref": "#/components/schemas/Artifact",
-                "description": "仅当useLatestArtifact=false时有效"
-              }
+          "k8sTemplates": {
+            "description": "k8syaml文件 (仅当containerized=true时有效)",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
+          },
+          "useLatestArtifact": {
+            "type": "boolean",
+            "description": "使用最新的应用包"
+          },
+          "artifact": {
+            "$ref": "#/components/schemas/Artifact",
+            "description": "仅当useLatestArtifact=false时有效"
           }
         }
       },
       "JobListResponse": {
         "type": "array",
         "items": {
-          "$ref": "/components/schemas/Job"
+          "$ref": "#/components/schemas/Job"
+        }
+      },
+      "JobRuntime": {
+        "type": "object",
+        "properties": {
+          "os": {
+            "type": "string",
+            "description": "运行os，如 ubuntu:14.04, ubuntu:16.04, alpine:3.5"
+          },
+          "cap": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          }
+        }
+      },
+      "JobTestConf": {
+        "type": "object",
+        "description": "测试任务配置",
+        "properties": {
+          "threshold": {
+            "type": "integer",
+            "description": "测试通过率阈值"
+          },
+          "reportTarget": {
+            "type": "string",
+            "description": "测试结果上报地址"
+          }
+        }
+      },
+      "JobType": {
+        "type": "string",
+        "enum": [
+          "test",
+          "build",
+          "deploy"
+        ],
+        "description": "任务类型"
+      },
+      "JobUpsertRequest": {
+        "type": "object",
+        "description": "测试任务需要包含 buildConf和testConf",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/JobType"
+          },
+          "services": {
+            "type": "array",
+            "description": "任务类型为deploy时,最多只能有一个service",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "服务ID"
+                }
+              }
+            }
+          },
+          "timeout": {
+            "type": "integer",
+            "description": "超时时间(秒)"
+          },
+          "vars": {
+            "$ref": "#/components/schemas/JobVars"
+          },
+          "buildConf": {
+            "$ref": "#/components/schemas/JobBuildConf"
+          },
+          "deployConf": {
+            "$ref": "#/components/schemas/JobDeployConf"
+          },
+          "testConf": {
+            "$ref": "#/components/schemas/JobTestConf"
+          }
+        }
+      },
+      "JobVars": {
+        "description": "自定义变量",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "变量名称 [a-z][a-z0-9A-Z_\\-]+"
+            },
+            "value": {
+              "type": "string",
+              "description": "值"
+            },
+            "secured": {
+              "type": "boolean",
+              "description": "是否敏感信息"
+            }
+          }
         }
       },
       "Measure": {
@@ -3971,7 +4347,7 @@
       },
       "ProductVar": {
         "type": "object",
-        "description": "产品全局变量",
+        "description": "产品全局变量, 当secured=true时，defaultValue必须为null",
         "properties": {
           "key": {
             "type": "string",
