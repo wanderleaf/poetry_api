@@ -2344,9 +2344,6 @@ components:
                 - ref
                 - custom
               description: '包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号'
-            location:
-              type: string
-              description: 打包类型为 zip或者tar时有效，相对构建根目录的包位置
             version:
               type: string
               description: 自定义版本号
@@ -2394,17 +2391,12 @@ components:
           type: array
           items:
             type: string
-        k8sTemplates:
-          description: k8syaml文件 (仅当containerized=true时有效)
-          type: array
-          items:
-            type: string
         useLatestArtifact:
           type: boolean
-          description: 使用最新的应用包
+          description: 使用最新的应用包 (仅当containerized=false时有效)
         artifact:
           $ref: '#/components/schemas/Artifact'
-          description: 仅当useLatestArtifact=false时有效
+          description: 仅当useLatestArtifact=false时有效 (仅当containerized=false时有效)
     JobListResponse:
       type: array
       items:
@@ -2791,6 +2783,11 @@ components:
         revision:
           type: string
           description: 配置模板版本
+        type:
+          type: string
+          enum:
+            - spec
+            - conf
     ServiceConfRevisionListResponse:
       type: array
       items:
