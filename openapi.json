@@ -3648,7 +3648,11 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "工具名称如 golang:1.11"
+            "description": "工具名称如 golang"
+          },
+          "version": {
+            "type": "string",
+            "description": "工具版本如 1.11"
           },
           "desc": {
             "type": "string",
@@ -3930,7 +3934,7 @@
           },
           "packaging": {
             "type": "object",
-            "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成镜像 registry.example.com/foo/bar:20190101121100, 则name=foo/bar, versioning=timestamp, type=image\n",
+            "description": "打包方式.\n如打包成压缩文件 apache-tomcat-8.5.38-20190101-1.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar\n如打包成压缩文件 tomcat-pr/1-20190101-1.zip, 则name=tomcat, versioning=ref, type=zip\n如打包成镜像 registry.example.com/foo/bar:20190101-1, 则name=foo/bar, versioning=none, type=image\n",
             "properties": {
               "type": {
                 "type": "string",
@@ -3948,11 +3952,11 @@
               "versioning": {
                 "type": "string",
                 "enum": [
+                  "none",
                   "ref",
-                  "timestamp",
                   "custom"
                 ],
-                "description": "包版本生成模式，ref表示依赖代码库的分支或者tag名称, custom为自定义版本号"
+                "description": "包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号"
               },
               "version": {
                 "type": "string",
@@ -4022,20 +4026,13 @@
               "type": "string"
             }
           },
-          "k8sTemplates": {
-            "description": "k8syaml文件 (仅当containerized=true时有效)",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "useLatestArtifact": {
             "type": "boolean",
-            "description": "使用最新的应用包"
+            "description": "使用最新的应用包 (仅当containerized=false时有效)"
           },
           "artifact": {
             "$ref": "#/components/schemas/Artifact",
-            "description": "仅当useLatestArtifact=false时有效"
+            "description": "仅当useLatestArtifact=false时有效 (仅当containerized=false时有效)"
           }
         }
       },
@@ -4050,7 +4047,7 @@
         "properties": {
           "os": {
             "type": "string",
-            "description": "运行os，如 ubuntu:14.04, ubuntu:16.04, alpine:3.5"
+            "description": "运行os，如 ubuntu:14.04, ubuntu:16.04"
           },
           "cap": {
             "type": "string",
@@ -4059,6 +4056,12 @@
               "medium",
               "low"
             ]
+          },
+          "buildTools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildTool"
+            }
           }
         }
       },
@@ -4595,6 +4598,13 @@
           "revision": {
             "type": "string",
             "description": "配置模板版本"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "spec",
+              "conf"
+            ]
           }
         }
       },
