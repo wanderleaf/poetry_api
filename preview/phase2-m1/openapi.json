@@ -2332,6 +2332,44 @@
         }
       }
     },
+    "/pm/buildOS": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProjectManager"
+        ],
+        "summary": "基础构建系统",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildOSListResponse"
+                },
+                "example": [
+                  {
+                    "name": "ubuntu:14.04",
+                    "desc": "ubuntu Trusty"
+                  },
+                  {
+                    "name": "ubuntu:16.04",
+                    "desc": "ubuntu Xenial"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/pm/buildTools": {
       "parameters": [
         {
@@ -2364,7 +2402,29 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BuildToolListResponse"
-                }
+                },
+                "example": [
+                  {
+                    "name": "golang",
+                    "version": 1.9,
+                    "desc": "golang:1.11",
+                    "binPath": "/go/bin",
+                    "enabled": true,
+                    "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.9.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\ntar -C $HOME -xzf /tmp/golang.tar.gz\n",
+                    "updated": "2019-01-01T12:30:00.000Z",
+                    "updatedBy": "me"
+                  },
+                  {
+                    "name": "golang",
+                    "version": 1.11,
+                    "desc": "golang:1.11",
+                    "binPath": "/go/bin",
+                    "enabled": true,
+                    "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.11.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\ntar -C $HOME -xzf /tmp/golang.tar.gz\n",
+                    "updated": "2019-02-01T12:30:00.000Z",
+                    "updatedBy": "me"
+                  }
+                ]
               }
             }
           }
@@ -2383,12 +2443,96 @@
           "ProjectManager"
         ],
         "summary": "添加构建工具",
+        "description": "如果存在相同名称和版本号的工具，则覆盖配置",
         "requestBody": {
           "description": "添加构建工具请求",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/BuildTool"
+              },
+              "example": {
+                "name": "golang",
+                "version": 1.11,
+                "desc": "golang:1.11",
+                "binPath": "/go/bin",
+                "enabled": true,
+                "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.11.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\\n\ntar -C $HOME -xzf /tmp/golang.tar.gz\n"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "添加成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pm/buildTools/{name}/{version}": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "org Id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "path",
+          "description": "工具名称",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "version",
+          "in": "path",
+          "description": "工具版本",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProjectManager"
+        ],
+        "summary": "更新构建工具",
+        "requestBody": {
+          "description": "更新构建工具请求",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildTool"
+              },
+              "example": {
+                "name": "golang",
+                "version": 1.12,
+                "desc": "golang:1.12",
+                "binPath": "/go/bin",
+                "enabled": true,
+                "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.12.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\\n\ntar -C $HOME -xzf /tmp/golang.tar.gz\n"
               }
             }
           }
@@ -2419,16 +2563,6 @@
           "ProjectManager"
         ],
         "summary": "删除构建工具",
-        "requestBody": {
-          "description": "删除构建工具请求",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BuildToolDeleteRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "添加成功",
@@ -2464,7 +2598,17 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CapListResponse"
-                }
+                },
+                "example": [
+                  {
+                    "name": "high",
+                    "desc": "8核16GB内存"
+                  },
+                  {
+                    "name": "median",
+                    "desc": "4核8GB内存"
+                  }
+                ]
               }
             }
           }
@@ -2502,6 +2646,11 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Env"
+              },
+              "example": {
+                "name": "test",
+                "desc": "测试环境，跑集成测试用",
+                "forId": true
               }
             }
           }
@@ -2513,6 +2662,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Env"
+                },
+                "example": {
+                  "id": 3,
+                  "name": "dev",
+                  "desc": "最活跃环境，经常更新，不稳定",
+                  "forId": false
                 }
               }
             }
@@ -2551,6 +2706,11 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Env"
+              },
+              "example": {
+                "name": "测试",
+                "desc": "测试环境",
+                "forIt": true
               }
             }
           }
@@ -2623,6 +2783,14 @@
         "responses": {
           "200": {
             "description": "渲染成功,tar.gz包,包含该环境下所有完成渲染的配置文件, 如:\n/\n  serviceA/\n    a.conf\n    deployment.yaml\n  serviceB/\n    service.yaml\n",
+            "content": {
+              "application/tar+gzip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
             "headers": {
               "Content-Disposition": {
                 "schema": {
@@ -2644,6 +2812,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ActionResult"
+                },
+                "example": {
+                  "resultCode": 10100,
+                  "errorMsg": "找不到Service-A 中的SUPER_KEY的值"
                 }
               }
             }
@@ -2676,6 +2848,7 @@
           "ProjectManager"
         ],
         "summary": "全量更新环境变量, 覆盖默认值",
+        "description": "设置某个变量取默认值时，设置isDefault为TRUE\n",
         "requestBody": {
           "description": "更新环境变量请求",
           "content": {
@@ -2714,7 +2887,7 @@
         "summary": "全量更新环境变量, 覆盖默认值",
         "responses": {
           "200": {
-            "description": "更新成功",
+            "description": "环境变量列表\n- key: MYSQL_ADDR\n  value: mysql://mysql:3306/me\n  isDefault: false\n  secured: false\n  defaultValue: mysql://mysql:3306/foo\n- key: MONGO_ADDR\n  value: mongo://mongo:27017/me\n  isDefault: true\n  secured: false\n  defaultValue: mongo://mongo:27017/me\n- key: SUPER_KEY\n  value: '*******'\n  secured: true\n  isDefault: false\n  defaultValue: '******'\n",
             "content": {
               "application/json": {
                 "schema": {
@@ -3110,7 +3283,30 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProjectListResponse"
-                }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "poetry",
+                    "desc": "peotry 产品线",
+                    "teams": [
+                      {
+                        "id": 1,
+                        "name": "Poetry开发组"
+                      }
+                    ],
+                    "publisher": [
+                      {
+                        "id": 2,
+                        "name": "Alex"
+                      },
+                      {
+                        "id": 3,
+                        "name": "Bob"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -3135,6 +3331,17 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectUpsertRequest"
+              },
+              "example": {
+                "name": "poetry",
+                "desc": "peotry 产品",
+                "teams": [
+                  1,
+                  2
+                ],
+                "publisher": [
+                  1
+                ]
               }
             }
           }
@@ -3359,7 +3566,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceCreateRequest"
+                "$ref": "#/components/schemas/Service"
               }
             }
           }
@@ -3460,7 +3667,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceConfUpdateRequest"
+                "$ref": "#/components/schemas/ServiceConfList"
               }
             }
           }
@@ -3498,6 +3705,53 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ServiceConfRevision"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pm/services/{serviceId}/confRestore": {
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "服务配置ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "revisionId",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "ProjectManager"
+        ],
+        "summary": "还原服务配置",
+        "responses": {
+          "200": {
+            "description": "还原结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
                 }
               }
             }
@@ -3544,7 +3798,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceConfRevisionListResponse"
+                  "$ref": "#/components/schemas/ServiceConfRevisionList"
                 }
               }
             },
@@ -3593,7 +3847,15 @@
         "summary": "渲染服务配置",
         "responses": {
           "200": {
-            "description": "渲染成功,tar.gz包,包含该环境下所有完成渲染的配置文件",
+            "description": "渲染成功,tar.gz包,包含该环境下所有完成渲染的配置文件\n/\n  a.conf\n  deployment.yaml\n",
+            "content": {
+              "application/tar+gzip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
             "headers": {
               "Content-Disposition": {
                 "schema": {
@@ -3615,6 +3877,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ActionResult"
+                },
+                "example": {
+                  "resultCode": 10100,
+                  "errorMsg": "找不到Service-A中的SUPER_KEY的值"
                 }
               }
             }
@@ -3678,53 +3944,6 @@
           }
         }
       }
-    },
-    "/pm/services/{serviceId}/restoreRevision": {
-      "parameters": [
-        {
-          "name": "serviceId",
-          "in": "path",
-          "description": "服务配置ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "revisionId",
-          "in": "query",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "ProjectManager"
-        ],
-        "summary": "还原服务配置",
-        "responses": {
-          "200": {
-            "description": "还原结果",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ActionResult"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -3778,32 +3997,47 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "应用包ID"
+            "description": "应用包ID",
+            "example": 1
           },
           "serviceName": {
             "type": "string",
-            "description": "服务名"
+            "readOnly": true,
+            "description": "服务名",
+            "example": "aurora-doc"
           },
           "created": {
             "type": "string",
-            "description": "生成日期"
+            "readOnly": true,
+            "description": "生成日期",
+            "example": "2019-01-01T00:00:00.000Z"
           },
           "image": {
             "type": "string",
-            "description": "镜像地址 如 registry.example.com/release-candidates/poetry:20180101120000-master"
+            "description": "镜像地址",
+            "readOnly": true,
+            "example": "registry.example.com/release-candidates/poetry:20180101120000-master"
           },
           "package": {
             "type": "string",
-            "description": "应用包地址 如 /dist/release-candidates/poetry-20180101112000-master.tar.gz"
+            "readOnly": true,
+            "description": "应用包地址",
+            "example": "/dist/release-candidates/poetry-20180101112000-master.tar.gz"
           },
           "repositories": {
             "description": "包来源",
             "type": "array",
+            "readOnly": true,
             "items": {
               "$ref": "#/components/schemas/ArtifactRepository"
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "serviceName",
+          "created"
+        ]
       },
       "ArtifactListResponse": {
         "type": "array",
@@ -3816,7 +4050,8 @@
         "properties": {
           "addr": {
             "type": "string",
-            "description": "代码库地址，如 8slan.gitlab.com/odf/poetry"
+            "description": "代码库地址，",
+            "example": "8slan.gitlab.com/odf/poetry"
           },
           "commit": {
             "$ref": "/components/schemas/CodeCommit"
@@ -3832,12 +4067,18 @@
               },
               "desc": {
                 "type": "string",
-                "description": "pr描述"
+                "description": "pr描述",
+                "example": "milestone 1"
               },
               "id": {
-                "type": "string"
+                "type": "string",
+                "example": 1
               }
-            }
+            },
+            "required": [
+              "commits",
+              "id"
+            ]
           },
           "ref": {
             "type": "object",
@@ -3847,19 +4088,27 @@
                 "enum": [
                   "tag",
                   "branch"
-                ]
+                ],
+                "example": "tag"
               },
               "value": {
                 "type": "string",
-                "description": "ref值, 如 master/v1.0.0"
+                "description": "ref值, 如 master/v1.0.0",
+                "example": "master"
               },
               "link": {
                 "type": "string",
-                "description": "ref http地址，如https://gitlab.8slan.com/odf/aurora/tree/master"
+                "description": "ref http地址",
+                "example": "https://gitlab.8slan.com/odf/aurora/tree/master"
               }
             }
           }
-        }
+        },
+        "required": [
+          "addr",
+          "commit",
+          "ref"
+        ]
       },
       "BuildDetail": {
         "type": "object",
@@ -3879,6 +4128,25 @@
           "id": {
             "type": "integer"
           }
+        }
+      },
+      "BuildOS": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ubuntu:14.04"
+          },
+          "desc": {
+            "type": "string",
+            "example": "ubuntu trusty"
+          }
+        }
+      },
+      "BuildOSListResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/BuildOS"
         }
       },
       "BuildReport": {
@@ -3904,28 +4172,36 @@
       "BuildTool": {
         "type": "object",
         "description": "构建工具",
+        "required": [
+          "name",
+          "version",
+          "scripts",
+          "updated",
+          "updatedBy"
+        ],
         "properties": {
           "name": {
             "type": "string",
-            "description": "工具名称如 golang"
+            "description": "工具名称如 golang",
+            "example": "golang"
           },
           "version": {
             "type": "string",
-            "description": "工具版本如 1.11"
+            "description": "工具版本如 1.11",
+            "example": 1.11
           },
           "desc": {
             "type": "string",
-            "description": "工具描述"
-          },
-          "os": {
-            "type": "string",
-            "description": "操作系统如 ubuntu:14.04"
+            "description": "工具描述",
+            "example": "golang 1.11"
           },
           "binPath": {
             "type": "string",
-            "description": "bin路径，构建时会被加入环境变量PATH"
+            "description": "bin路径，构建时会被加入环境变量PATH",
+            "example": "/go/bin"
           },
-          "enabled": {
+          "disabled": {
+            "description": "默认值false",
             "type": "boolean"
           },
           "scripts": {
@@ -3934,24 +4210,15 @@
           },
           "updated": {
             "type": "string",
-            "description": "更新时间"
+            "description": "更新时间",
+            "readOnly": true,
+            "example": "2019-01-01T01:01:01.123Z"
           },
           "updatedBy": {
             "type": "string",
-            "description": "更新者"
-          }
-        }
-      },
-      "BuildToolDeleteRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "工具名称如 golang"
-          },
-          "version": {
-            "type": "string",
-            "description": "工具版本如 1.11"
+            "description": "更新者",
+            "readOnly": true,
+            "example": "me"
           }
         }
       },
@@ -3960,6 +4227,32 @@
         "description": "构建工具列表",
         "items": {
           "$ref": "#/components/schemas/BuildTool"
+        }
+      },
+      "BuildToolLite": {
+        "type": "object",
+        "description": "构建工具",
+        "required": [
+          "name",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工具名称如 golang",
+            "example": "golang"
+          },
+          "version": {
+            "type": "string",
+            "description": "工具版本如 1.11",
+            "example": 1.11
+          },
+          "desc": {
+            "type": "string",
+            "description": "工具描述",
+            "example": "golang 1.11",
+            "readOnly": true
+          }
         }
       },
       "Cap": {
@@ -3971,14 +4264,19 @@
             "enum": [
               "high",
               "median",
-              "low"
+              "low",
+              "tiny"
             ]
           },
           "desc": {
             "type": "string",
-            "description": "CPU和内存配置, 如 high: 4 Core 8G Memory, medium: 2 Core 4G Memory, low: 1Core 2G Memory"
+            "description": "CPU和内存配置,\n如\n  high: 8核 16G内存\n  medium: 4核 8G内存\n  low: 2核 4G内存\n  tiny: 1核 4G内存\n"
           }
-        }
+        },
+        "required": [
+          "name",
+          "desc"
+        ]
       },
       "CapListResponse": {
         "type": "array",
@@ -3992,10 +4290,12 @@
         "description": "commit信息",
         "properties": {
           "hash": {
-            "type": "string"
+            "type": "string",
+            "example": "ac3cda2"
           },
           "comment": {
-            "type": "string"
+            "type": "string",
+            "example": "fix issue#123"
           }
         }
       },
@@ -4089,21 +4389,32 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "环境唯一ID (在更新，添加方法的请求体中无效)"
+            "description": "环境唯一ID (在更新，添加方法的请求体中无效)",
+            "readOnly": true,
+            "example": 1
           },
           "name": {
             "type": "string",
-            "description": "环境名称"
+            "description": "环境名称",
+            "example": "dev"
           },
           "desc": {
             "type": "string",
-            "description": "环境描述"
+            "description": "环境描述",
+            "example": "dev环境"
           },
           "forIt": {
             "type": "boolean",
-            "description": "是否集成测试环境, 默认值 false"
+            "description": "是否集成测试环境, 默认值 false",
+            "example": false
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "desc",
+          "forIt"
+        ]
       },
       "EnvVar": {
         "type": "object",
@@ -4111,17 +4422,39 @@
         "properties": {
           "key": {
             "type": "string",
-            "description": "变量名称 [a-z][a-z0-9A-Z_\\-]+"
+            "description": "变量名称",
+            "pattern": "[a-z0-9A-Z_\\.\\-]+",
+            "example": "MYSQL_ADDR"
           },
           "value": {
             "type": "string",
-            "description": "值"
+            "description": "值",
+            "example": "mysql://mysql:3306/you"
           },
           "isDefault": {
             "type": "boolean",
-            "description": "是否默认值"
+            "description": "是否默认值",
+            "example": false
+          },
+          "defaultValue": {
+            "type": "string",
+            "description": "默认值",
+            "readOnly": true,
+            "example": "mysql://mysql:3306/me"
+          },
+          "secured": {
+            "type": "boolean",
+            "description": "是否加密值",
+            "readOnly": true,
+            "example": true
           }
-        }
+        },
+        "required": [
+          "key",
+          "value",
+          "isDefault",
+          "secured"
+        ]
       },
       "EnvVarList": {
         "type": "array",
@@ -4162,35 +4495,40 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "任务ID"
+            "description": "任务ID",
+            "example": 1
           },
           "name": {
             "type": "string",
-            "description": "任务名称"
+            "description": "任务名称",
+            "example": "aurora构建任务"
           },
           "type": {
             "$ref": "#/components/schemas/JobType"
           },
           "services": {
             "type": "array",
-            "description": "任务类型为deploy时,最多只能有一个service",
+            "description": "关联的service",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
                   "type": "integer",
-                  "description": "服务ID"
+                  "description": "服务ID",
+                  "example": 1
                 },
                 "name": {
                   "type": "string",
-                  "description": "服务名称"
+                  "description": "服务名称",
+                  "example": "aurora-doc"
                 }
               }
             }
           },
           "timeout": {
             "type": "integer",
-            "description": "超时时间(秒)"
+            "description": "超时时间(秒)",
+            "example": 60
           },
           "runtime": {
             "$ref": "#/components/schemas/JobRuntime"
@@ -4207,7 +4545,14 @@
           "testConf": {
             "$ref": "#/components/schemas/JobTestConf"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "services",
+          "timeout"
+        ]
       },
       "JobBuildConf": {
         "type": "object",
@@ -4216,19 +4561,22 @@
           "caches": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "example": "./cache"
             }
           },
           "scripts": {
             "description": "运行脚本",
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "example": "echo \"hello world\""
             }
           },
           "cleanWorkspace": {
             "description": "设置是否清空工作目录",
-            "type": "boolean"
+            "type": "boolean",
+            "example": false
           },
           "packaging": {
             "type": "object",
@@ -4241,7 +4589,8 @@
                   "zip",
                   "tar"
                 ],
-                "description": "image表示打包成镜像，tar和zip表示打包成压缩文件"
+                "description": "image表示打包成镜像，tar和zip表示打包成压缩文件",
+                "example": "image"
               },
               "name": {
                 "type": "string",
@@ -4254,13 +4603,19 @@
                   "ref",
                   "custom"
                 ],
-                "description": "包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号"
+                "description": "包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号",
+                "example": "ref"
               },
               "version": {
                 "type": "string",
-                "description": "自定义版本号"
+                "description": "自定义版本号",
+                "example": "1.0.0"
               }
-            }
+            },
+            "required": [
+              "type",
+              "versioning"
+            ]
           },
           "repositories": {
             "type": "array",
@@ -4273,41 +4628,62 @@
                   "properties": {
                     "id": {
                       "type": "integer",
-                      "description": "代码库ID"
+                      "description": "代码库ID",
+                      "example": 1
                     },
                     "address": {
                       "type": "string",
-                      "description": "代码库地址"
+                      "description": "代码库地址",
+                      "readOnly": true,
+                      "example": "gitlab.8slan.com"
                     },
                     "type": {
                       "type": "string",
                       "enum": [
                         "gitlab",
                         "github"
-                      ]
+                      ],
+                      "readOnly": true,
+                      "example": "gitlab"
                     }
                   }
                 },
                 "namespace": {
                   "type": "string",
-                  "description": "命名空间 (user/group)"
+                  "description": "命名空间 (user/group)",
+                  "example": "odf"
                 },
                 "name": {
                   "type": "string",
-                  "description": "代码库名称"
+                  "description": "代码库名称",
+                  "example": "poetry"
                 },
                 "branch": {
                   "type": "string",
-                  "description": "分支名"
+                  "description": "分支名",
+                  "example": "master"
                 },
                 "submodule": {
                   "type": "boolean",
-                  "description": "是否同步子模块"
+                  "description": "是否同步子模块",
+                  "example": false
                 }
-              }
+              },
+              "required": [
+                "codehost",
+                "namespace",
+                "name"
+              ]
             }
           }
-        }
+        },
+        "required": [
+          "caches",
+          "scripts",
+          "cleanWorkspace",
+          "packaging",
+          "repositories"
+        ]
       },
       "JobDeployConf": {
         "type": "object",
@@ -4332,7 +4708,12 @@
             "$ref": "#/components/schemas/Artifact",
             "description": "仅当useLatestArtifact=false时有效 (仅当containerized=false时有效)"
           }
-        }
+        },
+        "required": [
+          "containerized",
+          "scripts",
+          "useLatestArtifact"
+        ]
       },
       "JobListResponse": {
         "type": "array",
@@ -4345,20 +4726,23 @@
         "properties": {
           "os": {
             "type": "string",
-            "description": "运行os，如 ubuntu:14.04, ubuntu:16.04"
+            "description": "运行os，如 ubuntu:14.04, ubuntu:16.04",
+            "example": "ubuntu:14.04"
           },
           "cap": {
             "type": "string",
             "enum": [
               "high",
-              "medium",
-              "low"
-            ]
+              "median",
+              "low",
+              "tiny"
+            ],
+            "example": "high"
           },
           "buildTools": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BuildTool"
+              "$ref": "#/components/schemas/BuildToolLite"
             }
           }
         }
@@ -4368,14 +4752,20 @@
         "description": "测试任务配置",
         "properties": {
           "threshold": {
-            "type": "integer",
-            "description": "测试通过率阈值"
+            "type": "number",
+            "description": "测试通过率阈值",
+            "example": 40.5
           },
-          "reportTarget": {
+          "reportLocation": {
             "type": "string",
-            "description": "测试结果上报地址"
+            "description": "测试结果路径",
+            "example": "./reports/report.xml"
           }
-        }
+        },
+        "required": [
+          "threshold",
+          "reportLocation"
+        ]
       },
       "JobType": {
         "type": "string",
@@ -4384,18 +4774,18 @@
           "build",
           "deploy"
         ],
-        "description": "任务类型"
+        "description": "任务类型",
+        "example": "build"
       },
       "JobUpsertRequest": {
         "type": "object",
-        "description": "测试任务需要包含 buildConf和testConf",
+        "description": "测试任务需要包含buildConf和testConf",
         "properties": {
           "type": {
             "$ref": "#/components/schemas/JobType"
           },
           "services": {
             "type": "array",
-            "description": "任务类型为deploy时,最多只能有一个service",
             "items": {
               "type": "object",
               "properties": {
@@ -4422,7 +4812,13 @@
           "testConf": {
             "$ref": "#/components/schemas/JobTestConf"
           }
-        }
+        },
+        "required": [
+          "type",
+          "services",
+          "timeout",
+          "vars"
+        ]
       },
       "JobVars": {
         "description": "自定义变量",
@@ -4432,18 +4828,27 @@
           "properties": {
             "key": {
               "type": "string",
-              "description": "变量名称 [a-z][a-z0-9A-Z_\\-]+"
+              "description": "变量名称",
+              "pattern": "[a-z0-9A-Z_\\-\\.]+",
+              "example": "HTTP_PROXY"
             },
             "value": {
               "type": "string",
-              "description": "值"
+              "description": "值",
+              "example": "http://10.0.0.1:3128"
             },
             "secured": {
               "type": "boolean",
-              "description": "是否敏感信息"
+              "description": "是否敏感信息",
+              "example": true
             }
           }
-        }
+        },
+        "required": [
+          "key",
+          "value",
+          "secured"
+        ]
       },
       "Measure": {
         "type": "object",
@@ -4519,15 +4924,18 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "工作流ID"
+            "description": "工作流ID",
+            "example": 1
           },
           "name": {
             "type": "string",
-            "description": "工作流名称"
+            "description": "工作流名称",
+            "example": "poetry-up-to-date"
           },
           "desc": {
             "type": "string",
-            "description": "工作流描述"
+            "description": "工作流描述",
+            "example": "poetry 持续构建"
           },
           "env": {
             "$ref": "#/components/schemas/Env"
@@ -4551,14 +4959,17 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "工作流名称"
+            "description": "工作流名称",
+            "example": "poetry-nightly"
           },
           "desc": {
             "type": "string",
-            "description": "工作流描述"
+            "description": "工作流描述",
+            "example": "poetry持续发布"
           },
           "envId": {
-            "type": "integer"
+            "type": "integer",
+            "example": 1
           },
           "stages": {
             "type": "array",
@@ -4566,34 +4977,59 @@
               "$ref": "#/components/schemas/StageUpdate"
             }
           }
-        }
+        },
+        "required": [
+          "name",
+          "desc",
+          "envId",
+          "stages"
+        ]
       },
       "Project": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "description": "产品唯一ID"
+            "description": "产品唯一ID",
+            "example": 1
           },
           "name": {
             "type": "string",
-            "description": "产品名称"
+            "description": "产品名称",
+            "example": "poetry"
           },
           "desc": {
             "type": "string",
-            "description": "产品描述"
+            "description": "产品描述",
+            "example": "poetry 产品线"
           },
           "teams": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TeamLite"
-            }
+            },
+            "example": [
+              {
+                "id": 1,
+                "name": "Poetry开发组"
+              }
+            ]
           },
           "publisher": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserLite"
-            }
+            },
+            "example": [
+              {
+                "id": 2,
+                "name": "Alex"
+              },
+              {
+                "id": 3,
+                "name": "Bob"
+              }
+            ]
           }
         }
       },
@@ -4608,41 +5044,59 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "产品名称"
+            "description": "产品名称",
+            "example": "poetry"
           },
           "desc": {
             "type": "string",
-            "description": "产品描述"
+            "description": "产品描述",
+            "example": "poetry 产品"
           },
           "teams": {
             "type": "array",
             "items": {
               "type": "integer"
-            }
+            },
+            "example": [
+              1,
+              2
+            ]
           },
           "publisher": {
             "type": "array",
             "items": {
               "type": "integer"
-            }
+            },
+            "description": "发布专员",
+            "example": [
+              1,
+              2
+            ]
           }
-        }
+        },
+        "required": [
+          "name",
+          "teams"
+        ]
       },
       "ProjectVar": {
         "type": "object",
-        "description": "产品全局变量, 当secured=true时，defaultValue必须为null",
+        "description": "产品全局变量",
         "properties": {
           "key": {
             "type": "string",
-            "description": "变量名称 [a-z][a-z0-9A-Z_\\-]+"
+            "description": "变量名称 [a-z0-9A-Z_\\.\\-]+",
+            "example": "MYSQL_ADDR"
           },
           "defaultValue": {
             "type": "string",
-            "description": "变量默认值"
+            "description": "变量默认值",
+            "example": "mysql://mysql:3306/mysql"
           },
           "secured": {
             "type": "boolean",
-            "description": "是否加密"
+            "description": "是否加密",
+            "example": false
           }
         }
       },
@@ -4836,17 +5290,31 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "服务ID"
+            "description": "服务ID",
+            "readOnly": true,
+            "example": 1
           },
           "name": {
             "type": "string",
-            "description": "服务名称"
+            "description": "服务名称",
+            "example": "poetry-doc"
+          },
+          "description": {
+            "type": "string",
+            "description": "服务名称",
+            "example": "poetry-doc 服务"
           },
           "containerized": {
             "type": "boolean",
-            "description": "是否容器化 (true = 容器化)"
+            "description": "是否容器化 (true = 容器化)",
+            "example": true
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "containerized"
+        ]
       },
       "ServiceConf": {
         "type": "object",
@@ -4854,67 +5322,68 @@
           "name": {
             "type": "string",
             "description": "配置名称",
-            "pattern": "[a-z0-9A-Z-_\\.]+"
+            "pattern": "[a-z0-9A-Z-_\\.]+",
+            "example": "lan.properties"
           },
           "content": {
             "type": "string",
-            "description": "服务配置模板内容"
+            "description": "服务配置模板内容",
+            "example": "language=zh_cn\ntimezone=shanghai\n"
+          },
+          "language": {
+            "type": "string",
+            "description": "配置语言如yaml,plain,properties,ini",
+            "example": "properties"
           },
           "updated": {
             "type": "string",
-            "description": "更新时间"
+            "description": "更新时间",
+            "readOnly": true
           },
-          "revision": {
+          "updatedBy": {
             "type": "string",
-            "description": "配置模板版本"
+            "description": "更新人",
+            "example": "bob",
+            "readOnly": true
           },
           "type": {
             "type": "string",
             "enum": [
               "spec",
               "conf"
-            ]
+            ],
+            "example": "spec",
+            "description": "配置类型，spec是k8syaml文件，conf是普通配置文件"
           }
+        }
+      },
+      "ServiceConfList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ServiceConf"
         }
       },
       "ServiceConfRevision": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "integer",
+            "example": 1
           },
           "created": {
             "type": "string",
-            "description": "创建时间"
+            "description": "创建时间",
+            "example": "2019-01-01T00:00:00.000Z"
           },
-          "conf": {
-            "$ref": "/components/schemas/ServiceConf"
+          "confs": {
+            "$ref": "#/components/schemas/ServiceConfList"
           }
         }
       },
-      "ServiceConfRevisionListResponse": {
+      "ServiceConfRevisionList": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/ServiceConfRevision"
-        }
-      },
-      "ServiceConfUpdateRequest": {
-        "type": "array",
-        "items": {
-          "$ref": "/components/schemas/ServiceConf"
-        }
-      },
-      "ServiceCreateRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "服务名称"
-          },
-          "containerized": {
-            "type": "boolean",
-            "description": "是否容器化 (true = 容器化)"
-          }
         }
       },
       "Stage": {
@@ -4922,14 +5391,19 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "步骤名称"
+            "description": "步骤名称",
+            "example": "poetry构建"
           },
           "jobs": {
             "type": "array",
             "description": "任务列表",
             "items": {
               "$ref": "#/components/schemas/Job"
-            }
+            },
+            "example": [
+              1,
+              2
+            ]
           }
         }
       },
@@ -4938,16 +5412,25 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "步骤名称"
+            "description": "步骤名称",
+            "example": "构建"
           },
           "jobs": {
             "type": "array",
             "description": "任务列表",
             "items": {
               "type": "integer"
-            }
+            },
+            "example": [
+              1,
+              2
+            ]
           }
-        }
+        },
+        "required": [
+          "name",
+          "jobs"
+        ]
       },
       "Team": {
         "type": "object",
