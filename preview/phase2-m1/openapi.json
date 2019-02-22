@@ -2451,13 +2451,27 @@
               "schema": {
                 "$ref": "#/components/schemas/BuildTool"
               },
-              "example": {
-                "name": "golang",
-                "version": 1.11,
-                "desc": "golang:1.11",
-                "binPath": "/go/bin",
-                "enabled": true,
-                "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.11.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\\n\ntar -C $HOME -xzf /tmp/golang.tar.gz\n"
+              "examples": {
+                "golang:1.11": {
+                  "value": {
+                    "name": "golang",
+                    "version": 1.11,
+                    "desc": "golang:1.11",
+                    "binPath": "/go/bin",
+                    "enabled": true,
+                    "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.11.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\\n\ntar -C $HOME -xzf /tmp/golang.tar.gz\n"
+                  }
+                },
+                "golang:1.9": {
+                  "value": {
+                    "name": "golang",
+                    "version": 1.9,
+                    "desc": "golang:1.11",
+                    "binPath": "/go/bin",
+                    "enabled": true,
+                    "scripts": "curl -fsSL http://spock-resources.qbox.net/go1.9.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\ntar -C $HOME -xzf /tmp/golang.tar.gz\n"
+                  }
+                }
               }
             }
           }
@@ -4054,7 +4068,7 @@
             "example": "8slan.gitlab.com/odf/poetry"
           },
           "commit": {
-            "$ref": "/components/schemas/CodeCommit"
+            "$ref": "#/components/schemas/CodeCommit"
           },
           "pr": {
             "type": "object",
@@ -4062,7 +4076,7 @@
               "commits": {
                 "type": "array",
                 "items": {
-                  "$ref": "/components/schemas/CodeCommit"
+                  "$ref": "#/components/schemas/CodeCommit"
                 }
               },
               "desc": {
