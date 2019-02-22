@@ -2935,9 +2935,13 @@ components:
           description: 测试通过率阈值
           example: 40.5
         reportLocation:
-          type: string
+          type: array
           description: 测试结果路径
-          example: ./reports/report.xml
+          items:
+            type: string
+          example:
+            - ./reports/report.xml
+            - ./reports/it/*.jacoco
       required:
         - threshold
         - reportLocation
@@ -3069,6 +3073,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stage'
+        supportRelease:
+          type: boolean
+          description: 是否支持发布
+          example: false
     PipelineListResponse:
       type: array
       items:
@@ -3091,11 +3099,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StageUpdate'
+        supportRelease:
+          type: boolean
+          description: 是否支持发布
+          example: false
       required:
         - name
         - desc
         - envId
         - stages
+        - supportRelease
     Project:
       type: object
       properties:
@@ -3316,14 +3329,9 @@ components:
           type: string
           description: 服务名称
           example: poetry-doc 服务
-        containerized:
-          type: boolean
-          description: 是否容器化 (true = 容器化)
-          example: true
       required:
         - id
         - name
-        - containerized
     ServiceConf:
       type: object
       properties:

@@ -4757,9 +4757,15 @@
             "example": 40.5
           },
           "reportLocation": {
-            "type": "string",
+            "type": "array",
             "description": "测试结果路径",
-            "example": "./reports/report.xml"
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "./reports/report.xml",
+              "./reports/it/*.jacoco"
+            ]
           }
         },
         "required": [
@@ -4945,6 +4951,11 @@
             "items": {
               "$ref": "#/components/schemas/Stage"
             }
+          },
+          "supportRelease": {
+            "type": "boolean",
+            "description": "是否支持发布",
+            "example": false
           }
         }
       },
@@ -4976,13 +4987,19 @@
             "items": {
               "$ref": "#/components/schemas/StageUpdate"
             }
+          },
+          "supportRelease": {
+            "type": "boolean",
+            "description": "是否支持发布",
+            "example": false
           }
         },
         "required": [
           "name",
           "desc",
           "envId",
-          "stages"
+          "stages",
+          "supportRelease"
         ]
       },
       "Project": {
@@ -5303,17 +5320,11 @@
             "type": "string",
             "description": "服务名称",
             "example": "poetry-doc 服务"
-          },
-          "containerized": {
-            "type": "boolean",
-            "description": "是否容器化 (true = 容器化)",
-            "example": true
           }
         },
         "required": [
           "id",
-          "name",
-          "containerized"
+          "name"
         ]
       },
       "ServiceConf": {
