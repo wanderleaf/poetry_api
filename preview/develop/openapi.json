@@ -3312,7 +3312,7 @@
                         "name": "Poetry开发组"
                       }
                     ],
-                    "publisher": [
+                    "releaser": [
                       {
                         "id": 2,
                         "name": "Alex"
@@ -3356,7 +3356,7 @@
                   1,
                   2
                 ],
-                "publisher": [
+                "releaser": [
                   1
                 ]
               }
@@ -5039,7 +5039,7 @@
               }
             ]
           },
-          "publisher": {
+          "releaser": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserLite"
@@ -5086,7 +5086,7 @@
               2
             ]
           },
-          "publisher": {
+          "releaser": {
             "type": "array",
             "items": {
               "type": "integer"

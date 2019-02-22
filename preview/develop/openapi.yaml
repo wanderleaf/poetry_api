@@ -1956,7 +1956,7 @@ paths:
                   teams:
                     - id: 1
                       name: Poetry开发组
-                  publisher:
+                  releaser:
                     - id: 2
                       name: Alex
                     - id: 3
@@ -1980,7 +1980,7 @@ paths:
               teams:
                 - 1
                 - 2
-              publisher:
+              releaser:
                 - 1
       responses:
         '200':
@@ -3121,7 +3121,7 @@ components:
           example:
             - id: 1
               name: Poetry开发组
-        publisher:
+        releaser:
           type: array
           items:
             $ref: '#/components/schemas/UserLite'
@@ -3152,7 +3152,7 @@ components:
           example:
             - 1
             - 2
-        publisher:
+        releaser:
           type: array
           items:
             type: integer
