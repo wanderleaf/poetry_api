@@ -1570,7 +1570,7 @@ paths:
             example:
               name: test
               desc: 测试环境，跑集成测试用
-              forId: true
+              forIt: true
       responses:
         '200':
           description: 添加成功
@@ -1582,7 +1582,7 @@ paths:
                 id: 3
                 name: dev
                 desc: 最活跃环境，经常更新，不稳定
-                forId: false
+                forIt: false
   '/pm/envs/{envId}':
     parameters:
       - name: envId
@@ -1668,15 +1668,6 @@ paths:
               schema:
                 type: string
               description: application/tar+gzip
-        '400':
-          description: 渲染失败
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ActionResult'
-              example:
-                resultCode: 10100
-                errorMsg: 找不到Service-A 中的SUPER_KEY的值
   '/pm/envs/{envId}/vars':
     parameters:
       - name: envId
@@ -2291,15 +2282,6 @@ paths:
               schema:
                 type: string
               description: application/tar+gzip
-        '400':
-          description: 渲染失败
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ActionResult'
-              example:
-                resultCode: 10100
-                errorMsg: 找不到Service-A中的SUPER_KEY的值
   '/pm/services/{serviceId}/renderConf':
     parameters:
       - name: serviceId
@@ -2325,7 +2307,7 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - ProjectManager
-      summary: 渲染服务配置
+      summary: 渲染服务某个配置文件
       responses:
         '200':
           description: 配置结果
@@ -2805,18 +2787,17 @@ components:
           type: object
           description: |
             打包方式.
-            如打包成压缩文件 apache-tomcat-8.5.38-20190101-1.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, type=tar
-            如打包成压缩文件 tomcat-pr/1-20190101-1.zip, 则name=tomcat, versioning=ref, type=zip
-            如打包成镜像 registry.example.com/foo/bar:20190101-1, 则name=foo/bar, versioning=none, type=image
+            如打包成压缩文件 apache-tomcat-8.5.38-20190101-1.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, fileType=tar
+            如打包成压缩文件 tomcat-pr/1-20190101-1.zip, 则name=tomcat, versioning=ref, fileType=zip
+            如打包成镜像 registry.example.com/foo/bar:20190101-1, 则name=foo/bar, versioning=none
           properties:
-            type:
+            fileType:
               type: string
               enum:
-                - image
                 - zip
                 - tar
-              description: image表示打包成镜像，tar和zip表示打包成压缩文件
-              example: image
+              description: tar和zip表示压缩文件格式
+              example: tar
             name:
               type: string
               description: '打包名称前缀, 如 tomcat'
@@ -2962,6 +2943,9 @@ components:
       type: object
       description: 测试任务需要包含buildConf和testConf
       properties:
+        name:
+          type: string
+          example: Poetry构建任务
         type:
           $ref: '#/components/schemas/JobType'
         services:
@@ -2984,6 +2968,7 @@ components:
         testConf:
           $ref: '#/components/schemas/JobTestConf'
       required:
+        - name
         - type
         - services
         - timeout
