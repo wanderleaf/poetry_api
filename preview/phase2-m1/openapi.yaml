@@ -1375,7 +1375,7 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - ProjectManager
-      summary: 基础构建系统
+      summary: 获取基础构建系统列表
       responses:
         '200':
           description: 获取成功
@@ -1455,16 +1455,6 @@ paths:
                   enabled: true
                   scripts: |
                     curl -fsSL http://spock-resources.qbox.net/go1.11.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\n
-                    tar -C $HOME -xzf /tmp/golang.tar.gz
-              'golang:1.9':
-                value:
-                  name: golang
-                  version: 1.9
-                  desc: 'golang:1.11'
-                  binPath: /go/bin
-                  enabled: true
-                  scripts: |
-                    curl -fsSL http://spock-resources.qbox.net/go1.9.linux-amd64.tar.gz  -o /tmp/golang.tar.gz
                     tar -C $HOME -xzf /tmp/golang.tar.gz
       responses:
         '200':
@@ -1723,30 +1713,33 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - ProjectManager
-      summary: '全量更新环境变量, 覆盖默认值'
+      summary: 获取环境变量
       responses:
         '200':
           description: |
             环境变量列表
-            - key: MYSQL_ADDR
-              value: mysql://mysql:3306/me
-              isDefault: false
-              secured: false
-              defaultValue: mysql://mysql:3306/foo
-            - key: MONGO_ADDR
-              value: mongo://mongo:27017/me
-              isDefault: true
-              secured: false
-              defaultValue: mongo://mongo:27017/me
-            - key: SUPER_KEY
-              value: '*******'
-              secured: true
-              isDefault: false
-              defaultValue: '******'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvVarList'
+              examples:
+                example one:
+                  value:
+                    - key: MYSQL_ADDR
+                      value: 'mysql://mysql:3306/me'
+                      isDefault: false
+                      secured: false
+                      defaultValue: 'mysql://mysql:3306/foo'
+                    - key: MONGO_ADDR
+                      value: 'mongo://mongo:27017/me'
+                      isDefault: true
+                      secured: false
+                      defaultValue: 'mongo://mongo:27017/me'
+                    - key: SUPER_KEY
+                      value: '*******'
+                      secured: true
+                      isDefault: false
+                      defaultValue: '******'
   /pm/jobs:
     parameters:
       - name: projectId
