@@ -1583,6 +1583,20 @@ paths:
                 name: dev
                 desc: 最活跃环境，经常更新，不稳定
                 forIt: false
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - ProjectManager
+      summary: 获取产品环境列表
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvList'
   '/pm/envs/{envId}':
     parameters:
       - name: envId
@@ -1668,6 +1682,29 @@ paths:
               schema:
                 type: string
               description: application/tar+gzip
+  '/pm/envs/{envId}/services':
+    parameters:
+      - name: envId
+        in: path
+        description: 环境ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - ProjectManager
+      summary: 获取某环境下服务列表
+      description: artifact只显示在当前环境构建的应用包
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvServiceList'
   '/pm/envs/{envId}/vars':
     parameters:
       - name: envId
@@ -2114,7 +2151,49 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/ServiceWithConf'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - ProjectManager
+      summary: 获取服务列表
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+  '/pm/services/{serviceId}':
+    parameters:
+      - name: serviceId
+        in: path
+        description: 服务ID
+        required: true
+        schema:
+          type: integer
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - ProjectManager
+      summary: 更新服务
+      requestBody:
+        description: 更新服务请求
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service'
+      responses:
+        '200':
+          description: 添加成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
   '/pm/services/{serviceId}/artifacts':
     parameters:
       - name: serviceId
@@ -2663,6 +2742,26 @@ components:
         - name
         - desc
         - forIt
+    EnvList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Env'
+    EnvService:
+      allOf:
+        - $ref: '#/components/schemas/ServiceWithConfLite'
+        - type: object
+          properties:
+            artifact:
+              $ref: '#/components/schemas/Artifact'
+      required:
+        - id
+        - name
+        - conf
+        - artifact
+    EnvServiceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/EnvService'
     EnvVar:
       type: object
       description: 环境参数
@@ -2783,39 +2882,6 @@ components:
           description: 设置是否清空工作目录
           type: boolean
           example: false
-        packaging:
-          type: object
-          description: |
-            打包方式.
-            如打包成压缩文件 apache-tomcat-8.5.38-20190101-1.tar.gz, 则name=apache-tomcat, versioning=custom, version=8.5.38, fileType=tar
-            如打包成压缩文件 tomcat-pr/1-20190101-1.zip, 则name=tomcat, versioning=ref, fileType=zip
-            如打包成镜像 registry.example.com/foo/bar:20190101-1, 则name=foo/bar, versioning=none
-          properties:
-            fileType:
-              type: string
-              enum:
-                - zip
-                - tar
-              description: tar和zip表示压缩文件格式
-              example: tar
-            name:
-              type: string
-              description: '打包名称前缀, 如 tomcat'
-            versioning:
-              type: string
-              enum:
-                - none
-                - ref
-                - custom
-              description: '包版本生成模式，ref表示依赖代码库的branch或者pr号, custom为自定义版本号'
-              example: ref
-            version:
-              type: string
-              description: 自定义版本号
-              example: 1.0.0
-          required:
-            - type
-            - versioning
         repositories:
           type: array
           items:
@@ -3323,6 +3389,25 @@ components:
         - id
         - name
     ServiceConf:
+      allOf:
+        - $ref: '#/components/schemas/ServiceConfLite'
+        - type: object
+          properties:
+            content:
+              type: string
+              description: 服务配置模板内容
+              example: |
+                language=zh_cn
+                timezone=shanghai
+    ServiceConfList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceConf'
+    ServiceConfListLite:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceConfLite'
+    ServiceConfLite:
       type: object
       properties:
         name:
@@ -3330,25 +3415,10 @@ components:
           description: 配置名称
           pattern: '[a-z0-9A-Z-_\.]+'
           example: lan.properties
-        content:
-          type: string
-          description: 服务配置模板内容
-          example: |
-            language=zh_cn
-            timezone=shanghai
         language:
           type: string
           description: '配置语言如yaml,plain,properties,ini'
           example: properties
-        updated:
-          type: string
-          description: 更新时间
-          readOnly: true
-        updatedBy:
-          type: string
-          description: 更新人
-          example: bob
-          readOnly: true
         type:
           type: string
           enum:
@@ -3356,10 +3426,6 @@ components:
             - conf
           example: spec
           description: 配置类型，spec是k8syaml文件，conf是普通配置文件
-    ServiceConfList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ServiceConf'
     ServiceConfRevision:
       type: object
       properties:
@@ -3370,12 +3436,60 @@ components:
           type: string
           description: 创建时间
           example: 2019-01-01T00:00:00.000Z
+        updated:
+          type: string
+          description: 更新时间
+          readOnly: true
+          example: 2019-01-01T00:00:00.000Z
+        updatedBy:
+          type: string
+          description: 更新人
+          example: bob
+          readOnly: true
         confs:
           $ref: '#/components/schemas/ServiceConfList'
     ServiceConfRevisionList:
       type: array
       items:
-        $ref: '#/components/schemas/ServiceConfRevision'
+        $ref: '#/components/schemas/ServiceConfRevisionLite'
+    ServiceConfRevisionLite:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        created:
+          type: string
+          description: 创建时间
+          example: 2019-01-01T00:00:00.000Z
+        confs:
+          $ref: '#/components/schemas/ServiceConfListLite'
+    ServiceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Service'
+    ServiceWithConf:
+      allOf:
+        - $ref: '#/components/schemas/Service'
+        - type: object
+          properties:
+            conf:
+              $ref: '#/components/schemas/ServiceConfRevision'
+      required:
+        - id
+        - name
+        - conf
+    ServiceWithConfLite:
+      allOf:
+        - $ref: '#/components/schemas/Service'
+        - type: object
+          properties:
+            conf:
+              $ref: '#/components/schemas/ServiceConfRevisionLite'
+      required:
+        - id
+        - name
+        - conf
     Stage:
       type: object
       properties:
