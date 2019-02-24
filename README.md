@@ -3,9 +3,13 @@
 
 ## Links
 
-- [Reference Documentation (ReDoc)](https://owndogfood.github.io/poetry_api/)
-- [SwaggerUI](https://owndogfood.github.io/poetry_api/swagger-ui/)
+### Stable
+- [Reference Documentation (ReDoc)](https://owndogfood.github.io/poetry_api/) 
 - OpenAPI Raw Files: [JSON](https://owndogfood.github.io/poetry_api/openapi.json) [YAML](https://owndogfood.github.io/poetry_api/openapi.yaml)
+
+### Latest
+- [Reference Documentation (ReDoc)](https://owndogfood.github.io/poetry_api/preview/develop) 
+- OpenAPI Raw Files: [JSON](https://owndogfood.github.io/poetry_api/preview/develop/openapi.json) [YAML](https://owndogfood.github.io/poetry_api/preview/develop/openapi.yaml)
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
