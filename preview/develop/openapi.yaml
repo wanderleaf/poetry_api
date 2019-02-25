@@ -957,6 +957,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmailHost'
+    delete:
+      tags:
+        - Directory
+      summary: 删除企业的邮件主机配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
   /directory/emailServices:
     parameters:
       - name: orgId
@@ -999,7 +1009,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmailService'
+    delete:
+      tags:
+        - Directory
+      summary: 删除企业的邮件服务配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
   /directory/emailServices/send:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
     post:
       security:
         - ApiKeyAuth: []
@@ -1009,13 +1036,13 @@ paths:
       summary: 发送邮件
       requestBody:
         description: 发送邮件参数
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
+              type: array
+              items:
+                $ref: '#/components/schemas/EmailAction'
       responses:
         '200':
           description: 发送成功
@@ -1037,26 +1064,6 @@ paths:
         required: true
         schema:
           type: integer
-    post:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - Directory
-      summary: 创建一个通知历史
-      requestBody:
-        description: 通知历史参数
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NotifyHistory'
-      responses:
-        '200':
-          description: 创建成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotifyHistory'
     get:
       tags:
         - Directory
@@ -2923,6 +2930,11 @@ components:
           type: string
         clientSecret:
           type: string
+    EmailAction:
+      type: object
+      properties:
+        email:
+          type: string
     EmailHost:
       type: object
       properties:
@@ -2940,8 +2952,6 @@ components:
           description: 在响应体隐藏
         isTlS:
           type: boolean
-        orgId:
-          type: integer
     EmailService:
       type: object
       properties:
@@ -2956,8 +2966,6 @@ components:
           type: string
         theme:
           type: string
-        orgId:
-          type: integer
     Env:
       type: object
       properties:
@@ -3359,8 +3367,6 @@ components:
           type: string
         status:
           type: string
-        orgId:
-          type: integer
     Organization:
       type: object
       properties:
