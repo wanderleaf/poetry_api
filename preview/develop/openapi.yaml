@@ -867,6 +867,164 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Codehost'
+  /directory/emailHosts:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建或者更新邮件主机配置
+      requestBody:
+        description: 邮件主机参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailHost'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailHost'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取邮件主机配置
+      responses:
+        '200':
+          description: 邮件服务配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailHost'
+  /directory/emailServices:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建或者更新邮件服务配置
+      requestBody:
+        description: 邮件服务参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailService'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailService'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取邮件服务配置
+      responses:
+        '200':
+          description: 邮件服务配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailService'
+  /directory/emailServices/send:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 发送邮件
+      requestBody:
+        description: 发送邮件参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: 发送成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '500':
+          description: 发送失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/notifyHistorys:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建一个通知历史
+      requestBody:
+        description: 通知历史参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotifyHistory'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotifyHistory'
+    get:
+      tags:
+        - Directory
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      summary: 列出通知历史
+      responses:
+        '200':
+          description: 所有通知历史
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotifyHistory'
   /directory/organization:
     post:
       tags:
@@ -2717,6 +2875,41 @@ components:
           type: string
         clientSecret:
           type: string
+    EmailHost:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        name:
+          type: string
+        port:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+          description: 在响应体隐藏
+        isTlS:
+          type: boolean
+        orgId:
+          type: integer
+    EmailService:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        name:
+          type: string
+        address:
+          type: string
+        display_name:
+          type: string
+        theme:
+          type: string
+        orgId:
+          type: integer
     Env:
       type: object
       properties:
@@ -3097,6 +3290,29 @@ components:
           enum:
             - add
             - remove
+    NotifyHistory:
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        type:
+          type: string
+          enum:
+            - email
+            - sms
+            - wechat
+        title:
+          type: string
+        content:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        status:
+          type: string
+        orgId:
+          type: integer
     Organization:
       type: object
       properties:
