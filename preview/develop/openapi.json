@@ -1673,7 +1673,7 @@
         }
       }
     },
-    "/directory/emailServices/send": {
+    "/directory/emailServicess/send": {
       "parameters": [
         {
           "name": "orgId",

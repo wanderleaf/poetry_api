@@ -971,7 +971,7 @@ paths:
       responses:
         '200':
           description: 删除成功
-  /directory/emailServices/send:
+  /directory/emailServicess/send:
     parameters:
       - name: orgId
         in: query
