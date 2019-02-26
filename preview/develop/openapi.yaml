@@ -3028,6 +3028,10 @@ components:
           type: string
           description: 任务名称
           example: aurora构建任务
+        desc:
+          type: string
+          description: 任务描述
+          example: aurora
         type:
           $ref: '#/components/schemas/JobType'
         services:
