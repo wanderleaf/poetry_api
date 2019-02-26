@@ -5919,15 +5919,9 @@
             "description": "创建时间",
             "example": "2019-01-01T00:00:00.000Z"
           },
-          "updated": {
+          "createdBy": {
             "type": "string",
-            "description": "更新时间",
-            "readOnly": true,
-            "example": "2019-01-01T00:00:00.000Z"
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "更新人",
+            "description": "创建者",
             "example": "bob",
             "readOnly": true
           },
