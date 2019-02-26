@@ -4867,7 +4867,7 @@
           "address": {
             "type": "string"
           },
-          "display_name": {
+          "displayName": {
             "type": "string"
           },
           "theme": {
