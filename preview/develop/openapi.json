@@ -5186,11 +5186,6 @@
               "example": "echo \"hello world\""
             }
           },
-          "cleanWorkspace": {
-            "description": "设置是否清空工作目录",
-            "type": "boolean",
-            "example": false
-          },
           "repositories": {
             "type": "array",
             "items": {
@@ -5254,7 +5249,6 @@
         "required": [
           "caches",
           "scripts",
-          "cleanWorkspace",
           "packaging",
           "repositories"
         ]
