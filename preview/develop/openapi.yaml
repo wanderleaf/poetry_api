@@ -388,18 +388,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
-  /ac/repositories/search:
+  /ac/repoNamespaces:
     parameters:
-      - name: orgId
+      - name: codehostId
         in: query
-        description: org id
-        required: false
-        schema:
-          type: integer
-      - name: teamId
-        in: query
-        description: team id
-        required: false
+        description: Codehost Id
+        required: true
         schema:
           type: integer
     get:
@@ -408,7 +402,37 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - AnalysisCenter
-      summary: 列出该组织/团队的所有Repo
+      summary: 列出该codehost下的所有的namesapce
+      responses:
+        '200':
+          description: namespace列表详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /ac/repositories/search:
+    parameters:
+      - name: codehostId
+        in: query
+        description: codehost id
+        required: false
+        schema:
+          type: integer
+      - name: namespaceName
+        in: query
+        description: namespace名称
+        required: false
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出某个namespace下的所有Repo
       responses:
         '200':
           description: 所有Repo详情
@@ -522,6 +546,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
+  '/ac/team/{teamId}/repos':
+    parameters:
+      - name: teamId
+        in: path
+        description: team id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出团队的所有Repo
+      responses:
+        '200':
+          description: 所有Repo详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
   /ac/teamQualityGates/search:
     parameters:
       - name: teamId
