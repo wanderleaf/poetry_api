@@ -5384,6 +5384,9 @@
             "type": "integer",
             "description": "超时时间(秒)"
           },
+          "runtime": {
+            "$ref": "#/components/schemas/JobRuntime"
+          },
           "vars": {
             "$ref": "#/components/schemas/JobVars"
           },
