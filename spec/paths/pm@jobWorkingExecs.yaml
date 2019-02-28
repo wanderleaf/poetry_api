@@ -17,6 +17,5 @@ get:
       description: 获取成功
       content:
         text/event-stream:
-          type: array
           schema:
             $ref: '#/components/schemas/JobExecList'
