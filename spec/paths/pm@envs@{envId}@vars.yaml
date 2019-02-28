@@ -1,0 +1,62 @@
+parameters:
+  - name: envId
+    in: path
+    description: 环境ID
+    required: true
+    schema:
+      type: string
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 全量更新环境变量, 覆盖默认值
+  description: |
+    设置某个变量取默认值时，设置isDefault为TRUE
+  requestBody:
+    description: 更新环境变量请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/EnvVarList"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 获取环境变量
+  responses:
+    '200':
+      description: | 
+        环境变量列表
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnvVarList'
+          examples:
+            "example one":
+              value:
+              - key: MYSQL_ADDR
+                value: mysql://mysql:3306/me
+                isDefault: false
+                secured: false
+                defaultValue: mysql://mysql:3306/foo
+              - key: MONGO_ADDR
+                value: mongo://mongo:27017/me
+                isDefault: true
+                secured: false
+                defaultValue: mongo://mongo:27017/me
+              - key: SUPER_KEY
+                value: '*******'
+                secured: true
+                isDefault: false
+                defaultValue: '******'

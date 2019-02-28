@@ -1,0 +1,14 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 步骤名称
+    example: poetry构建
+  jobs:
+    type: array
+    description: 任务列表
+    items:
+      $ref: "#/components/schemas/Job"
+    example:
+      - 1
+      - 2

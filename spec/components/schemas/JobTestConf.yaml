@@ -1,0 +1,18 @@
+type: object
+description: 测试任务配置
+properties:
+  threshold:
+    type: number
+    description: 测试通过率阈值
+    example: 40.5
+  reportLocation:
+    type: array
+    description: 测试结果路径
+    items:
+      type: string
+    example:
+      - './reports/report.xml'
+      - './reports/it/*.jacoco'
+required:
+  - threshold
+  - reportLocation

@@ -1,0 +1,33 @@
+parameters:
+  - name: serviceId
+    in: path
+    description: 服务配置ID
+    required: true
+    schema:
+      type: integer
+  - name: confName
+    in: query
+    required: true
+    schema:
+      type: string
+  - name: envId
+    in: query
+    description: 环境ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 渲染服务某个配置文件
+  responses:
+    '200':
+      description: 配置结果
+      headers:
+        Content-Disposition:
+          schema:
+            type: string
+          description: '文件名 ex: attachment; filename="filename.conf"'

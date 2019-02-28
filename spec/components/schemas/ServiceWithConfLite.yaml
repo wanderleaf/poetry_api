@@ -1,0 +1,10 @@
+allOf:
+  - $ref: "#/components/schemas/Service"
+  - type: object
+    properties:
+      conf:
+        $ref: "#/components/schemas/ServiceConfRevisionLite"
+required:
+  - id
+  - name
+  - conf

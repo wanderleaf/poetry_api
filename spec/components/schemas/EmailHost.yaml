@@ -1,0 +1,16 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 在请求体中无效
+  name:
+    type: string
+  port:
+    type: integer
+  username:
+    type: string
+  password:
+    type: string
+    description: 在响应体隐藏
+  isTlS:
+    type: boolean

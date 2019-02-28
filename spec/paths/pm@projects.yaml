@@ -1,0 +1,61 @@
+parameters:
+  - name: orgId
+    in: query
+    description: org Id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 获取产品列表
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectListResponse'
+          example:
+            - id: 1
+              name: poetry
+              desc: peotry 产品线
+              teams:
+                - id: 1
+                  name: Poetry开发组
+              releaser:
+                - id: 2
+                  name: Alex
+                - id: 3
+                  name: Bob
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 新建产品
+  requestBody:
+    description: 添加产品请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ProjectUpsertRequest"
+        example:
+          name: poetry
+          desc: peotry 产品
+          teams:
+            - 1
+            - 2
+          releaser:
+            - 1
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Project'

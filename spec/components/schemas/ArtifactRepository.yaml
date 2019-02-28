@@ -1,0 +1,44 @@
+type: object
+properties:
+  addr:
+    type: string
+    description: 代码库地址，
+    example: 8slan.gitlab.com/odf/poetry
+  commit:
+    $ref: "#/components/schemas/CodeCommit"
+  pr:
+    type: object
+    properties:
+      commits:
+        type: array
+        items:
+          $ref: "#/components/schemas/CodeCommit"
+      desc:
+        type: string
+        description: pr描述
+        example: milestone 1
+      id:
+        type: string
+        example: 1
+    required:
+      - commits
+      - id
+  ref:
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ['tag', 'branch']
+        example: tag
+      value:
+        type: string
+        description: ref值, 如 master/v1.0.0
+        example: master
+      link:
+        type: string
+        description: ref http地址
+        example: https://gitlab.8slan.com/odf/aurora/tree/master
+required:
+  - addr
+  - commit
+  - ref

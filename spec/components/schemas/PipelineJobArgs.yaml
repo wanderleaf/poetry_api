@@ -1,0 +1,19 @@
+type: object
+description: 启动工作流参数
+properties:
+  job:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "aurora构建任务"
+      type:
+        type: string
+        example: 任务类型
+  repos:
+    type: array
+    items:
+      $ref: "#/components/schemas/JobArgsRepo"

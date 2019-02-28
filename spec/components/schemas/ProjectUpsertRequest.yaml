@@ -1,0 +1,28 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 产品名称
+    example: poetry
+  desc:
+    type: string
+    description: 产品描述
+    example: poetry 产品
+  teams:
+    type: array
+    items:
+      type: integer
+    example:
+      - 1
+      - 2
+  releaser:
+    type: array
+    items:
+      type: integer
+    description: 发布专员
+    example:
+      - 1
+      - 2
+required:
+  - name
+  - teams

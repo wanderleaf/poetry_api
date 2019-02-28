@@ -1,0 +1,19 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 获取基础构建系统列表
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BuildOSListResponse'
+          example:
+            - name: ubuntu:14.04
+              desc: ubuntu Trusty
+            - name: ubuntu:16.04
+              desc: ubuntu Xenial

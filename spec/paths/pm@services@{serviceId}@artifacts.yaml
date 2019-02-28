@@ -1,0 +1,27 @@
+parameters:
+  - name: serviceId
+    in: path
+    description: 服务ID
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  parameters:
+    - $ref: "#/components/parameters/page"
+    - $ref: "#/components/parameters/per_page"
+  summary: 服务的应用包列表(支持分页)
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ArtifactListResponse'
+      headers:
+        X-Total:
+          $ref: "#/components/headers/X-Total"

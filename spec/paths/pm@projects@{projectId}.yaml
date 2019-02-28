@@ -1,0 +1,55 @@
+parameters:
+  - name: projectId
+    in: path
+    description: 产品ID
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 获取产品详情
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Project'
+patch:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 更新产品
+  requestBody:
+    description: 产品参数
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ProjectUpsertRequest"
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 删除产品
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

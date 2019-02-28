@@ -1,0 +1,63 @@
+type: object
+description: 构建任务配置
+properties:
+  caches:
+    type: array
+    items:
+      type: string
+      example: ./cache
+  scripts:
+    description: 运行脚本
+    type: array
+    items:
+      type: string
+      example: echo "hello world"
+  # packaging： 删除，不提供自定义选择, 可以在下载包时自定义名称
+  repositories:
+    type: array
+    items:
+      type: object
+      description: 代码库
+      properties:
+        codehost:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 代码库ID
+              example: 1
+            address:
+              type: string
+              description: 代码库地址
+              readOnly: true
+              example: 'gitlab.8slan.com'
+            type:
+              type: string
+              enum: ['gitlab', 'github']
+              readOnly: true
+              example: gitlab
+        namespace:
+          type: string
+          description: 命名空间 (user/group)
+          example: odf
+        name:
+          type: string
+          description: 代码库名称
+          example: poetry
+        branch:
+          type: string
+          description: 分支名
+          example: master
+        submodule:
+          type: boolean
+          description: 是否同步子模块
+          example: false
+      required:
+        - codehost
+        - namespace
+        - name
+required:
+  - caches
+  - scripts
+  - packaging
+  - repositories

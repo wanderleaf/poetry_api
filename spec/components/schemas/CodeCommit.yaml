@@ -1,0 +1,9 @@
+type: object
+description: commit信息
+properties:
+  hash:
+    type: string
+    example: ac3cda2
+  comment:
+    type: string
+    example: 'fix issue#123'

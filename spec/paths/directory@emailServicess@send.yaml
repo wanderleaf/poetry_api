@@ -1,0 +1,36 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 发送邮件
+  requestBody:
+    description: 发送邮件参数
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailAction'
+  responses:
+    "200":
+      description: "发送成功"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ActionResult"
+    "500":
+      description: "发送失败"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ActionResult"

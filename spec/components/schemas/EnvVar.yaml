@@ -1,0 +1,31 @@
+type: object
+description: "环境参数"
+properties:
+  key:
+    type: string
+    description: '变量名称'
+    pattern: '[a-z0-9A-Z_\.\-]+'
+    example: MYSQL_ADDR
+  value:
+    type: string
+    description: 值
+    example: 'mysql://mysql:3306/you'
+  isDefault:
+    type: boolean
+    description: 是否默认值
+    example: false
+  defaultValue:
+    type: string
+    description: 默认值
+    readOnly: true
+    example: 'mysql://mysql:3306/me'
+  secured:
+    type: boolean
+    description: 是否加密值
+    readOnly: true
+    example: true
+required:
+  - key
+  - value
+  - isDefault
+  - secured

@@ -1,0 +1,9 @@
+type: object
+properties:
+  repos:
+    type: array
+    items:
+      $ref: "#/components/schemas/JobArgsRepo"
+  envId:
+    type: integer
+    example: 1

@@ -1,0 +1,25 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  jobExecId:
+    type: integer
+    example: 1
+  # events:
+  #   description: 事件记录
+  #   type: array
+  #   items:
+  #     $ref: "#/components/schemas/ExecEvent"
+  latestEvent:
+    $ref: "#/components/schemas/ExecEvent"
+  service:
+    $ref: "#/components/schemas/Service"
+  artifact:
+    $ref: "#/components/schemas/Artifact"
+required:
+  - id
+  - jobExecId
+  - latestEvent
+  - service
+  - artifact

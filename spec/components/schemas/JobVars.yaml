@@ -1,0 +1,22 @@
+description: 自定义变量
+type: array
+items:
+  type: object
+  properties:
+    key:
+      type: string
+      description: '变量名称'
+      pattern: '[a-z0-9A-Z_\-\.]+'
+      example: HTTP_PROXY
+    value:
+      type: string
+      description: 值
+      example: 'http://10.0.0.1:3128'
+    secured:
+      type: boolean
+      description: 是否敏感信息
+      example: true
+required:
+  - key
+  - value
+  - secured

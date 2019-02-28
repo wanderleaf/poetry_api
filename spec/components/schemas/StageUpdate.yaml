@@ -1,0 +1,17 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 步骤名称
+    example: 构建
+  jobs:
+    type: array
+    description: 任务列表
+    items:
+      type: integer
+    example:
+      - 1
+      - 2
+required:
+  - name
+  - jobs

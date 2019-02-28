@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: 服务ID
+    readOnly: true
+    example: 1
+  name:
+    type: string
+    description: 服务名称
+    example: poetry-doc
+  desc:
+    type: string
+    description: 服务名称
+    example: poetry-doc 服务
+required:
+  - id
+  - name

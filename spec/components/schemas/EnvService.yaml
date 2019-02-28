@@ -1,0 +1,11 @@
+allOf:
+  - $ref: "#/components/schemas/ServiceWithConfLite"
+  - type: object
+    properties:
+      artifact:
+        $ref: "#/components/schemas/Artifact"
+required:
+  - id
+  - name
+  - conf
+  - artifact

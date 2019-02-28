@@ -1,0 +1,16 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 配置名称
+    pattern: '[a-z0-9A-Z-_\.]+'
+    example: lan.properties
+  language:
+    type: string
+    description: 配置语言如yaml,plain,properties,ini
+    example: properties
+  type:
+    type: string
+    enum: ['spec', 'conf']
+    example: spec
+    description: 配置类型，spec是k8syaml文件，conf是普通配置文件

@@ -1,0 +1,5 @@
+name: page
+in: query
+description: 分页index
+schema:
+  type: integer

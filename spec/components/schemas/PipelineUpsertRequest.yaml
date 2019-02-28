@@ -1,0 +1,27 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 工作流名称
+    example: poetry-nightly
+  desc:
+    type: string
+    description: 工作流描述
+    example: poetry持续发布
+  envId:
+    type: integer
+    example: 1
+  stages:
+    type: array
+    items:
+      $ref: "#/components/schemas/StageUpdate"
+  supportRelease:
+    type: boolean
+    description: 是否支持发布
+    example: false
+required:
+  - name
+  - desc
+  - envId
+  - stages
+  - supportRelease

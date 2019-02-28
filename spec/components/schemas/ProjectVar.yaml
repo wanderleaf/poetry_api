@@ -1,0 +1,15 @@
+type: object
+description: "产品全局变量"
+properties:
+  key:
+    type: string
+    description: '变量名称 [a-z0-9A-Z_\.\-]+'
+    example: MYSQL_ADDR
+  defaultValue:
+    type: string
+    description: 变量默认值 
+    example: "mysql://mysql:3306/mysql"
+  secured:
+    type: boolean
+    description: 是否加密
+    example: false

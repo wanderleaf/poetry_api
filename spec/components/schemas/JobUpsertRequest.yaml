@@ -1,0 +1,35 @@
+type: object
+description: 测试任务需要包含buildConf和testConf
+properties:
+  name:
+    type: string
+    example: Poetry构建任务
+  type:
+    $ref: "#/components/schemas/JobType"
+  services:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 服务ID
+  timeout:
+    type: integer
+    description: 超时时间(秒)
+  runtime:
+    $ref: "#/components/schemas/JobRuntime"
+  vars:
+    $ref: "#/components/schemas/JobVars"
+  buildConf:
+    $ref: "#/components/schemas/JobBuildConf"
+  deployConf:
+   $ref: "#/components/schemas/JobDeployConf"
+  testConf:
+   $ref: "#/components/schemas/JobTestConf"
+required:
+  - name
+  - type
+  - services
+  - timeout
+  - vars

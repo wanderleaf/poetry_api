@@ -1,0 +1,27 @@
+parameters:
+  - name: serviceId
+    in: path
+    description: 服务ID
+    required: true
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 更新服务
+  requestBody:
+    description: 更新服务请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/Service"
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

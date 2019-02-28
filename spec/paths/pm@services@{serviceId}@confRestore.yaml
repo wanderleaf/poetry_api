@@ -1,0 +1,26 @@
+parameters:
+  - name: serviceId
+    in: path
+    description: 服务配置ID
+    required: true
+    schema:
+      type: integer
+  - name: revisionId
+    in: query
+    required: true
+    schema:
+      type: string
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 还原服务配置
+  responses:
+    '200':
+      description: "还原结果"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

@@ -1,0 +1,41 @@
+type: object
+description: 构建工具
+required:
+  - name
+  - version
+  - scripts
+  - updated
+  - updatedBy
+properties:
+  name:
+    type: string
+    description: 工具名称如 golang
+    example: golang
+  version:
+    type: string
+    description: 工具版本如 1.11
+    example: 1.11
+  desc:
+    type: string
+    description: 工具描述
+    example: golang 1.11
+  binPath:
+    type: string
+    description: bin路径，构建时会被加入环境变量PATH
+    example: /go/bin
+  disabled:
+    description: 默认值false
+    type: boolean
+  scripts:
+    type: string
+    description: 安装脚本
+  updated:
+    type: string
+    description: 更新时间
+    readOnly: true
+    example: '2019-01-01T01:01:01.123Z'
+  updatedBy:
+    type: string
+    description: 更新者
+    readOnly: true
+    example: me

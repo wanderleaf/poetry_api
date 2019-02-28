@@ -1,8 +1,8 @@
 openapi: 3.0.0
 servers:
   - description: Poetry API Auto Mocking
-    url: 'https://virtserver.swaggerhub.com/zhuzhan_poetry/poetry_api/1.0.0-rc'
+    url: 'http://poetry-api.dev.8slan.com'
 info:
-  version: 1.0.0-rc
+  version: 1.0.0
   title: Poetry api
   description: 'Poetry api协议, 分页协议参考https://docs.gitlab.com/ee/api/#pagination-link-header'

@@ -1,0 +1,10 @@
+allOf:
+  - $ref: "#/components/schemas/ServiceConfLite"
+  - type: object
+    properties:
+      content:
+        type: string
+        description: 服务配置模板内容
+        example: |
+          language=zh_cn
+          timezone=shanghai

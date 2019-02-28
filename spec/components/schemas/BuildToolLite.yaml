@@ -1,0 +1,19 @@
+type: object
+description: 构建工具
+required:
+  - name
+  - version
+properties:
+  name:
+    type: string
+    description: 工具名称如 golang
+    example: golang
+  version:
+    type: string
+    description: 工具版本如 1.11
+    example: 1.11
+  desc:
+    type: string
+    description: 工具描述
+    example: golang 1.11
+    readOnly: true

@@ -1,0 +1,20 @@
+properties:
+  id:
+    type: integer
+    description: 在请求体中无效
+  type:
+    type: string
+    enum:
+      - email
+      - sms
+      - wechat
+  title:
+    type: string
+  content:
+    type: string
+  from:
+    type: string
+  to:
+    type: string
+  status:
+    type: string

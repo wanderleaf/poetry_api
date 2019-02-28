@@ -1,0 +1,51 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建或者更新邮件服务配置
+  requestBody:
+    description: 邮件服务参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/EmailService'
+  responses:
+    "200":
+      description: "创建成功"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EmailService"
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取邮件服务配置
+  responses:
+    '200':
+      description: 邮件服务配置
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmailService'
+delete:
+  tags:
+    - Directory
+  summary: 删除企业的邮件服务配置
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

@@ -1,0 +1,41 @@
+parameters:
+  - name: projectId
+    in: path
+    description: 产品ID
+    required: true
+    schema:
+      type: integer
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 更新产品环境变量(全量)
+  requestBody:
+    description: 添加产品环境变量请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ProjectVarList"
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 获取产品环境变量
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectVarList'

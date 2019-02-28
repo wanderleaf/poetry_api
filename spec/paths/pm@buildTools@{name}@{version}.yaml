@@ -1,0 +1,62 @@
+parameters:
+  - name: orgId
+    in: query
+    description: org Id
+    required: true
+    schema:
+      type: integer
+  - name: name
+    in: path
+    description: 工具名称
+    required: true
+    schema:
+      type: string
+  - name: version
+    in: path
+    description: 工具版本
+    required: true
+    schema:
+      type: string
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 更新构建工具
+  requestBody:
+    description: 更新构建工具请求
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/BuildTool"
+        example:
+          name: golang
+          version: 1.12
+          desc: golang:1.12
+          binPath: /go/bin
+          enabled: true
+          scripts: |
+            curl -fsSL http://spock-resources.qbox.net/go1.12.linux-amd64.tar.gz  -o /tmp/golang.tar.gz\n
+            tar -C $HOME -xzf /tmp/golang.tar.gz
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 删除构建工具
+  responses:
+    '200':
+      description: 添加成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

@@ -1,0 +1,14 @@
+type: object
+properties:
+  os:
+    type: string
+    description: 运行os，如 ubuntu:14.04, ubuntu:16.04
+    example: ubuntu:14.04
+  cap:
+    type: string
+    enum: ['high', 'median', 'low', 'tiny']
+    example: high
+  buildTools:
+    type: array
+    items:
+      $ref: "#/components/schemas/BuildToolLite"

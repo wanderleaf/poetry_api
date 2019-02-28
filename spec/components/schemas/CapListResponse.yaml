@@ -1,0 +1,4 @@
+type: array
+description: 运算能力列表
+items:
+  $ref: "#/components/schemas/Cap"

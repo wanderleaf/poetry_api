@@ -1,0 +1,5 @@
+name: per_page
+in: query
+description: 分页大小
+schema:
+  type: integer

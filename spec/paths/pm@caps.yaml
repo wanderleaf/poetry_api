@@ -1,0 +1,19 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - ProjectManager
+  summary: 运算能力列表
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CapListResponse'
+          example:
+            - name: high
+              desc: 8核16GB内存
+            - name: median
+              desc: 4核8GB内存

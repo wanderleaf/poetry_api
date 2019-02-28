@@ -1,0 +1,44 @@
+type: object
+description: Job代码库参数
+properties:
+  codehost:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: 代码库ID
+        example: 1
+      address:
+        type: string
+        description: 代码库地址
+        example: 'gitlab.8slan.com'
+        readOnly: true
+      type:
+        type: string
+        enum: ['gitlab', 'github']
+        example: gitlab
+        readOnly: true
+  namespace:
+    type: string
+    description: 命名空间 (user/group)
+    example: odf
+  name:
+    type: string
+    description: 代码库名称
+    example: poetry
+  branch:
+    type: string
+    description: 分支名
+    example: master
+  pr:
+    type: string
+    description: pr id
+    example: 1
+  tag:
+    type: string
+    description: tag id
+    example: v1.0.0
+required:
+  - codehost
+  - namespace
+  - name
