@@ -1,0 +1,23 @@
+parameters:
+  - name: codehostId
+    in: query
+    description: Codehost Id
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出该codehost下的所有的namesapce
+  responses:
+    '200':
+      description: namespace列表详情
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
