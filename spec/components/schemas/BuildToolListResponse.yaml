@@ -1,4 +1,0 @@
-type: array
-description: 构建工具列表
-items:
-  $ref: "#/components/schemas/BuildTool"
