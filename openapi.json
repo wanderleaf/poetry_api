@@ -2460,6 +2460,29 @@
             }
           }
         }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "获取user",
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/directory/user/detail": {
