@@ -757,6 +757,59 @@
         }
       }
     },
+    "/ac/reposNotInCi": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "org id",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/per_page"
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "列出所有未纳入CI的Repo",
+        "responses": {
+          "200": {
+            "description": "所有Repo详情",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Repository"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "X-Total": {
+                "$ref": "#/components/headers/X-Total"
+              }
+            }
+          }
+        }
+      }
+    },
     "/ac/securityMeasureCount/{reportId}": {
       "parameters": [
         {
