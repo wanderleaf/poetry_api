@@ -1,0 +1,15 @@
+get:
+  security:
+    - ApiKeyAuth: []
+  summary: 生成jwt的Token
+  tags:
+    - Directory
+  responses:
+    '200':
+      description: 生成成功
+      content:
+        text/plain:
+          schema:
+            type: string
+    '400':
+      description: 生成失败
