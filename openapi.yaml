@@ -1281,6 +1281,10 @@ paths:
                   type: string
                 desc:
                   type: string
+                leaders:
+                  type: array
+                  items:
+                    type: integer
       responses:
         '200':
           description: 创建成功
@@ -1328,6 +1332,10 @@ paths:
                   type: string
                 desc:
                   type: string
+                leaders:
+                  type: array
+                  items:
+                    type: integer
       responses:
         '200':
           description: 更新成功
@@ -1472,6 +1480,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  '/directory/user/{userId}/team/batch':
+    parameters:
+      - name: userId
+        in: path
+        description: 用户ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 批量更新用户所属组
+      requestBody:
+        description: 批量更新用户所属组数据
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
   /directory/user/detail:
     get:
       tags:
@@ -1826,12 +1865,6 @@ components:
         id:
           type: integer
           description: user id
-        action:
-          type: string
-          enum:
-            - add
-            - remove
-            - update
         isTeamleader:
           type: boolean
     ModifyRepositoryAction:
