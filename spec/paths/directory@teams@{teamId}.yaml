@@ -37,6 +37,10 @@ put:
               type: string
             desc:
               type: string
+            leaders:
+              type: array
+              items:
+                type: integer
   responses:
     '200':
       description: 更新成功

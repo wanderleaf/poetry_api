@@ -23,6 +23,11 @@ post:
               type: string
             desc:
               type: string
+            leaders:
+              type: array
+              items:
+                type: integer
+
   responses:
     '200':
       description: 创建成功
