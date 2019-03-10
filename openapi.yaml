@@ -1678,6 +1678,159 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+  '/spock/codehost/{codehostId}/namespaces':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+    get:
+      tags:
+        - spock
+      summary: 查询代码源下所有namespace
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Namespace'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace
+    get:
+      tags:
+        - spock
+      summary: 查询代码源namespace下所有仓库
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/branches':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有分支
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/prs':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+      - name: targetBranch
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 查找的目标分支
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有PR
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PR'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/tags':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有分支
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
 components:
   schemas:
     ActionResult:
@@ -1710,6 +1863,18 @@ components:
           description: 在响应体隐藏
         dn:
           type: string
+    Branch:
+      type: object
+      properties:
+        name:
+          type: string
+          example: master
+        protected:
+          type: boolean
+          example: true
+        merged:
+          type: boolean
+          example: true
     BuildDetail:
       type: object
       properties:
@@ -1877,6 +2042,18 @@ components:
           enum:
             - add
             - remove
+    Namespace:
+      type: object
+      properties:
+        name:
+          type: string
+          example: odf
+        path:
+          type: string
+          example: odf
+        kind:
+          type: string
+          example: group
     NotifyHistory:
       properties:
         id:
@@ -1909,6 +2086,39 @@ components:
           type: string
         orgToken:
           type: string
+    PR:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        targetBranch:
+          type: string
+          example: master
+        sourceBranch:
+          type: string
+          example: dev
+        projectId:
+          type: string
+          example: 1
+        title:
+          type: string
+          example: new-feature
+        authorName:
+          type: string
+          example: qu
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+          example: koderover
+        description:
+          type: string
+          example: 发布系统
+        defaultBranch:
+          type: string
+          example: master
     QualityGate:
       type: object
       properties:
@@ -2028,6 +2238,15 @@ components:
           type: string
         id:
           type: integer
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+          example: v0.1
+        message:
+          type: string
+          example: change sth...
     Team:
       type: object
       properties:
