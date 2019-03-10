@@ -1,0 +1,32 @@
+parameters:
+  - name: codehostId
+    in: path
+    schema:
+      type: integer
+    required: true
+    description: 需要查询的codehost ID
+  - name: projectId
+    in: path
+    schema:
+      type: string
+    required: true
+    description: 需要查询的project Name
+  - name: namespace
+    in: path
+    schema:
+      type: string
+    required: true
+    description: 需要查询的namespace Path
+get:
+  tags:
+    - spock
+  summary: 查询仓库下所有分支
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tag'

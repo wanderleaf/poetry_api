@@ -1,0 +1,11 @@
+type: object
+properties:
+  name:
+    type: string
+    example: master
+  protected:
+    type: boolean
+    example: true
+  merged:
+    type: boolean
+    example: true

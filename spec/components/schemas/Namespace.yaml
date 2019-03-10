@@ -1,0 +1,11 @@
+type: object
+properties:
+  name:
+    type: string
+    example: odf
+  path:
+    type: string
+    example: odf
+  kind:
+    type: string
+    example: group

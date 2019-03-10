@@ -1,0 +1,11 @@
+type: object
+properties:
+  name:
+    type: string
+    example: koderover
+  description:
+    type: string
+    example: 发布系统
+  defaultBranch:
+    type: string
+    example: master

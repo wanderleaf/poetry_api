@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 2
+  targetBranch:
+    type: string
+    example: master
+  sourceBranch:
+    type: string
+    example: dev
+  projectId:
+    type: string
+    example: 1
+  title:
+    type: string
+    example: new-feature
+  authorName:
+    type: string
+    example: qu
