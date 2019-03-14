@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Poetry API Auto Mocking
-    url: 'http://poetry-api.dev.8slan.com'
+    url: 'http://poetry.dev.8slan.com/api'
 info:
   version: 1.0.0
   title: Poetry api
@@ -2352,15 +2352,15 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: X-API-KEY
-      description: '普通用户使用的API-KEY, [a-zA-Z0-9]{16}'
+      name: authorization
+      description: '普通用户使用的API-KEY, 如 X-API-KEY 01234567890abcdefg'
     ApiOrgTokenAuth:
       type: apiKey
       in: header
-      name: X-ORG-TOKEN
-      description: '企业TOKEN, [a-zA-Z0-9]{16}'
+      name: authorization
+      description: '企业TOKEN, 如 X-ORG-TOKEN 01234567890abcdefg'
     ApiRootKeyAuth:
       type: apiKey
       in: header
-      name: X-ROOT-API-KEY
-      description: 'root权限使用的API-KEY, [a-zA-Z0-9]{16}'
+      name: authorization
+      description: 'root权限使用的API-KEY, 如X-ROOT-API-KEY 0123456789abcdefg'
