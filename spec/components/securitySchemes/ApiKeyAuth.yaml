@@ -1,4 +1,4 @@
 type: apiKey
 in: header
-name: X-API-KEY
-description: '普通用户使用的API-KEY, [a-zA-Z0-9]{16}'
+name: authorization 
+description: '普通用户使用的API-KEY, 如 X-API-KEY 01234567890abcdefg'

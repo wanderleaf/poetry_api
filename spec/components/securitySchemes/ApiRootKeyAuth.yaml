@@ -1,4 +1,4 @@
 type: apiKey
 in: header
-name: X-ROOT-API-KEY
-description: 'root权限使用的API-KEY, [a-zA-Z0-9]{16}'
+name: authorization
+description: 'root权限使用的API-KEY, 如X-ROOT-API-KEY 0123456789abcdefg'

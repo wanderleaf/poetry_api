@@ -1,4 +1,4 @@
 type: apiKey
 in: header
-name: X-ORG-TOKEN
-description: '企业TOKEN, [a-zA-Z0-9]{16}'
+name: authorization
+description: '企业TOKEN, 如 X-ORG-TOKEN 01234567890abcdefg'
