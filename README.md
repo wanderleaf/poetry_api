@@ -3,13 +3,9 @@
 
 ## Links
 
-### Stable
-- [Reference Documentation (ReDoc)](https://owndogfood.github.io/poetry_api/) 
-- OpenAPI Raw Files: [JSON](https://owndogfood.github.io/poetry_api/openapi.json) [YAML](https://owndogfood.github.io/poetry_api/openapi.yaml)
-
 ### Latest
-- [Reference Documentation (ReDoc)](https://owndogfood.github.io/poetry_api/preview/develop) 
-- OpenAPI Raw Files: [JSON](https://owndogfood.github.io/poetry_api/preview/develop/openapi.json) [YAML](https://owndogfood.github.io/poetry_api/preview/develop/openapi.yaml)
+- [Reference Documentation (ReDoc)](http://apidoc.poetry.dev.8slan.com/) [Reference Documentation (swagger)](http://apidoc.poetry.dev.8slan.com/swagger.html)
+- OpenAPI Raw Files: [JSON](http://apidoc.poetry.dev.8slan.com/openapi.json) [YAML](http://apidoc.poetry.dev.8slan.com/openapi.yaml)
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
