@@ -1,0 +1,27 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  org_id:
+    type: string
+  reg_addr:
+    type: string
+  reg_type:
+    type: string
+  reg_provider:
+    type: string
+  is_default:
+    type: boolean    
+  namespace:
+    type: string
+  access_key:
+    type: string
+  secret_key:
+    type: string
+  update_time:
+    type: integer
+    readOnly: true
+  update_by:
+    type: string
+    readOnly: true

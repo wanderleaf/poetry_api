@@ -1,0 +1,28 @@
+parameters:
+  - name: id
+    in: path
+    description: 镜像仓库ID
+    required: true
+    schema:
+      type: string
+put:
+  tags:
+    - spock
+  summary: 更新镜像仓库
+  requestBody:
+    description: 更新镜像仓库
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Registry'
+  responses:
+    '200':
+      description: 成功
+delete:
+  tags:
+    - spock
+  summary: 删除镜像仓库
+  responses:
+    '200':
+      description: 成功
