@@ -1070,45 +1070,37 @@
         }
       }
     },
-    "/dc/configManage": {
+    "/dc/builds/{releaseId}": {
       "parameters": [
         {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "piplineName",
-          "in": "query",
-          "description": "工作流的名称",
+          "name": "releaseId",
+          "in": "path",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
           }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
         }
       ],
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "删除编译相关信息",
+        "responses": {
+          "200": {
+            "description": "删除成功"
+          }
+        }
+      },
       "get": {
         "security": [
           {
@@ -1121,14 +1113,14 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "得到交付配置文件信息",
+        "summary": "得到编译相关信息",
         "responses": {
           "200": {
-            "description": "交付配置文件信息参数",
+            "description": "编译信息参数",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeliveryConfig"
+                  "$ref": "#/components/schemas/DeliveryBuild"
                 }
               }
             }
@@ -1136,12 +1128,12 @@
         }
       }
     },
-    "/dc/configManage/{configId}": {
+    "/dc/configs/{releaseId}": {
       "parameters": [
         {
-          "name": "configId",
+          "name": "releaseId",
           "in": "path",
-          "description": "交付配置文件信息ID",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
@@ -1166,47 +1158,7 @@
             "description": "删除成功"
           }
         }
-      }
-    },
-    "/dc/configManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
+      },
       "get": {
         "security": [
           {
@@ -1219,17 +1171,14 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "获取交付配置文件信息列表",
+        "summary": "得到配置文件信息",
         "responses": {
           "200": {
-            "description": "交付配置文件信息参数",
+            "description": "配置文件信息参数",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryConfig"
-                  }
+                  "$ref": "#/components/schemas/DeliveryConfig"
                 }
               }
             }
@@ -1237,78 +1186,12 @@
         }
       }
     },
-    "/dc/deliveryManage": {
+    "/dc/envs/{releaseId}": {
       "parameters": [
         {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "得到交付相关信息",
-        "responses": {
-          "200": {
-            "description": "交付相关信息参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeliveryInfo"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/deliveryManage/{deliveryId}": {
-      "parameters": [
-        {
-          "name": "deliveryId",
+          "name": "releaseId",
           "in": "path",
-          "description": "交付相关信息ID",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
@@ -1327,122 +1210,13 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "删除交付相关信息",
+        "summary": "删除环境变量信息",
         "responses": {
           "200": {
             "description": "删除成功"
           }
         }
-      }
-    },
-    "/dc/deliveryManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "获取交付相关信息列表",
-        "responses": {
-          "200": {
-            "description": "交付相关信息参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/envManage": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "piplineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
+      },
       "get": {
         "security": [
           {
@@ -1458,7 +1232,7 @@
         "summary": "得到交付环境变量信息",
         "responses": {
           "200": {
-            "description": "交付环境变量信息参数",
+            "description": "环境变量信息参数",
             "content": {
               "application/json": {
                 "schema": {
@@ -1470,179 +1244,12 @@
         }
       }
     },
-    "/dc/envManage/{envId}": {
+    "/dc/images/{releaseId}": {
       "parameters": [
         {
-          "name": "envId",
+          "name": "releaseId",
           "in": "path",
-          "description": "交付中心环境变量ID",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "delete": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "删除交付环境变量信息",
-        "responses": {
-          "200": {
-            "description": "删除成功"
-          }
-        }
-      }
-    },
-    "/dc/envManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "获取交付环境变量信息列表",
-        "responses": {
-          "200": {
-            "description": "交付环境变量信息参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryEnv"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/imageManage": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "得到交付镜像文件信息",
-        "responses": {
-          "200": {
-            "description": "交付镜像文件信息参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeliveryImage"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/imageManage/{imageId}": {
-      "parameters": [
-        {
-          "name": "imageId",
-          "in": "path",
-          "description": "交付中心镜像信息ID",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
@@ -1667,65 +1274,7 @@
             "description": "删除成功"
           }
         }
-      }
-    },
-    "/dc/imageManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "imageName",
-          "in": "query",
-          "description": "镜像名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "imageLabel",
-          "in": "query",
-          "description": "镜像标签",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      },
       "get": {
         "security": [
           {
@@ -1738,17 +1287,14 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "获取交付镜像文件信息列表",
+        "summary": "得到镜像信息",
         "responses": {
           "200": {
-            "description": "交付镜像文件信息参数",
+            "description": "镜像信息参数",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryImage"
-                  }
+                  "$ref": "#/components/schemas/DeliveryImage"
                 }
               }
             }
@@ -1756,45 +1302,37 @@
         }
       }
     },
-    "/dc/packageManage": {
+    "/dc/packages/{releaseId}": {
       "parameters": [
         {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
+          "name": "releaseId",
+          "in": "path",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
           }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
         }
       ],
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "删除包信息信息",
+        "responses": {
+          "200": {
+            "description": "删除成功"
+          }
+        }
+      },
       "get": {
         "security": [
           {
@@ -1807,10 +1345,10 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "获取交付包信息",
+        "summary": "得到包信息",
         "responses": {
           "200": {
-            "description": "交付包信息参数",
+            "description": "包信息参数",
             "content": {
               "application/json": {
                 "schema": {
@@ -1822,12 +1360,128 @@
         }
       }
     },
-    "/dc/packageManage/{packageId}": {
+    "/dc/releases": {
       "parameters": [
         {
-          "name": "packageId",
+          "name": "orgId",
+          "in": "query",
+          "description": "组织ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "teamId",
+          "in": "query",
+          "description": "团队ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "pipelineName",
+          "in": "query",
+          "description": "工作流的名称",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "taskId",
+          "in": "query",
+          "description": "工作流任务ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "description": "分页大小",
+          "schema": {
+            "type": "integer"
+          },
+          "required": false
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "description": "分页index",
+          "schema": {
+            "type": "integer"
+          },
+          "required": false
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "获取版本信息列表",
+        "responses": {
+          "200": {
+            "description": "版本信息参数",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryVersion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "新增版本信息列表",
+        "requestBody": {
+          "description": "版本信息参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryVersion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "版本信息添加成功"
+          }
+        }
+      }
+    },
+    "/dc/releases/{id}": {
+      "parameters": [
+        {
+          "name": "id",
           "in": "path",
-          "description": "交付包信息ID",
+          "description": "版本信息ID",
           "required": true,
           "schema": {
             "type": "string"
@@ -1846,53 +1500,13 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "删除交付包信息信息",
+        "summary": "删除版本信息",
         "responses": {
           "200": {
             "description": "删除成功"
           }
         }
-      }
-    },
-    "/dc/packageManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
+      },
       "get": {
         "security": [
           {
@@ -1905,246 +1519,10 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "获取交付包信息列表",
+        "summary": "得到版本信息",
         "responses": {
           "200": {
-            "description": "交付包信息参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryPackage"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/securityManage": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "得到交付安全扫描结果信息",
-        "responses": {
-          "200": {
-            "description": "交付安全扫描结果参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeliverySecurity"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/securityManage/{securityId}": {
-      "parameters": [
-        {
-          "name": "securityId",
-          "in": "path",
-          "description": "交付安全扫描信息ID",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "delete": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "删除交付安全扫描结果信息",
-        "responses": {
-          "200": {
-            "description": "删除成功"
-          }
-        }
-      }
-    },
-    "/dc/securityManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "获取交付安全扫描结果信息列表",
-        "responses": {
-          "200": {
-            "description": "交付安全扫描结果参数",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliverySecurity"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dc/versionManage": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          },
-          {
-            "ApiRootKeyAuth": []
-          }
-        ],
-        "tags": [
-          "DeliveryCenter"
-        ],
-        "summary": "得到交付版本信息",
-        "responses": {
-          "200": {
-            "description": "交付版本信息参数",
+            "description": "版本信息参数",
             "content": {
               "application/json": {
                 "schema": {
@@ -2156,12 +1534,12 @@
         }
       }
     },
-    "/dc/versionManage/{versionId}": {
+    "/dc/securitys/{releaseId}": {
       "parameters": [
         {
-          "name": "versionId",
+          "name": "releaseId",
           "in": "path",
-          "description": "交付版本信息ID",
+          "description": "release的ID",
           "required": true,
           "schema": {
             "type": "string"
@@ -2180,62 +1558,13 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "删除交付版本信息",
+        "summary": "删除安全扫描结果信息",
         "responses": {
           "200": {
             "description": "删除成功"
           }
         }
-      }
-    },
-    "/dc/versionManage/search": {
-      "parameters": [
-        {
-          "name": "orgId",
-          "in": "query",
-          "description": "组织ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "teamId",
-          "in": "query",
-          "description": "团队ID",
-          "required": true,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "pipelineName",
-          "in": "query",
-          "description": "工作流的名称",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "taskId",
-          "in": "query",
-          "description": "工作流任务ID",
-          "required": false,
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "label",
-          "in": "query",
-          "description": "标签",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      },
       "get": {
         "security": [
           {
@@ -2248,17 +1577,14 @@
         "tags": [
           "DeliveryCenter"
         ],
-        "summary": "获取交付版本信息列表",
+        "summary": "得到安全扫描结果信息",
         "responses": {
           "200": {
-            "description": "交付版本信息参数",
+            "description": "安全扫描结果参数",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeliveryVersion"
-                  }
+                  "$ref": "#/components/schemas/DeliverySecurity"
                 }
               }
             }
@@ -4505,67 +3831,7 @@
           }
         }
       },
-      "DeliveryConfig": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "fileContentList": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "DeliveryEnv": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "fileContentList": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "DeliveryImage": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "image": {
-            "type": "string"
-          },
-          "imageSize": {
-            "type": "integer"
-          },
-          "imageDigest": {
-            "type": "string"
-          },
-          "imageLables": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "DeliveryInfo": {
+      "DeliveryBuild": {
         "type": "object",
         "properties": {
           "id": {
@@ -4575,10 +3841,7 @@
           "testReportUrls": {
             "type": "array",
             "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             }
           },
           "orderedServices": {
@@ -4593,20 +3856,101 @@
           "issues": {
             "type": "array",
             "items": {
+              "type": "string"
+            }
+          },
+          "commits": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "jobContext": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryConfig": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "fileContentList": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "integer"
+          }
+        }
+      },
+      "DeliveryEnv": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "fileContentList": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "integer"
+          }
+        }
+      },
+      "DeliveryImage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "image": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "imageSize": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "imageDigest": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "imageLables": {
+            "type": "object",
+            "additionalProperties": {
               "type": "array",
               "items": {
                 "type": "string"
               }
             }
           },
-          "commits": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
+          "createdAt": {
+            "type": "integer"
           }
         }
       },
@@ -4618,9 +3962,30 @@
             "readOnly": true
           },
           "packageUrl": {
-            "type": "string"
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "packageName": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
           },
           "packageSize": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "packageDigest": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
             "type": "integer"
           }
         }
@@ -4632,32 +3997,22 @@
             "type": "string",
             "readOnly": true
           },
-          "packageIds": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+          "imageDigest": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "property既是服务名称"
             }
           },
-          "descs": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+          "ancestryInfo": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "property既是服务名称"
             }
           },
-          "levels": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
+          "createdAt": {
+            "type": "integer"
           }
         }
       },
@@ -4681,6 +4036,9 @@
             }
           },
           "createdBy": {
+            "type": "string"
+          },
+          "createdAt": {
             "type": "integer"
           }
         }
