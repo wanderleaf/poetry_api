@@ -833,7 +833,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DeliveryVersion'
+                  $ref: '#/components/schemas/DeliveryRelease'
     post:
       security:
         - ApiKeyAuth: []
@@ -2359,6 +2359,23 @@ components:
             type: string
         createdAt:
           type: integer
+    DeliveryRelease:
+      type: object
+      properties:
+        versionInfo:
+          $ref: '#/components/schemas/DeliveryVersion'
+        buildInfo:
+          $ref: '#/components/schemas/DeliveryBuild'
+        imageInfo:
+          $ref: '#/components/schemas/DeliveryImage'
+        packageInfo:
+          $ref: '#/components/schemas/DeliveryPackage'
+        configInfo:
+          $ref: '#/components/schemas/DeliveryConfig'
+        envInfo:
+          $ref: '#/components/schemas/DeliveryEnv'
+        securityInfo:
+          $ref: '#/components/schemas/DeliverySecurity'
     DeliverySecurity:
       type: object
       properties:
