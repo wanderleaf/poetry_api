@@ -2272,12 +2272,27 @@ components:
         issues:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/DeliveryIssueObject'
         commits:
           type: array
           items:
-            type: object
-        jobContext:
+            $ref: '#/components/schemas/DeliveryCommitObject'
+    DeliveryCommitObject:
+      type: object
+      properties:
+        branch:
+          type: string
+        checkoutPath:
+          type: string
+        commitId:
+          type: string
+        isPrimary:
+          type: boolean
+        remoteName:
+          type: string
+        repoName:
+          type: string
+        repoOwner:
           type: string
     DeliveryConfig:
       type: object
@@ -2285,50 +2300,80 @@ components:
         id:
           type: string
           readOnly: true
-        fileContentList:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: array
-              items:
-                type: string
+        serviceName:
+          type: string
+        ConfigContents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryConfigObject'
+    DeliveryConfigObject:
+      type: object
+      properties:
+        content:
+          type: string
     DeliveryEnv:
       type: object
       properties:
         id:
           type: string
           readOnly: true
-        fileContentList:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: string
+        serviceName:
+          type: string
+        envs:
+          $ref: '#/components/schemas/DeliveryEnvObject'
+    DeliveryEnvObject:
+      type: object
+      properties:
+        envName:
+          type: string
+        envContent:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEnvObject2'
+    DeliveryEnvObject2:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     DeliveryImage:
       type: object
       properties:
         id:
           type: string
           readOnly: true
+        serviceName:
+          type: string
         image:
-          type: object
-          additionalProperties:
-            type: string
+          type: string
         imageSize:
-          type: object
-          additionalProperties:
-            type: integer
+          type: integer
         imageDigest:
-          type: object
-          additionalProperties:
-            type: string
+          type: string
         imageLables:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+          type: array
+          items:
+            type: string
+    DeliveryIssueObject:
+      type: object
+      properties:
+        assignee:
+          type: string
+        creator:
+          type: string
+        id:
+          type: string
+        key:
+          type: string
+        priority:
+          type: string
+        reporter:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
     DeliveryPackage:
       type: object
       properties:
@@ -2336,21 +2381,13 @@ components:
           type: string
           readOnly: true
         packageUrl:
-          type: object
-          additionalProperties:
-            type: string
+          type: string
         packageName:
-          type: object
-          additionalProperties:
-            type: string
+          type: string
         packageSize:
-          type: object
-          additionalProperties:
-            type: integer
+          type: integer
         packageDigest:
-          type: object
-          additionalProperties:
-            type: string
+          type: string
     DeliveryRelease:
       type: object
       properties:
@@ -2359,31 +2396,37 @@ components:
         buildInfo:
           $ref: '#/components/schemas/DeliveryBuild'
         imageInfo:
-          $ref: '#/components/schemas/DeliveryImage'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryImage'
         packageInfo:
-          $ref: '#/components/schemas/DeliveryPackage'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryPackage'
         configInfo:
-          $ref: '#/components/schemas/DeliveryConfig'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryConfig'
         envInfo:
-          $ref: '#/components/schemas/DeliveryEnv'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEnv'
         securityInfo:
-          $ref: '#/components/schemas/DeliverySecurity'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverySecurity'
     DeliverySecurity:
       type: object
       properties:
         id:
           type: string
           readOnly: true
+        serviceName:
+          type: string
         imageDigest:
-          type: object
-          additionalProperties:
-            type: string
-            description: property既是服务名称
+          type: string
         ancestryInfo:
-          type: object
-          additionalProperties:
-            type: string
-            description: property既是服务名称
+          type: string
     DeliveryVersion:
       type: object
       properties:
@@ -2398,8 +2441,6 @@ components:
           type: array
           items:
             type: string
-        createdBy:
-          type: string
     EmailAction:
       type: object
       properties:
