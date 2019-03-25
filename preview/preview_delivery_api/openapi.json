@@ -3903,7 +3903,7 @@
           "serviceName": {
             "type": "string"
           },
-          "ConfigContents": {
+          "configContents": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DeliveryConfigObject"
