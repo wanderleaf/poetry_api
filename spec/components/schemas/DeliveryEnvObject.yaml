@@ -1,0 +1,8 @@
+type: object
+properties:
+  envName:
+    type: string
+  envContent:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliveryEnvObject2'

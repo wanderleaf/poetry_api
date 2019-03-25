@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  serviceName:
+    type: string
+  ConfigContents:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliveryConfigObject'

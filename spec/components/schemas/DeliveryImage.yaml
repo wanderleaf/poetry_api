@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  serviceName:
+    type: string
+  image:
+    type: string
+  imageSize:
+    type: integer
+  imageDigest:
+    type: string
+  imageLables:
+    type: array
+    items:
+      type: string

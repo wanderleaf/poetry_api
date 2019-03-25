@@ -1,0 +1,31 @@
+parameters:
+  - name: releaseId
+    in: path
+    description: release的ID
+    required: true
+    schema:
+      type: string
+delete:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 删除镜像文件信息
+  responses:
+    '200':
+      description: 删除成功
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 得到镜像信息
+  responses:
+    '200':
+      description: 镜像信息参数
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeliveryImage'

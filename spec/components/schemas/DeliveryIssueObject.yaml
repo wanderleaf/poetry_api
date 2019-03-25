@@ -1,0 +1,18 @@
+type: object
+properties:
+  assignee:
+    type: string
+  creator:
+    type: string
+  id:
+    type: string
+  key:
+    type: string
+  priority:
+    type: string
+  reporter:
+    type: string
+  summary:
+    type: string
+  url:
+    type: string

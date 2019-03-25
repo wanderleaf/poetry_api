@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  packageUrl:
+    type: string
+  packageName:
+    type: string
+  packageSize:
+    type: integer
+  packageDigest:
+    type: string
