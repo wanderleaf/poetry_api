@@ -2293,8 +2293,6 @@ components:
               type: array
               items:
                 type: string
-        createdAt:
-          type: integer
     DeliveryEnv:
       type: object
       properties:
@@ -2307,8 +2305,6 @@ components:
             type: object
             additionalProperties:
               type: string
-        createdAt:
-          type: integer
     DeliveryImage:
       type: object
       properties:
@@ -2333,8 +2329,6 @@ components:
             type: array
             items:
               type: string
-        createdAt:
-          type: integer
     DeliveryPackage:
       type: object
       properties:
@@ -2357,8 +2351,6 @@ components:
           type: object
           additionalProperties:
             type: string
-        createdAt:
-          type: integer
     DeliveryRelease:
       type: object
       properties:
@@ -2392,8 +2384,6 @@ components:
           additionalProperties:
             type: string
             description: property既是服务名称
-        createdAt:
-          type: integer
     DeliveryVersion:
       type: object
       properties:
@@ -2410,8 +2400,6 @@ components:
             type: string
         createdBy:
           type: string
-        createdAt:
-          type: integer
     EmailAction:
       type: object
       properties:

@@ -3888,9 +3888,6 @@
                 }
               }
             }
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
@@ -3909,9 +3906,6 @@
                 "type": "string"
               }
             }
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
@@ -3948,9 +3942,6 @@
                 "type": "string"
               }
             }
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
@@ -3984,9 +3975,6 @@
             "additionalProperties": {
               "type": "string"
             }
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
@@ -4036,9 +4024,6 @@
               "type": "string",
               "description": "property既是服务名称"
             }
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
@@ -4063,9 +4048,6 @@
           },
           "createdBy": {
             "type": "string"
-          },
-          "createdAt": {
-            "type": "integer"
           }
         }
       },
