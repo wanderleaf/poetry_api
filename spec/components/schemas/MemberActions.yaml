@@ -5,5 +5,3 @@ properties:
     description: user id
   isTeamleader:
     type: boolean
-  action:
-    type: string

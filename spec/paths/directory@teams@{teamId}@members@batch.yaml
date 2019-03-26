@@ -28,3 +28,26 @@ post:
         application/json:
           schema:
             $ref: '#/components/schemas/ActionResult'
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 更新团队成员
+  requestBody:
+    description: 更新团队成员数据(新接口，不需要action参数)
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberActions'
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
