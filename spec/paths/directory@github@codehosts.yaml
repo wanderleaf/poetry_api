@@ -1,0 +1,23 @@
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建一个type为github的codehost
+  requestBody:
+    description: codehost 参数
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            installationID:
+              type: integer
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Codehost'
