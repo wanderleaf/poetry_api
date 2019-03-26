@@ -2903,6 +2903,46 @@
             }
           }
         }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "更新团队成员",
+        "requestBody": {
+          "description": "更新团队成员数据(新接口，不需要action参数)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MemberActions"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/directory/teamss/search": {
@@ -4318,6 +4358,21 @@
         }
       },
       "MemberAction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "user id"
+          },
+          "isTeamleader": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string"
+          }
+        }
+      },
+      "MemberActions": {
         "type": "object",
         "properties": {
           "id": {
