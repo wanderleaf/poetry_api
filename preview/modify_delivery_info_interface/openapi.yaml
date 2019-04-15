@@ -724,12 +724,6 @@ paths:
         required: true
         schema:
           type: integer
-      - name: teamId
-        in: query
-        description: 团队ID
-        required: true
-        schema:
-          type: integer
       - name: pipelineName
         in: query
         description: 工作流的名称
@@ -740,6 +734,12 @@ paths:
         in: query
         description: 工作流任务ID
         required: true
+        schema:
+          type: integer
+      - name: teamId
+        in: query
+        description: 团队ID
+        required: false
         schema:
           type: integer
       - name: per_page
