@@ -11,7 +11,7 @@ delete:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 删除配置文件信息
+  summary: 删除部署信息
   responses:
     '200':
       description: 删除成功
@@ -21,11 +21,11 @@ get:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 得到配置文件信息
+  summary: 得到部署信息
   responses:
     '200':
-      description: 配置文件信息参数
+      description: 部署信息参数
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeliveryConfig'
+            $ref: '#/components/schemas/DeliveryDeploy'

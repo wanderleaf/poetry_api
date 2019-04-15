@@ -5,13 +5,24 @@ properties:
     readOnly: true
   serviceName:
     type: string
-  image:
+  repoName:
+    type: string
+  tagName:
     type: string
   imageSize:
     type: integer
   imageDigest:
     type: string
-  imageLables:
-    type: array
-    items:
-      type: string
+  author:
+    type: string
+  architecture:
+    type: string
+  dockerVersion:
+    type: string
+  os:
+    type: string
+  creationTime:
+    type: string
+  updateTime:
+    type: string
+

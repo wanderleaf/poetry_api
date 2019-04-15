@@ -3,16 +3,15 @@ properties:
   id:
     type: string
     readOnly: true
-  testReportUrls:
-    type: array
-    items:
-      type: string
-  orderedServices:
-    type: array
-    items:
-      type: array
-      items:
-        type: string
+  releaseId:
+    type: string
+    readOnly: true
+  serviceName:
+    type: string
+  imageInfo:
+    $ref: '#/components/schemas/DeliveryImage'
+  packageInfo:
+    $ref: '#/components/schemas/DeliveryPackage'
   issues:
     type: array
     items:

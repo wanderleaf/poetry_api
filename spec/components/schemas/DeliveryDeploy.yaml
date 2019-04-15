@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  releaseId:
+    type: string
+    readOnly: true
+  serviceName:
+    type: string
+  configContents:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliveryConfigObject'
+  envs:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliveryEnvObject2'
+  orderedServices:
+    type: array
+    items:
+      type: array
+      items:
+        type: string

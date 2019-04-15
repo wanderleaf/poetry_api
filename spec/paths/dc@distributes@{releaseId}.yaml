@@ -11,7 +11,7 @@ delete:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 删除镜像文件信息
+  summary: 删除分发信息
   responses:
     '200':
       description: 删除成功
@@ -21,11 +21,11 @@ get:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 得到镜像信息
+  summary: 得到分发信息
   responses:
     '200':
-      description: 镜像信息参数
+      description: 分发信息参数
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeliveryImage'
+            $ref: '#/components/schemas/DeliveryDistribute'

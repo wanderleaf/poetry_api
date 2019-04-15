@@ -11,7 +11,7 @@ delete:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 删除包信息信息
+  summary: 删除测试信息
   responses:
     '200':
       description: 删除成功
@@ -21,11 +21,11 @@ get:
     - ApiRootKeyAuth: []
   tags:
     - DeliveryCenter
-  summary: 得到包信息
+  summary: 得到测试信息
   responses:
     '200':
-      description: 包信息参数
+      description: 测试信息参数
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeliveryPackage'
+            $ref: '#/components/schemas/DeliveryTest'
