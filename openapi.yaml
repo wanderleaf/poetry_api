@@ -652,7 +652,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeliveryBuild'
-  '/dc/configs/{releaseId}':
+  '/dc/deploys/{releaseId}':
     parameters:
       - name: releaseId
         in: path
@@ -666,7 +666,7 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - DeliveryCenter
-      summary: 删除配置文件信息
+      summary: 删除部署信息
       responses:
         '200':
           description: 删除成功
@@ -676,15 +676,15 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - DeliveryCenter
-      summary: 得到配置文件信息
+      summary: 得到部署信息
       responses:
         '200':
-          description: 配置文件信息参数
+          description: 部署信息参数
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeliveryConfig'
-  '/dc/envs/{releaseId}':
+                $ref: '#/components/schemas/DeliveryDeploy'
+  '/dc/distributes/{releaseId}':
     parameters:
       - name: releaseId
         in: path
@@ -698,7 +698,7 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - DeliveryCenter
-      summary: 删除环境变量信息
+      summary: 删除分发信息
       responses:
         '200':
           description: 删除成功
@@ -708,89 +708,19 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - DeliveryCenter
-      summary: 得到交付环境变量信息
+      summary: 得到分发信息
       responses:
         '200':
-          description: 环境变量信息参数
+          description: 分发信息参数
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeliveryEnv'
-  '/dc/images/{releaseId}':
-    parameters:
-      - name: releaseId
-        in: path
-        description: release的ID
-        required: true
-        schema:
-          type: string
-    delete:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - DeliveryCenter
-      summary: 删除镜像文件信息
-      responses:
-        '200':
-          description: 删除成功
-    get:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - DeliveryCenter
-      summary: 得到镜像信息
-      responses:
-        '200':
-          description: 镜像信息参数
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeliveryImage'
-  '/dc/packages/{releaseId}':
-    parameters:
-      - name: releaseId
-        in: path
-        description: release的ID
-        required: true
-        schema:
-          type: string
-    delete:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - DeliveryCenter
-      summary: 删除包信息信息
-      responses:
-        '200':
-          description: 删除成功
-    get:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - DeliveryCenter
-      summary: 得到包信息
-      responses:
-        '200':
-          description: 包信息参数
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeliveryPackage'
+                $ref: '#/components/schemas/DeliveryDistribute'
   /dc/releases:
     parameters:
       - name: orgId
         in: query
         description: 组织ID
-        required: true
-        schema:
-          type: integer
-      - name: teamId
-        in: query
-        description: 团队ID
         required: true
         schema:
           type: integer
@@ -804,6 +734,12 @@ paths:
         in: query
         description: 工作流任务ID
         required: true
+        schema:
+          type: integer
+      - name: teamName
+        in: query
+        description: 团队名称
+        required: false
         schema:
           type: integer
       - name: per_page
@@ -914,6 +850,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeliverySecurity'
+  '/dc/tests/{releaseId}':
+    parameters:
+      - name: releaseId
+        in: path
+        description: release的ID
+        required: true
+        schema:
+          type: string
+    delete:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 删除测试信息
+      responses:
+        '200':
+          description: 删除成功
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 得到测试信息
+      responses:
+        '200':
+          description: 测试信息参数
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryTest'
   /directory/ad:
     parameters:
       - name: orgId
@@ -2370,16 +2338,15 @@ components:
         id:
           type: string
           readOnly: true
-        testReportUrls:
-          type: array
-          items:
-            type: string
-        orderedServices:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
+        releaseId:
+          type: string
+          readOnly: true
+        serviceName:
+          type: string
+        imageInfo:
+          $ref: '#/components/schemas/DeliveryImage'
+        packageInfo:
+          $ref: '#/components/schemas/DeliveryPackage'
         issues:
           type: array
           items:
@@ -2405,33 +2372,49 @@ components:
           type: string
         repoOwner:
           type: string
-    DeliveryConfig:
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-        serviceName:
-          type: string
-        ConfigContents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryConfigObject'
     DeliveryConfigObject:
       type: object
       properties:
         content:
           type: string
-    DeliveryEnv:
+    DeliveryDeploy:
       type: object
       properties:
         id:
           type: string
           readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
         serviceName:
           type: string
+        configContents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryConfigObject'
         envs:
-          $ref: '#/components/schemas/DeliveryEnvObject'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEnvObject2'
+        orderedServices:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+    DeliveryDistribute:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        serviceName:
+          type: string
+        registryName:
+          type: string
     DeliveryEnvObject:
       type: object
       properties:
@@ -2456,16 +2439,26 @@ components:
           readOnly: true
         serviceName:
           type: string
-        image:
+        repoName:
+          type: string
+        tagName:
           type: string
         imageSize:
           type: integer
         imageDigest:
           type: string
-        imageLables:
-          type: array
-          items:
-            type: string
+        author:
+          type: string
+        architecture:
+          type: string
+        dockerVersion:
+          type: string
+        os:
+          type: string
+        creationTime:
+          type: string
+        updateTime:
+          type: string
     DeliveryIssueObject:
       type: object
       properties:
@@ -2505,23 +2498,21 @@ components:
         versionInfo:
           $ref: '#/components/schemas/DeliveryVersion'
         buildInfo:
-          $ref: '#/components/schemas/DeliveryBuild'
-        imageInfo:
           type: array
           items:
-            $ref: '#/components/schemas/DeliveryImage'
-        packageInfo:
+            $ref: '#/components/schemas/DeliveryBuild'
+        deployInfo:
           type: array
           items:
-            $ref: '#/components/schemas/DeliveryPackage'
-        configInfo:
+            $ref: '#/components/schemas/DeliveryDeploy'
+        testInfo:
           type: array
           items:
-            $ref: '#/components/schemas/DeliveryConfig'
-        envInfo:
+            $ref: '#/components/schemas/DeliveryTest'
+        distributeInfo:
           type: array
           items:
-            $ref: '#/components/schemas/DeliveryEnv'
+            $ref: '#/components/schemas/DeliveryDistribute'
         securityInfo:
           type: array
           items:
@@ -2532,12 +2523,28 @@ components:
         id:
           type: string
           readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
         serviceName:
           type: string
         imageDigest:
           type: string
         ancestryInfo:
           type: string
+    DeliveryTest:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        testReportUrls:
+          type: array
+          items:
+            type: string
     DeliveryVersion:
       type: object
       properties:
