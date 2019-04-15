@@ -1274,9 +1274,9 @@
           }
         },
         {
-          "name": "teamId",
+          "name": "teamName",
           "in": "query",
-          "description": "团队ID",
+          "description": "团队名称",
           "required": false,
           "schema": {
             "type": "integer"
