@@ -3,9 +3,11 @@ properties:
   id:
     type: string
     readOnly: true
-  serviceName:
+  releaseId:
     type: string
-  ConfigContents:
+    readOnly: true
+  testReportUrls:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryConfigObject'
+      type: string
+

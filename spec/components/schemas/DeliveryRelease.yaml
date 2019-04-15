@@ -3,23 +3,21 @@ properties:
   versionInfo:
     $ref: '#/components/schemas/DeliveryVersion'
   buildInfo:
-    $ref: '#/components/schemas/DeliveryBuild'
-  imageInfo:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryImage'
-  packageInfo:
+      $ref: '#/components/schemas/DeliveryBuild'
+  deployInfo:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryPackage'
-  configInfo:
+      $ref: '#/components/schemas/DeliveryDeploy'
+  testInfo:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryConfig'
-  envInfo:
+      $ref: '#/components/schemas/DeliveryTest'
+  distributeInfo:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryEnv'
+      $ref: '#/components/schemas/DeliveryDistribute'
   securityInfo:
     type: array
     items:
