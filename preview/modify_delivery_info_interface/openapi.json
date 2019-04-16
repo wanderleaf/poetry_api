@@ -4097,6 +4097,9 @@
           },
           "registryName": {
             "type": "string"
+          },
+          "namespace": {
+            "type": "string"
           }
         }
       },

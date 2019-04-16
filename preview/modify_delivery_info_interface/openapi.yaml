@@ -2427,6 +2427,8 @@ components:
           type: string
         registryName:
           type: string
+        namespace:
+          type: string
     DeliveryEnvObject:
       type: object
       properties:
