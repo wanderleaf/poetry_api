@@ -10,3 +10,5 @@ properties:
     type: string
   registryName:
     type: string
+  namespace:
+    type: string
