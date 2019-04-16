@@ -2375,8 +2375,20 @@ components:
     DeliveryConfigObject:
       type: object
       properties:
-        content:
+        name:
           type: string
+        age:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        createTime:
+          type: integer
     DeliveryDeploy:
       type: object
       properties:
