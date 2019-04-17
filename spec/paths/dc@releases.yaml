@@ -5,16 +5,16 @@ parameters:
     required: true
     schema:
       type: integer
-  - name: pipelineName
+  - name: workflowName
     in: query
     description: 工作流的名称
-    required: true
+    required: false
     schema:
       type: string
   - name: taskId
     in: query
     description: 工作流任务ID
-    required: true
+    required: false
     schema:
       type: integer
   - name: teamName

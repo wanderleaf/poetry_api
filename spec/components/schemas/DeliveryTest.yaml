@@ -6,8 +6,7 @@ properties:
   releaseId:
     type: string
     readOnly: true
-  testReportUrls:
+  testReports:
     type: array
     items:
-      type: string
-
+      $ref: '#/components/schemas/DeliveryTestObject'

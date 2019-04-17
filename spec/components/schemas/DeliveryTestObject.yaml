@@ -1,0 +1,10 @@
+type: object
+properties:
+  testResultPath:
+    type: string
+  workflowName:
+    type: string
+  taskId:
+    type: integer
+  serviceName:
+    type: string
