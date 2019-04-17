@@ -1256,10 +1256,10 @@
           }
         },
         {
-          "name": "pipelineName",
+          "name": "workflowName",
           "in": "query",
           "description": "工作流的名称",
-          "required": true,
+          "required": false,
           "schema": {
             "type": "string"
           }
@@ -1268,7 +1268,7 @@
           "name": "taskId",
           "in": "query",
           "description": "工作流任务ID",
-          "required": true,
+          "required": false,
           "schema": {
             "type": "integer"
           }
@@ -4131,13 +4131,6 @@
       "DeliveryImage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "serviceName": {
-            "type": "string"
-          },
           "repoName": {
             "type": "string"
           },
@@ -4202,10 +4195,6 @@
       "DeliveryPackage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
           "packageUrl": {
             "type": "string"
           },
@@ -4291,11 +4280,28 @@
             "type": "string",
             "readOnly": true
           },
-          "testReportUrls": {
+          "testReports": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/DeliveryTestObject"
             }
+          }
+        }
+      },
+      "DeliveryTestObject": {
+        "type": "object",
+        "properties": {
+          "testResultPath": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "integer"
+          },
+          "serviceName": {
+            "type": "string"
           }
         }
       },
@@ -4309,7 +4315,22 @@
           "version": {
             "type": "string"
           },
+          "orgId": {
+            "type": "integer"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "integer"
+          },
           "desc": {
+            "type": "string"
+          },
+          "createdBy": {
             "type": "string"
           },
           "labels": {
