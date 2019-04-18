@@ -4300,7 +4300,7 @@
           "taskId": {
             "type": "integer"
           },
-          "serviceName": {
+          "testName": {
             "type": "string"
           }
         }

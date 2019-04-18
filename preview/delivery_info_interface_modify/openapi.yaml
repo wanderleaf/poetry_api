@@ -2560,7 +2560,7 @@ components:
           type: string
         taskId:
           type: integer
-        serviceName:
+        testName:
           type: string
     DeliveryVersion:
       type: object
