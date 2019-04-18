@@ -6,5 +6,5 @@ properties:
     type: string
   taskId:
     type: integer
-  serviceName:
+  testName:
     type: string
