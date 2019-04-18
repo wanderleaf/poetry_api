@@ -724,15 +724,15 @@ paths:
         required: true
         schema:
           type: integer
-      - name: pipelineName
+      - name: workflowName
         in: query
-        description: 工作流的名称
+        description: 工作流的名称(新增时必须包含)
         required: true
         schema:
           type: string
       - name: taskId
         in: query
-        description: 工作流任务ID
+        description: 工作流任务ID(新增时必须包含)
         required: true
         schema:
           type: integer
@@ -817,7 +817,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeliveryVersion'
+                $ref: '#/components/schemas/DeliveryVersionArgs'
   '/dc/securitys/{releaseId}':
     parameters:
       - name: releaseId
@@ -2375,8 +2375,20 @@ components:
     DeliveryConfigObject:
       type: object
       properties:
-        content:
+        name:
           type: string
+        age:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        createTime:
+          type: integer
     DeliveryDeploy:
       type: object
       properties:
@@ -2415,6 +2427,8 @@ components:
           type: string
         registryName:
           type: string
+        namespace:
+          type: string
     DeliveryEnvObject:
       type: object
       properties:
@@ -2434,11 +2448,6 @@ components:
     DeliveryImage:
       type: object
       properties:
-        id:
-          type: string
-          readOnly: true
-        serviceName:
-          type: string
         repoName:
           type: string
         tagName:
@@ -2481,9 +2490,6 @@ components:
     DeliveryPackage:
       type: object
       properties:
-        id:
-          type: string
-          readOnly: true
         packageUrl:
           type: string
         packageName:
@@ -2496,7 +2502,7 @@ components:
       type: object
       properties:
         versionInfo:
-          $ref: '#/components/schemas/DeliveryVersion'
+          $ref: '#/components/schemas/DeliveryVersionArgs'
         buildInfo:
           type: array
           items:
@@ -2541,10 +2547,21 @@ components:
         releaseId:
           type: string
           readOnly: true
-        testReportUrls:
+        testReports:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/DeliveryTestObject'
+    DeliveryTestObject:
+      type: object
+      properties:
+        testResultPath:
+          type: string
+        workflowName:
+          type: string
+        taskId:
+          type: integer
+        testName:
+          type: string
     DeliveryVersion:
       type: object
       properties:
@@ -2552,6 +2569,30 @@ components:
           type: string
           readOnly: true
         version:
+          type: string
+        desc:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    DeliveryVersionArgs:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        version:
+          type: string
+        orgId:
+          type: integer
+        teamName:
+          type: string
+        workflowName:
+          type: string
+        taskId:
+          type: string
+        createdBy:
           type: string
         desc:
           type: string

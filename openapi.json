@@ -1256,9 +1256,9 @@
           }
         },
         {
-          "name": "pipelineName",
+          "name": "workflowName",
           "in": "query",
-          "description": "工作流的名称",
+          "description": "工作流的名称(新增时必须包含)",
           "required": true,
           "schema": {
             "type": "string"
@@ -1267,7 +1267,7 @@
         {
           "name": "taskId",
           "in": "query",
-          "description": "工作流任务ID",
+          "description": "工作流任务ID(新增时必须包含)",
           "required": true,
           "schema": {
             "type": "integer"
@@ -1410,7 +1410,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeliveryVersion"
+                  "$ref": "#/components/schemas/DeliveryVersionArgs"
                 }
               }
             }
@@ -4021,8 +4021,26 @@
       "DeliveryConfigObject": {
         "type": "object",
         "properties": {
-          "content": {
+          "name": {
             "type": "string"
+          },
+          "age": {
+            "type": "string"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "createTime": {
+            "type": "integer"
           }
         }
       },
@@ -4079,6 +4097,9 @@
           },
           "registryName": {
             "type": "string"
+          },
+          "namespace": {
+            "type": "string"
           }
         }
       },
@@ -4110,13 +4131,6 @@
       "DeliveryImage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "serviceName": {
-            "type": "string"
-          },
           "repoName": {
             "type": "string"
           },
@@ -4181,10 +4195,6 @@
       "DeliveryPackage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
           "packageUrl": {
             "type": "string"
           },
@@ -4203,7 +4213,7 @@
         "type": "object",
         "properties": {
           "versionInfo": {
-            "$ref": "#/components/schemas/DeliveryVersion"
+            "$ref": "#/components/schemas/DeliveryVersionArgs"
           },
           "buildInfo": {
             "type": "array",
@@ -4270,11 +4280,28 @@
             "type": "string",
             "readOnly": true
           },
-          "testReportUrls": {
+          "testReports": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/DeliveryTestObject"
             }
+          }
+        }
+      },
+      "DeliveryTestObject": {
+        "type": "object",
+        "properties": {
+          "testResultPath": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "integer"
+          },
+          "testName": {
+            "type": "string"
           }
         }
       },
@@ -4286,6 +4313,42 @@
             "readOnly": true
           },
           "version": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DeliveryVersionArgs": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "type": "string"
+          },
+          "orgId": {
+            "type": "integer"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "createdBy": {
             "type": "string"
           },
           "desc": {
