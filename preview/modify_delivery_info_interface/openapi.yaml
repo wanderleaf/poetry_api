@@ -727,13 +727,13 @@ paths:
       - name: workflowName
         in: query
         description: 工作流的名称
-        required: false
+        required: true
         schema:
           type: string
       - name: taskId
         in: query
         description: 工作流任务ID
-        required: false
+        required: true
         schema:
           type: integer
       - name: teamName
@@ -2570,17 +2570,7 @@ components:
           readOnly: true
         version:
           type: string
-        orgId:
-          type: integer
-        teamName:
-          type: string
-        workflowName:
-          type: string
-        taskId:
-          type: integer
         desc:
-          type: string
-        createdBy:
           type: string
         labels:
           type: array
