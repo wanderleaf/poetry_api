@@ -5,17 +5,7 @@ properties:
     readOnly: true
   version:
     type: string
-  orgId:
-    type: integer
-  teamName:
-    type: string
-  workflowName:
-    type: string
-  taskId:
-    type: integer
   desc:
-    type: string
-  createdBy:
     type: string
   labels:
     type: array
