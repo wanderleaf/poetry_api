@@ -1,12 +1,8 @@
 type: object
 properties:
-  id:
-    type: string
-    readOnly: true
-  serviceName:
-    type: string
   repoName:
     type: string
+    readOnly: true
   tagName:
     type: string
   imageSize:

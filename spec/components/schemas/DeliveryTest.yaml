@@ -10,4 +10,7 @@ properties:
     type: array
     items:
       type: string
-
+  testReports:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliveryTestObject'
