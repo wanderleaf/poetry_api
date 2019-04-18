@@ -5,15 +5,15 @@ parameters:
     required: true
     schema:
       type: integer
-  - name: pipelineName
+  - name: workflowName
     in: query
-    description: 工作流的名称
+    description: 工作流的名称(新增时必须包含)
     required: true
     schema:
       type: string
   - name: taskId
     in: query
-    description: 工作流任务ID
+    description: 工作流任务ID(新增时必须包含)
     required: true
     schema:
       type: integer

@@ -1,10 +1,5 @@
 type: object
 properties:
-  id:
-    type: string
-    readOnly: true
-  serviceName:
-    type: string
   repoName:
     type: string
   tagName:

@@ -1,8 +1,5 @@
 type: object
 properties:
-  id:
-    type: string
-    readOnly: true
   packageUrl:
     type: string
   packageName:
