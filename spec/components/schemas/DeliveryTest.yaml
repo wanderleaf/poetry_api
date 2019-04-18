@@ -6,10 +6,6 @@ properties:
   releaseId:
     type: string
     readOnly: true
-  testReportUrls:
-    type: array
-    items:
-      type: string
   testReports:
     type: array
     items:
