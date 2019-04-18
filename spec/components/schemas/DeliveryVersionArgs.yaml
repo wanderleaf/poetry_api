@@ -1,0 +1,23 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  version:
+    type: string
+  orgId:
+    type: integer
+  teamName:
+    type: string
+  workflowName:
+    type: string
+  taskId:
+    type: string
+  createdBy:
+    type: string
+  desc:
+    type: string
+  labels:
+    type: array
+    items:
+      type: string

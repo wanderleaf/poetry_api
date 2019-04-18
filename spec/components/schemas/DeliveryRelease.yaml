@@ -1,7 +1,7 @@
 type: object
 properties:
   versionInfo:
-    $ref: '#/components/schemas/DeliveryVersion'
+    $ref: '#/components/schemas/DeliveryVersionArgs'
   buildInfo:
     type: array
     items:
