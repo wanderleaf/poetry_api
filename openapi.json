@@ -1070,6 +1070,53 @@
         }
       }
     },
+    "/ac/tests/measureInfo": {
+      "parameters": [
+        {
+          "name": "product",
+          "in": "query",
+          "description": "product name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "onlyDelivery",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "获取产品的测试任务质效信息",
+        "responses": {
+          "200": {
+            "description": "产品的测试任务质效信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestMeasureInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dc/builds/{releaseId}": {
       "parameters": [
         {
@@ -4910,6 +4957,26 @@
             "items": {
               "$ref": "#/components/schemas/RepoQualityGate"
             }
+          }
+        }
+      },
+      "TestMeasureInfo": {
+        "type": "object",
+        "properties": {
+          "productName": {
+            "type": "string"
+          },
+          "noTotalFrequency": {
+            "type": "integer"
+          },
+          "noTotalTime": {
+            "type": "integer"
+          },
+          "noSuccess": {
+            "type": "integer"
+          },
+          "onlyDelivery": {
+            "type": "boolean"
           }
         }
       },
