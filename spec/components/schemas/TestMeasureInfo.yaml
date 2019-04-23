@@ -1,0 +1,12 @@
+type: object
+properties:
+  productName:
+    type: string
+  noTotalFrequency:
+    type: integer
+  noTotalTime:
+    type: integer
+  noSuccess:
+    type: integer
+  onlyDelivery:
+    type: boolean
