@@ -1070,6 +1070,48 @@
         }
       }
     },
+    "/dc/products": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "组织ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "获取产品信息列表",
+        "responses": {
+          "200": {
+            "description": "产品信息参数",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryProduct"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dc/releases": {
       "parameters": [
         {
@@ -1105,7 +1147,7 @@
           "description": "产品名称",
           "required": false,
           "schema": {
-            "type": "integer"
+            "type": "string"
           }
         },
         {
@@ -3915,6 +3957,14 @@
             "type": "integer"
           },
           "packageDigest": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryProduct": {
+        "type": "object",
+        "properties": {
+          "productName": {
             "type": "string"
           }
         }
