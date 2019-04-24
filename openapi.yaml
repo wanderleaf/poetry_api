@@ -643,7 +643,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DeliveryProduct'
+                  type: string
   /dc/releases:
     parameters:
       - name: orgId
