@@ -8,10 +8,10 @@ properties:
     readOnly: true
   serviceName:
     type: string
-  configContents:
+  yamlContents:
     type: array
     items:
-      $ref: '#/components/schemas/DeliveryConfigObject'
+      type: string
   envs:
     type: array
     items:
