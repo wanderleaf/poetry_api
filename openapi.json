@@ -1321,9 +1321,9 @@
           }
         },
         {
-          "name": "teamName",
+          "name": "productName",
           "in": "query",
-          "description": "团队名称",
+          "description": "产品名称",
           "required": false,
           "schema": {
             "type": "integer"
@@ -4386,7 +4386,7 @@
           "orgId": {
             "type": "integer"
           },
-          "teamName": {
+          "productName": {
             "type": "string"
           },
           "workflowName": {
