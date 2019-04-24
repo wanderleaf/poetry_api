@@ -22,7 +22,7 @@ parameters:
     description: 产品名称
     required: false
     schema:
-      type: integer
+      type: string
   - name: per_page
     in: query
     description: 分页大小
