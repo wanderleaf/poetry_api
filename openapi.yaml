@@ -2264,6 +2264,8 @@ components:
           readOnly: true
         serviceName:
           type: string
+        containerName:
+          type: string
         yamlContents:
           type: array
           items:
