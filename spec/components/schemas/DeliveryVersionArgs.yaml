@@ -7,7 +7,7 @@ properties:
     type: string
   orgId:
     type: integer
-  teamName:
+  productName:
     type: string
   workflowName:
     type: string
