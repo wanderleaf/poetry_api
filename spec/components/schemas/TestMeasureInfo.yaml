@@ -8,5 +8,7 @@ properties:
     type: integer
   noSuccess:
     type: integer
-  onlyDelivery:
-    type: boolean
+  noDeliverySuccess:
+    type: integer
+  noDeliveryFrequency:
+    type: integer

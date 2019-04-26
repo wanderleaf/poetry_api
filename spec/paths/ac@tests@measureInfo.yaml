@@ -1,0 +1,16 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 获取产品的测试任务质效信息
+  responses:
+    '200':
+      description: 产品的测试任务质效信息
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TestMeasureInfo'
