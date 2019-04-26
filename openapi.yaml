@@ -620,6 +620,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TeamQualityGate'
+  /ac/tests/measureInfo:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取产品的测试任务质效信息
+      responses:
+        '200':
+          description: 产品的测试任务质效信息
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestMeasureInfo'
   /dc/products:
     parameters:
       - name: orgId
@@ -2851,8 +2868,10 @@ components:
           type: integer
         noSuccess:
           type: integer
-        onlyDelivery:
-          type: boolean
+        noDeliverySuccess:
+          type: integer
+        noDeliveryFrequency:
+          type: integer
     User:
       type: object
       properties:
