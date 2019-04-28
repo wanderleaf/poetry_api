@@ -2021,6 +2021,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
+  /spock/reaperOS:
+    get:
+      tags:
+        - spock
+      summary: 列出构建系统OS
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReaperOS'
   /spock/registry/namespaces:
     get:
       parameters:
@@ -2681,6 +2698,20 @@ components:
             - CCBTL
         intValue:
           type: integer
+    ReaperOS:
+      type: object
+      properties:
+        value:
+          type: string
+          example: trusty
+          description: 唯一ID
+        label:
+          type: string
+          description: 描述信息
+          example: ubuntu 14.04
+      required:
+        - value
+        - label
     Registry:
       type: object
       properties:
