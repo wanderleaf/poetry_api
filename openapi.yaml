@@ -152,6 +152,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
+  /ac/delivery/measureInfo:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取产品的交付任务质效信息
+      responses:
+        '200':
+          description: 产品的交付任务质效信息
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryMeasureInfo'
   /ac/issueMeasures/search:
     parameters:
       - name: reportId
@@ -2387,6 +2404,23 @@ components:
           type: string
         url:
           type: string
+    DeliveryMeasureInfo:
+      type: object
+      properties:
+        productName:
+          type: string
+        noProductWeeks:
+          type: integer
+        noDeliveryFrequency:
+          type: integer
+        noTotalTime:
+          type: integer
+        noTaskTotalTime:
+          type: integer
+        noSuccessTask:
+          type: integer
+        noTask:
+          type: integer
     DeliveryPackage:
       type: object
       properties:
