@@ -1,0 +1,16 @@
+type: object
+properties:
+  productName:
+    type: string
+  noProductWeeks:
+    type: integer
+  noDeliveryFrequency:
+    type: integer
+  noTotalTime:
+    type: integer
+  noTaskTotalTime:
+    type: integer
+  noSuccessTask:
+    type: integer
+  noTask:
+    type: integer
