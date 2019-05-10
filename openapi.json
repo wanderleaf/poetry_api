@@ -1348,6 +1348,86 @@
         }
       }
     },
+    "/dc/securitys": {
+      "get": {
+        "parameters": [
+          {
+            "name": "imageName",
+            "in": "query",
+            "description": "镜像名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "security",
+            "in": "query",
+            "description": "漏洞等级",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "获取镜像安全扫描详情信息",
+        "responses": {
+          "200": {
+            "description": "镜像安全扫描参数",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliverySecurity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "DeliveryCenter"
+        ],
+        "summary": "新增镜像安全扫描详情信息",
+        "requestBody": {
+          "description": "镜像安全扫描参数信息参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliverySecurity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "信息添加成功"
+          }
+        }
+      }
+    },
     "/directory/ad": {
       "parameters": [
         {
@@ -4121,10 +4201,10 @@
               "$ref": "#/components/schemas/DeliveryDistribute"
             }
           },
-          "securityInfo": {
+          "securityStatsInfo": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DeliverySecurity"
+              "$ref": "#/components/schemas/DeliverySecurityStats"
             }
           }
         }
@@ -4132,22 +4212,122 @@
       "DeliverySecurity": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "releaseId": {
-            "type": "string",
-            "readOnly": true
-          },
-          "serviceName": {
+          "imageId": {
             "type": "string"
           },
-          "imageDigest": {
+          "imageName": {
             "type": "string"
           },
-          "ancestryInfo": {
+          "layerId": {
             "type": "string"
+          },
+          "vulnerability": {
+            "$ref": "#/components/schemas/DeliverySecurityVulnerability"
+          },
+          "feature": {
+            "$ref": "#/components/schemas/DeliverySecurityFeature"
+          },
+          "severity": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliverySecurityFeature": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespaceName": {
+            "type": "string"
+          },
+          "versionFormat": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "vulnerabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliverySecurityVulnerability"
+            }
+          },
+          "addedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliverySecurityStats": {
+        "type": "object",
+        "properties": {
+          "imageName": {
+            "type": "string"
+          },
+          "deliverySecurityStatsInfo": {
+            "$ref": "#/components/schemas/DeliverySecurityStatsInfo"
+          }
+        }
+      },
+      "DeliverySecurityStatsInfo": {
+        "type": "object",
+        "properties": {
+          "unkown": {
+            "type": "integer"
+          },
+          "negligible": {
+            "type": "integer"
+          },
+          "medium": {
+            "type": "integer"
+          },
+          "low": {
+            "type": "integer"
+          },
+          "high": {
+            "type": "integer"
+          },
+          "critical": {
+            "type": "integer"
+          }
+        }
+      },
+      "DeliverySecurityVulnerability": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespaceName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "key": "Hello!",
+              "value": "world!"
+            }
+          },
+          "fixedBy": {
+            "type": "string"
+          },
+          "fixedIn": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliverySecurityFeature"
+            }
           }
         }
       },
