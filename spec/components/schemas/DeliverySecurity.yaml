@@ -1,14 +1,14 @@
 type: object
 properties:
-  id:
+  imageId:
     type: string
-    readOnly: true
-  releaseId:
+  imageName:
     type: string
-    readOnly: true
-  serviceName:
+  layerId:
     type: string
-  imageDigest:
-    type: string
-  ancestryInfo:
+  vulnerability:
+    $ref: '#/components/schemas/DeliverySecurityVulnerability'
+  feature:
+    $ref: '#/components/schemas/DeliverySecurityFeature'
+  severity:
     type: string

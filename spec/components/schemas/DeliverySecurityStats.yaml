@@ -1,0 +1,6 @@
+type: object
+properties:
+  imageName:
+    type: string
+  deliverySecurityStatsInfo:
+    $ref: '#/components/schemas/DeliverySecurityStatsInfo'

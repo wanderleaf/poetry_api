@@ -18,7 +18,7 @@ properties:
     type: array
     items:
       $ref: '#/components/schemas/DeliveryDistribute'
-  securityInfo:
+  securityStatsInfo:
     type: array
     items:
-      $ref: '#/components/schemas/DeliverySecurity'
+      $ref: '#/components/schemas/DeliverySecurityStats'

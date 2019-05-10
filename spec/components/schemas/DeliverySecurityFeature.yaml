@@ -1,0 +1,16 @@
+type: object
+properties:
+  name:
+    type: string
+  namespaceName:
+    type: string
+  versionFormat:
+    type: string
+  version:
+    type: string
+  vulnerabilities:
+    type: array
+    items:
+      $ref: '#/components/schemas/DeliverySecurityVulnerability'
+  addedBy:
+    type: string
