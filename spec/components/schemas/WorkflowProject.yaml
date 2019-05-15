@@ -1,0 +1,76 @@
+type: object
+properties: 
+    id: 
+      type: "string"
+    product_name: 
+      type: "string"
+    create_time: 
+      type: "number"
+    update_time: 
+      type: "number"
+    status: 
+      type: "string"
+    revision: 
+      type: "number"
+    enabled: 
+      type: "boolean"
+    env_name: 
+      type: "string"
+    update_by: 
+      type: "string"
+    visibility: 
+      type: "string"
+    enable_stcov: 
+      type: "boolean"
+    services:
+      type: array
+      items:
+        type: array
+        items:
+          type: object
+          properties: 
+            service_name: 
+              type: "string"
+            type: 
+              type: "string"
+            revision: 
+              type: "number"
+            containers: 
+              type: "array"
+              items: 
+                type: "object"
+                properties: 
+                  name: 
+                    type: "string"
+                  image: 
+                    type: "string"
+    render: 
+      properties: 
+        name: 
+          type: "string"
+        revision: 
+          type: "number"
+        product_tmpl: 
+          type: "string"
+        description: 
+          type: "string"
+      type: "object"
+    error: 
+      type: "string"
+    vars: 
+      type: "array"
+      items: 
+        type: "object"
+        properties: 
+          key: 
+            type: "string"
+          value: 
+            type: "string"
+          alias: 
+            type: "string"
+          state: 
+            type: "string"
+          services: 
+            type: "array"
+            items: 
+              type: "string"

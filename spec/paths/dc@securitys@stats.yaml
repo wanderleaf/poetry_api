@@ -1,0 +1,21 @@
+parameters:
+  - name: imageName
+    in: query
+    description: 镜像名称
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 获取镜像安全扫描统计数据
+  responses:
+    '200':
+      description: 镜像安全扫描参数
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeliverySecurityStatsInfo'

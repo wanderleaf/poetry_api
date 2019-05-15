@@ -1,0 +1,21 @@
+parameters:
+  - name: releaseId
+    in: path
+    description: 交付版本的ID
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 获取产品信息
+  responses:
+    '200':
+      description: 产品信息参数
+      content:
+        application/json:
+           schema:
+            $ref: '#/components/schemas/WorkflowProject'
