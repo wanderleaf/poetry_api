@@ -5090,10 +5090,10 @@
           "noSuccess": {
             "type": "integer"
           },
-          "noDeliverySuccess": {
+          "noDeployFrequency": {
             "type": "integer"
           },
-          "noDeliveryFrequency": {
+          "noProductWeek": {
             "type": "integer"
           }
         }
