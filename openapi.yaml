@@ -805,9 +805,9 @@ paths:
   /dc/securitys:
     get:
       parameters:
-        - name: imageName
+        - name: imageId
           in: query
-          description: 镜像名称
+          description: 镜像ID
           required: true
           schema:
             type: string
@@ -850,9 +850,9 @@ paths:
           description: 信息添加成功
   /dc/securitys/stats:
     parameters:
-      - name: imageName
+      - name: imageId
         in: query
-        description: 镜像名称
+        description: 镜像ID
         required: true
         schema:
           type: string
@@ -2594,19 +2594,19 @@ components:
     DeliverySecurityStatsInfo:
       type: object
       properties:
-        total:
+        Total:
           type: integer
-        unkown:
+        Unkown:
           type: integer
-        negligible:
+        Negligible:
           type: integer
-        medium:
+        Medium:
           type: integer
-        low:
+        Low:
           type: integer
-        high:
+        High:
           type: integer
-        critical:
+        Critical:
           type: integer
     DeliverySecurityVulnerability:
       type: object
