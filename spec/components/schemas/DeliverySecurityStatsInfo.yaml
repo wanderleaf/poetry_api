@@ -1,16 +1,16 @@
 type: object
 properties:
-  total:
+  Total:
     type: integer
-  unkown:
+  Unkown:
     type: integer
-  negligible:
+  Negligible:
     type: integer
-  medium:
+  Medium:
     type: integer
-  low:
+  Low:
     type: integer
-  high:
+  High:
     type: integer
-  critical:
+  Critical:
     type: integer

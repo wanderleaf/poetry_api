@@ -1,8 +1,8 @@
 get:
   parameters:
-  - name: imageName
+  - name: imageId
     in: query
-    description: 镜像名称
+    description: 镜像ID
     required: true
     schema:
       type: string
