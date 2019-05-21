@@ -1,0 +1,28 @@
+parameters:
+  - name: productName
+    in: path
+    description: 项目名
+    required: true
+    schema:
+      type: string
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 向项目(product)添加/删除Repo
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModifyRepositoryAction'
+  responses:
+    '200':
+      description: 更新结果
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'

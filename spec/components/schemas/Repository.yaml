@@ -14,6 +14,8 @@ properties:
       type: string
   codehostId:
     type: integer
+  productName:
+    type: string
   url:
     type: string
   team:

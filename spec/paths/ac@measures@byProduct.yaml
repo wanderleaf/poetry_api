@@ -1,0 +1,23 @@
+parameters:
+  - name: product
+    in: query
+    description: 项目(产品)
+    required: true
+    schema:
+      type: string
+get:
+  summary: 列出项目(product)的代码库质效
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  responses:
+    '200':
+      description: 代码库质效列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RepoMeasure'

@@ -1,0 +1,23 @@
+parameters:
+  - name: productName
+    in: path
+    description: productName
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 列出项目(product)的所有Repo
+  responses:
+    '200':
+      description: 所有Repo详情
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Repository'

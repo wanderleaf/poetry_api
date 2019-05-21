@@ -1,0 +1,6 @@
+type: object
+properties:
+  product:
+    type: string
+  measures:
+    $ref: '#/components/schemas/Measure'
