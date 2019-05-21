@@ -377,6 +377,48 @@
         }
       }
     },
+    "/ac/measures/byProduct": {
+      "parameters": [
+        {
+          "name": "product",
+          "in": "query",
+          "description": "项目(产品)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "列出项目(product)的代码库质效",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "responses": {
+          "200": {
+            "description": "代码库质效列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RepoMeasure"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ac/measures/byTeam": {
       "parameters": [
         {
@@ -585,6 +627,141 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Measure"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ac/product/{productName}/modifyRepositories": {
+      "parameters": [
+        {
+          "name": "productName",
+          "in": "path",
+          "description": "项目名",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "向项目(product)添加/删除Repo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ModifyRepositoryAction"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ac/product/{productName}/repos": {
+      "parameters": [
+        {
+          "name": "productName",
+          "in": "path",
+          "description": "productName",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "列出项目(product)的所有Repo",
+        "responses": {
+          "200": {
+            "description": "所有Repo详情",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Repository"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ac/product/measures/byOrg": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "组织Id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "列出组织产品纬度的代码质效列表",
+        "responses": {
+          "200": {
+            "description": "团队质效列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductMeasure"
                   }
                 }
               }
@@ -4740,6 +4917,17 @@
           }
         }
       },
+      "ProductMeasure": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "measures": {
+            "$ref": "#/components/schemas/Measure"
+          }
+        }
+      },
       "Project": {
         "type": "object",
         "properties": {
@@ -4905,6 +5093,9 @@
           },
           "codehostId": {
             "type": "integer"
+          },
+          "productName": {
+            "type": "string"
           },
           "url": {
             "type": "string"
