@@ -1,0 +1,48 @@
+type: object
+properties:
+  namespace:
+    type: string
+    example: dev
+  targets:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          example: poetry-portal
+        build:
+          type: object
+          properties:
+            repos:
+              type: array
+              items:
+                $ref: "#/components/schemas/WorkflowArgsRepo"
+        version:
+          type: string
+          example: stable
+        deploy:
+          type: array
+          items:
+            type: object
+            properties:
+              env:
+                type: string
+                example: pac-cronjob/pac-django
+              type:
+                type: string
+                example: k8s
+  tests:
+    type: array
+    items:
+      type: object
+      properties:
+        test_module_name:
+          type: string
+          example: test_poetry
+        builds:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowArgsRepo"
+  is_demo:
+    type: boolean

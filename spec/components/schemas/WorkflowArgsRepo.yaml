@@ -1,0 +1,14 @@
+type: object
+properties:
+  repo_owner:
+    type: string
+    example: odf
+  repo_name:
+    type: string
+    example: koderover
+  branch:
+    type: string
+    example: master
+  codehost_id:
+    type: integer
+    example: 1

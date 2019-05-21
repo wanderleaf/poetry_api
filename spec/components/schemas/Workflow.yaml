@@ -1,0 +1,148 @@
+type: object
+properties:
+  name:
+    type: string
+    example: build-poetry
+  enabled:
+    type: boolean
+    example: true
+  product_tmpl_name:
+    type: string
+    example: poetry
+  description:
+    type: string
+    example: 构建poetry工作流
+  updated_by:
+    type: string
+    example: allen
+    readOnly: true
+  created_by:
+    type: string
+    example: bob
+    readOnly: true
+  update_time:
+    type: integer
+    example: 0
+    readOnly: true
+  create_time:
+    type: integer
+    example: 0
+    readOnly: true
+  schedules:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            number:
+              type: integer
+              example: 30
+              description:
+                minutes区间最小值为30,其他>0
+            frequency:
+              type: string
+              description:
+                任务周期. type=timing 支持day(每天),monday-sunday, type=gap 支持 hours, minutes
+              enum:
+                - day
+                - monday
+                - tuesday
+                - wednesday
+                - thursday
+                - friday
+                - satarday
+                - sunday
+                - hours
+                - minutes
+            time:
+              type: string
+              example: "12:24"
+              description: 任务运行时间，可以和 day, monday to sunday 配合使用, type必须为timing
+            type:
+              type: string
+              enum:
+                - timing
+                - gap
+            workflow_args:
+              $ref: "#/components/schemas/WorkflowArgsInTrigger"
+  build_stage:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      modules:
+        type: array
+        items:
+          type: object
+          properties:
+            target:
+              type: string
+              example: poetry-portal
+            build_module_ver:
+              type: string
+              example: stable
+              description: 目前必须为stable
+  test_stage:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      test_names:
+        type: array
+        items:
+          type: string
+  security_stage:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+  distribute_stage:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      image_repo:
+        type: string
+      distributes:
+        type: array
+        items:
+          type: object
+          properties:
+            target:
+              type: string
+            image_distribute:
+              type: boolean
+  hook_ctl:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            main_repo:
+              allOf:
+                - $ref: "#/components/schemas/WorkflowArgsRepo"
+                - type: object
+                  properties:
+                    match_folders:
+                      type: array
+                      items:
+                        type: string
+                        example: /
+                        description: 匹配规则 / 表示匹配所有，!表示排除目标文件, 如 /,!.md,.go
+                    events:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - push
+                          - pull_request
+            workflow_args:
+              $ref: "#/components/schemas/WorkflowArgsInTrigger"

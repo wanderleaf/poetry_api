@@ -1,0 +1,34 @@
+post:
+  tags:
+    - spock
+  summary: '创建工作流'
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: 工作流内容
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Workflow'
+  responses:
+    '200':
+      description: 成功
+put:
+  tags:
+    - spock
+  summary: '更新工作流'
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: 工作流内容
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Workflow'
+  responses:
+    '200':
+      description: 成功
