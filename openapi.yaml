@@ -2310,6 +2310,41 @@ paths:
       responses:
         '200':
           description: 成功
+  /spock/workflow:
+    post:
+      tags:
+        - spock
+      summary: 创建工作流
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: 工作流内容
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+      responses:
+        '200':
+          description: 成功
+    put:
+      tags:
+        - spock
+      summary: 更新工作流
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: 工作流内容
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+      responses:
+        '200':
+          description: 成功
 components:
   schemas:
     ActionResult:
@@ -3244,6 +3279,217 @@ components:
           type: integer
         name:
           type: string
+    Workflow:
+      type: object
+      properties:
+        name:
+          type: string
+          example: build-poetry
+        enabled:
+          type: boolean
+          example: true
+        product_tmpl_name:
+          type: string
+          example: poetry
+        description:
+          type: string
+          example: 构建poetry工作流
+        updated_by:
+          type: string
+          example: allen
+          readOnly: true
+        created_by:
+          type: string
+          example: bob
+          readOnly: true
+        update_time:
+          type: integer
+          example: 0
+          readOnly: true
+        create_time:
+          type: integer
+          example: 0
+          readOnly: true
+        schedules:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  number:
+                    type: integer
+                    example: 30
+                    description: 'minutes区间最小值为30,其他>0'
+                  frequency:
+                    type: string
+                    description: '任务周期. type=timing 支持day(每天),monday-sunday, type=gap 支持 hours, minutes'
+                    enum:
+                      - day
+                      - monday
+                      - tuesday
+                      - wednesday
+                      - thursday
+                      - friday
+                      - satarday
+                      - sunday
+                      - hours
+                      - minutes
+                  time:
+                    type: string
+                    example: '12:24'
+                    description: '任务运行时间，可以和 day, monday to sunday 配合使用, type必须为timing'
+                  type:
+                    type: string
+                    enum:
+                      - timing
+                      - gap
+                  workflow_args:
+                    $ref: '#/components/schemas/WorkflowArgsInTrigger'
+        build_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            modules:
+              type: array
+              items:
+                type: object
+                properties:
+                  target:
+                    type: string
+                    example: poetry-portal
+                  build_module_ver:
+                    type: string
+                    example: stable
+                    description: 目前必须为stable
+        test_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            test_names:
+              type: array
+              items:
+                type: string
+        security_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        distribute_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            image_repo:
+              type: string
+            distributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  target:
+                    type: string
+                  image_distribute:
+                    type: boolean
+        hook_ctl:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  main_repo:
+                    allOf:
+                      - $ref: '#/components/schemas/WorkflowArgsRepo'
+                      - type: object
+                        properties:
+                          match_folders:
+                            type: array
+                            items:
+                              type: string
+                              example: /
+                              description: '匹配规则 / 表示匹配所有，!表示排除目标文件, 如 /,!.md,.go'
+                          events:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - push
+                                - pull_request
+                  workflow_args:
+                    $ref: '#/components/schemas/WorkflowArgsInTrigger'
+    WorkflowArgsInTrigger:
+      type: object
+      properties:
+        namespace:
+          type: string
+          example: dev
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: poetry-portal
+              build:
+                type: object
+                properties:
+                  repos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowArgsRepo'
+              version:
+                type: string
+                example: stable
+              deploy:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    env:
+                      type: string
+                      example: pac-cronjob/pac-django
+                    type:
+                      type: string
+                      example: k8s
+        tests:
+          type: array
+          items:
+            type: object
+            properties:
+              test_module_name:
+                type: string
+                example: test_poetry
+              builds:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowArgsRepo'
+        is_demo:
+          type: boolean
+    WorkflowArgsRepo:
+      type: object
+      properties:
+        repo_owner:
+          type: string
+          example: odf
+        repo_name:
+          type: string
+          example: koderover
+        branch:
+          type: string
+          example: master
+        codehost_id:
+          type: integer
+          example: 1
     WorkflowProject:
       type: object
       properties:
