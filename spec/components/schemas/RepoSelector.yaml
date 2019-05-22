@@ -1,0 +1,10 @@
+type: object
+properties:
+  name:
+    type: string
+  namespace:
+    type: string
+  branch:
+    type: string
+  codehostId:
+    type: integer

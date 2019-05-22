@@ -1,0 +1,31 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织Id
+    required: true
+    schema:
+      type: integer
+post:
+  summary: 列出指定代码库的质效
+  description: 若没有找到指定代码库，则不返回内容
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepoSelector'
+  responses:
+    '200':
+      description: 代码库质效列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RepoMeasure'
