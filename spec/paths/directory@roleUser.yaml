@@ -1,0 +1,68 @@
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建角色用户信息
+  requestBody:
+    description: 角色用户信息参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/RoleUserBatch'
+  responses:
+    "200":
+      description: "创建成功"
+get:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: userId
+    in: query
+    description: 用户ID
+    required: false
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取角色用户列表
+  responses:
+    '200':
+      description: 角色用户列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RoleUser'
+delete:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: userId
+    in: query
+    description: 用户ID
+    required: false
+    schema:
+      type: integer
+  tags:
+    - Directory
+  summary: 删除角色用户信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

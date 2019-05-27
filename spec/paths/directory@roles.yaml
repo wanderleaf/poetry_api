@@ -1,0 +1,79 @@
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建角色
+  requestBody:
+    description: 角色参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Role'
+  responses:
+    "200":
+      description: "创建成功"
+put:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: true
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 更新角色
+  requestBody:
+    description: 角色参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Role'
+  responses:
+    "200":
+      description: "更新成功"
+get:
+  parameters:
+  - name: name
+    in: query
+    description: 角色名称
+    required: false
+    schema:
+      type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取角色列表
+  responses:
+    '200':
+      description: 角色列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Role'
+delete:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: true
+    schema:
+      type: integer
+  tags:
+    - Directory
+  summary: 删除角色
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

@@ -1,0 +1,39 @@
+get:
+  parameters:
+  - name: userId
+    in: query
+    description: 用户ID
+    required: true
+    schema:
+      type: integer
+  - name: permissionUUID
+    in: query
+    description: 权限UUID
+    required: true
+    schema:
+      type: string
+  - name: permissionType
+    in: query
+    description: 权限类型 1.系统权限,2.项目权限
+    required: true
+    schema:
+      type: integer
+  - name: projectName
+    in: query
+    description: 项目名称
+    required: false
+    schema:
+      type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取用户权限关系
+  responses:
+    '200':
+      description: 用户是否有某个权限
+      content:
+        application/json:
+          schema:
+            type: boolean

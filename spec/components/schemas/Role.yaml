@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+    description: 在请求体中无效
+  name:
+    type: string
+  roleType:
+    type: integer
+  desc:
+    type: string
+  isDisabled:
+    type: integer

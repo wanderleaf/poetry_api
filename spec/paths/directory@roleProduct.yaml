@@ -1,0 +1,68 @@
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建项目角色信息
+  requestBody:
+    description: 项目角色信息参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/RoleProduct'
+  responses:
+    "200":
+      description: "创建成功"
+get:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: productName
+    in: query
+    description: 项目名称
+    required: false
+    schema:
+      type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取项目角色列表
+  responses:
+    '200':
+      description: 项目角色列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RoleProduct'
+delete:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: productName
+    in: query
+    description: 项目名称
+    required: false
+    schema:
+      type: string
+  tags:
+    - Directory
+  summary: 删除项目角色信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

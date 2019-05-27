@@ -1,0 +1,68 @@
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建环境角色信息
+  requestBody:
+    description: 环境角色信息参数
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/RoleEnv'
+  responses:
+    "200":
+      description: "创建成功"
+get:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: envName
+    in: query
+    description: 环境名称
+    required: false
+    schema:
+      type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取环境角色列表
+  responses:
+    '200':
+      description: 环境角色列表
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RoleEnv'
+delete:
+  parameters:
+  - name: roleId
+    in: query
+    description: 角色ID
+    required: false
+    schema:
+      type: integer
+  - name: envName
+    in: query
+    description: 环境名称
+    required: false
+    schema:
+      type: string
+  tags:
+    - Directory
+  summary: 删除环境角色信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功
