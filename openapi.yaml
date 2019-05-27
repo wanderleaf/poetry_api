@@ -1662,6 +1662,384 @@ paths:
                 $ref: '#/components/schemas/Organization'
         '404':
           description: 查找失败
+  '/directory/role/{id}':
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色详情
+      responses:
+        '200':
+          description: 角色列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+  /directory/roleEnv:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建环境角色信息
+      requestBody:
+        description: 环境角色信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleEnv'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: envName
+          in: query
+          description: 环境名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取环境角色列表
+      responses:
+        '200':
+          description: 环境角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleEnv'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: envName
+          in: query
+          description: 环境名称
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除环境角色信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/rolePermission:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色权限信息
+      requestBody:
+        description: 角色权限参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RolePermissionBatch'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色权限列表
+      responses:
+        '200':
+          description: 角色权限列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RolePermission'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除角色权限信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roleProduct:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建项目角色信息
+      requestBody:
+        description: 项目角色信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleProduct'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取项目角色列表
+      responses:
+        '200':
+          description: 项目角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleProduct'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除项目角色信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roles:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色
+      requestBody:
+        description: 角色参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+      responses:
+        '200':
+          description: 创建成功
+    put:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新角色
+      requestBody:
+        description: 角色参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+      responses:
+        '200':
+          description: 更新成功
+    get:
+      parameters:
+        - name: name
+          in: query
+          description: 角色名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色列表
+      responses:
+        '200':
+          description: 角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+      tags:
+        - Directory
+      summary: 删除角色
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roleUser:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色用户信息
+      requestBody:
+        description: 角色用户信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleUserBatch'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: userId
+          in: query
+          description: 用户ID
+          required: false
+          schema:
+            type: integer
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色用户列表
+      responses:
+        '200':
+          description: 角色用户列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleUser'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: userId
+          in: query
+          description: 用户ID
+          required: false
+          schema:
+            type: integer
+      tags:
+        - Directory
+      summary: 删除角色用户信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
   /directory/team:
     parameters:
       - name: orgId
@@ -2060,6 +2438,46 @@ paths:
       responses:
         '200':
           description: 成功
+  /directory/userPermissionRelation:
+    get:
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: query
+          description: '权限类型 1.系统权限,2.项目权限'
+          required: true
+          schema:
+            type: integer
+        - name: projectName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取用户权限关系
+      responses:
+        '200':
+          description: 用户是否有某个权限
+          content:
+            application/json:
+              schema:
+                type: boolean
   /directory/userss/search:
     parameters:
       - name: orgId
@@ -3172,6 +3590,91 @@ components:
               type: integer
             name:
               type: string
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        name:
+          type: string
+        roleType:
+          type: integer
+        desc:
+          type: string
+        isDisabled:
+          type: integer
+    RoleEnv:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        envName:
+          type: string
+    RolePermission:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        permissionUUID:
+          type: string
+    RolePermissionBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        permissionUUIDs:
+          type: array
+          items:
+            type: string
+    RoleProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        productName:
+          type: string
+    RoleUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        userId:
+          type: integer
+    RoleUserBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        userIds:
+          type: array
+          items:
+            type: integer
     SecurityMeasureCount:
       type: object
       properties:
