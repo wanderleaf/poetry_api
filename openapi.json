@@ -335,6 +335,102 @@
         }
       }
     },
+    "/ac/measureInsight/data": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "查看所有质效洞察指标",
+        "responses": {
+          "200": {
+            "description": "质效洞察指标集合",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureInsightData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ac/measureInsight/index": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "查看所有质效洞察指标",
+        "responses": {
+          "200": {
+            "description": "质效洞察指标集合",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureInsightIndex"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ac/measureInsight/modifyIndex": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "AnalysisCenter"
+        ],
+        "summary": "修改质效洞察所展示的指标",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ModifyMeasureIndexAction"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ac/measures/byOrg": {
       "parameters": [
         {
@@ -4964,23 +5060,29 @@
       "CodeCoverage": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "noStmt": {
             "type": "integer"
           },
           "noMissedStmt": {
             "type": "integer"
           },
-          "noLine": {
+          "value": {
             "type": "integer"
           },
-          "noMissedLine": {
+          "score": {
             "type": "integer"
           },
-          "time": {
-            "type": "string"
-          },
-          "id": {
-            "type": "integer"
+          "grade": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
           }
         }
       },
@@ -5279,6 +5381,26 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          }
+        }
+      },
+      "deliveryMeasure": {
+        "type": "object",
+        "properties": {
+          "testTimes": {
+            "type": "string"
+          },
+          "testAverageTime": {
+            "type": "string"
+          },
+          "testSuccessRate": {
+            "type": "string"
+          },
+          "deployFrequency": {
+            "type": "string"
+          },
+          "deployTimes": {
             "type": "string"
           }
         }
@@ -5590,6 +5712,26 @@
           }
         }
       },
+      "deploymentMeasure": {
+        "type": "object",
+        "properties": {
+          "deliveryTimes": {
+            "type": "string"
+          },
+          "deliveryFrequency": {
+            "type": "string"
+          },
+          "developTime": {
+            "type": "string"
+          },
+          "cdAverageTime": {
+            "type": "string"
+          },
+          "cdPassingRate": {
+            "type": "string"
+          }
+        }
+      },
       "EmailAction": {
         "type": "object",
         "properties": {
@@ -5644,6 +5786,26 @@
           }
         }
       },
+      "integrationMeasure": {
+        "type": "object",
+        "properties": {
+          "codeCoverage": {
+            "type": "string"
+          },
+          "codeIssue": {
+            "type": "string"
+          },
+          "codeSecurity": {
+            "type": "string"
+          },
+          "ciPassingRate": {
+            "type": "string"
+          },
+          "ciAverageTime": {
+            "type": "string"
+          }
+        }
+      },
       "IssueMeasure": {
         "type": "object",
         "properties": {
@@ -5689,6 +5851,36 @@
           }
         }
       },
+      "MeasureInsightData": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "measures": {
+            "type": "object",
+            "properties": {
+              "codeCoverage": {
+                "$ref": "#/components/schemas/CodeCoverage"
+              }
+            }
+          }
+        }
+      },
+      "MeasureInsightIndex": {
+        "type": "object",
+        "properties": {
+          "integrationMeasure": {
+            "$ref": "#/components/schemas/integrationMeasure"
+          },
+          "deploymentMeasure": {
+            "$ref": "#/components/schemas/deploymentMeasure"
+          },
+          "deliveryMeasure": {
+            "$ref": "#/components/schemas/deliveryMeasure"
+          }
+        }
+      },
       "MemberAction": {
         "type": "object",
         "properties": {
@@ -5713,6 +5905,30 @@
           },
           "isTeamleader": {
             "type": "boolean"
+          }
+        }
+      },
+      "ModifyMeasureIndexAction": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "delivery_times",
+                "delivery_frequency",
+                "develop_time",
+                "cd_pipeline_average_time"
+              ]
+            }
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "add",
+              "remove"
+            ]
           }
         }
       },
