@@ -4225,6 +4225,12 @@
                           "type": "string"
                         }
                       }
+                    },
+                    "permissionUUIDs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
