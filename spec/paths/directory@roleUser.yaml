@@ -21,7 +21,7 @@ get:
     description: 角色类型
     required: true
     schema:
-      type: string
+      type: integer
   - name: roleId
     in: query
     description: 角色ID
@@ -56,7 +56,7 @@ delete:
     description: 角色类型
     required: true
     schema:
-      type: string
+      type: integer
   - name: roleId
     in: query
     description: 角色ID
