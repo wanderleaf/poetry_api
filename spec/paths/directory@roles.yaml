@@ -45,6 +45,12 @@ get:
     required: false
     schema:
       type: string
+  - name: roleType
+    in: query
+    description: 角色类型
+    required: false
+    schema:
+      type: string
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []
