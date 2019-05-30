@@ -41,6 +41,10 @@ post:
                     type: integer
                   name:
                     type: string
+              permissionUUIDs:
+                type: array
+                items:
+                  type: string
     '400':
       description: 用户名或密码错误
       content:
