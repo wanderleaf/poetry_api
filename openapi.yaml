@@ -1784,6 +1784,12 @@ paths:
           description: 创建成功
     get:
       parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
         - name: roleId
           in: query
           description: 角色ID
@@ -1813,6 +1819,12 @@ paths:
                   $ref: '#/components/schemas/RolePermission'
     delete:
       parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
         - name: roleId
           in: query
           description: 角色ID
@@ -1951,6 +1963,12 @@ paths:
           required: false
           schema:
             type: string
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: false
+          schema:
+            type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -2002,6 +2020,12 @@ paths:
           description: 创建成功
     get:
       parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
         - name: roleId
           in: query
           description: 角色ID
@@ -2031,6 +2055,12 @@ paths:
                   $ref: '#/components/schemas/RoleUser'
     delete:
       parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
         - name: roleId
           in: query
           description: 角色ID
@@ -3641,6 +3671,8 @@ components:
           type: integer
         permissionUUID:
           type: string
+        roleType:
+          type: integer
     RolePermissionBatch:
       type: object
       properties:
@@ -3649,6 +3681,8 @@ components:
           readOnly: true
           description: 在请求体中无效
         roleId:
+          type: integer
+        roleType:
           type: integer
         permissionUUIDs:
           type: array
@@ -3674,6 +3708,8 @@ components:
           description: 在请求体中无效
         roleId:
           type: integer
+        roleType:
+          type: integer
         userId:
           type: integer
     RoleUserBatch:
@@ -3684,6 +3720,8 @@ components:
           readOnly: true
           description: 在请求体中无效
         roleId:
+          type: integer
+        roleType:
           type: integer
         userIds:
           type: array

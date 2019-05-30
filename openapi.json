@@ -3079,6 +3079,15 @@
       "get": {
         "parameters": [
           {
+            "name": "roleType",
+            "in": "query",
+            "description": "角色类型",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "roleId",
             "in": "query",
             "description": "角色ID",
@@ -3127,6 +3136,15 @@
       },
       "delete": {
         "parameters": [
+          {
+            "name": "roleType",
+            "in": "query",
+            "description": "角色类型",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "roleId",
             "in": "query",
@@ -3364,6 +3382,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "roleType",
+            "in": "query",
+            "description": "角色类型",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "security": [
@@ -3458,6 +3485,15 @@
       "get": {
         "parameters": [
           {
+            "name": "roleType",
+            "in": "query",
+            "description": "角色类型",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "roleId",
             "in": "query",
             "description": "角色ID",
@@ -3506,6 +3542,15 @@
       },
       "delete": {
         "parameters": [
+          {
+            "name": "roleType",
+            "in": "query",
+            "description": "角色类型",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "roleId",
             "in": "query",
@@ -6052,6 +6097,9 @@
           },
           "permissionUUID": {
             "type": "string"
+          },
+          "roleType": {
+            "type": "integer"
           }
         }
       },
@@ -6064,6 +6112,9 @@
             "description": "在请求体中无效"
           },
           "roleId": {
+            "type": "integer"
+          },
+          "roleType": {
             "type": "integer"
           },
           "permissionUUIDs": {
@@ -6101,6 +6152,9 @@
           "roleId": {
             "type": "integer"
           },
+          "roleType": {
+            "type": "integer"
+          },
           "userId": {
             "type": "integer"
           }
@@ -6115,6 +6169,9 @@
             "description": "在请求体中无效"
           },
           "roleId": {
+            "type": "integer"
+          },
+          "roleType": {
             "type": "integer"
           },
           "userIds": {
