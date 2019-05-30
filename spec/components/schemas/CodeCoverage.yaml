@@ -1,14 +1,19 @@
 type: object
 properties:
+  id:
+    type: integer
   noStmt:
     type: integer
   noMissedStmt:
     type: integer
-  noLine:
+  value:
     type: integer
-  noMissedLine:
+  score:
     type: integer
-  time:
+  grade:
     type: string
-  id:
-    type: integer
+    enum:
+      - A
+      - B
+      - C
+      - D

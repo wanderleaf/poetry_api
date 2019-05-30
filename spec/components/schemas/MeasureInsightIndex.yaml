@@ -1,0 +1,8 @@
+type: object
+properties:
+  integrationMeasure:
+    $ref: '#/components/schemas/integrationMeasure'
+  deploymentMeasure:
+    $ref: '#/components/schemas/deploymentMeasure'
+  deliveryMeasure:
+    $ref: '#/components/schemas/deliveryMeasure'

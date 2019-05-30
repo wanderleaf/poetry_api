@@ -1,0 +1,14 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 查看所有质效洞察指标
+  responses:
+    '200':
+      description: 质效洞察指标集合
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MeasureInsightData'

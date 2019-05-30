@@ -1,0 +1,12 @@
+type: object
+properties:
+  testTimes:
+    type: string
+  testAverageTime:
+    type: string
+  testSuccessRate:
+    type: string
+  deployFrequency:
+    type: string
+  deployTimes:
+    type: string

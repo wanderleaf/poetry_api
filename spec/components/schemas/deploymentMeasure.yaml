@@ -1,0 +1,12 @@
+type: object
+properties:
+  deliveryTimes:
+    type: string
+  deliveryFrequency:
+    type: string
+  developTime:
+    type: string
+  cdAverageTime:
+    type: string
+  cdPassingRate:
+    type: string

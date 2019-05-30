@@ -1,0 +1,16 @@
+type: object
+properties:
+  index:
+    type: array
+    items:
+      type: string
+      enum:
+        - delivery_times
+        - delivery_frequency
+        - develop_time
+        - cd_pipeline_average_time
+  action:
+    type: string
+    enum:
+      - add
+      - remove

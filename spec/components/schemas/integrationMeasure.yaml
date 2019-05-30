@@ -1,0 +1,12 @@
+type: object
+properties:
+  codeCoverage:
+    type: string
+  codeIssue:
+    type: string
+  codeSecurity:
+    type: string
+  ciPassingRate:
+    type: string
+  ciAverageTime:
+    type: string

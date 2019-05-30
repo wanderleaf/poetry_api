@@ -1,0 +1,9 @@
+type: object
+properties:
+  product:
+    type: string
+  measures:
+    type: object
+    properties:
+      codeCoverage:
+        $ref: '#/components/schemas/CodeCoverage'
