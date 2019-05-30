@@ -8,5 +8,5 @@ properties:
     type: integer
   envName:
     type: string
-  productName:
+  productId:
     type: string
