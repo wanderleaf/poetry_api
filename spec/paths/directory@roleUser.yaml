@@ -16,6 +16,12 @@ post:
       description: "创建成功"
 get:
   parameters:
+  - name: roleType
+    in: query
+    description: 角色类型
+    required: true
+    schema:
+      type: string
   - name: roleId
     in: query
     description: 角色ID
@@ -45,6 +51,12 @@ get:
               $ref: '#/components/schemas/RoleUser'
 delete:
   parameters:
+  - name: roleType
+    in: query
+    description: 角色类型
+    required: true
+    schema:
+      type: string
   - name: roleId
     in: query
     description: 角色ID
