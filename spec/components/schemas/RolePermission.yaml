@@ -8,3 +8,5 @@ properties:
     type: integer
   permissionUUID:
     type: string
+  roleType:
+    type: integer
