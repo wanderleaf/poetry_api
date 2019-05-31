@@ -3124,9 +3124,9 @@
       "get": {
         "parameters": [
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": true,
             "schema": {
               "type": "string"
@@ -3182,9 +3182,9 @@
       "delete": {
         "parameters": [
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": true,
             "schema": {
               "type": "string"
@@ -3407,9 +3407,9 @@
             }
           },
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": false,
             "schema": {
               "type": "string"
@@ -3456,9 +3456,9 @@
             }
           },
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": false,
             "schema": {
               "type": "string"
@@ -3876,9 +3876,9 @@
             }
           },
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": false,
             "schema": {
               "type": "string"
@@ -3925,9 +3925,9 @@
             }
           },
           {
-            "name": "productId",
+            "name": "productName",
             "in": "query",
-            "description": "项目ID",
+            "description": "项目名称",
             "required": false,
             "schema": {
               "type": "string"
@@ -6506,7 +6506,7 @@
           "envName": {
             "type": "string"
           },
-          "productId": {
+          "productName": {
             "type": "string"
           }
         }
@@ -6563,7 +6563,7 @@
           "roleId": {
             "type": "integer"
           },
-          "productId": {
+          "productName": {
             "type": "string"
           }
         }
@@ -6745,7 +6745,7 @@
             "readOnly": true,
             "description": "在请求体中无效"
           },
-          "productId": {
+          "productName": {
             "type": "string"
           },
           "teamId": {

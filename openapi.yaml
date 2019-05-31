@@ -1803,9 +1803,9 @@ paths:
           description: 创建成功
     get:
       parameters:
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: true
           schema:
             type: string
@@ -1838,9 +1838,9 @@ paths:
                   $ref: '#/components/schemas/RoleEnv'
     delete:
       parameters:
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: true
           schema:
             type: string
@@ -1971,9 +1971,9 @@ paths:
           required: false
           schema:
             type: integer
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: false
           schema:
             type: string
@@ -2000,9 +2000,9 @@ paths:
           required: false
           schema:
             type: integer
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: false
           schema:
             type: string
@@ -2244,9 +2244,9 @@ paths:
           required: false
           schema:
             type: integer
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: false
           schema:
             type: string
@@ -2273,9 +2273,9 @@ paths:
           required: false
           schema:
             type: integer
-        - name: productId
+        - name: productName
           in: query
-          description: 项目ID
+          description: 项目名称
           required: false
           schema:
             type: string
@@ -3911,7 +3911,7 @@ components:
           type: integer
         envName:
           type: string
-        productId:
+        productName:
           type: string
     RolePermission:
       type: object
@@ -3950,7 +3950,7 @@ components:
           description: 在请求体中无效
         roleId:
           type: integer
-        productId:
+        productName:
           type: string
     RoleUser:
       type: object
@@ -4073,7 +4073,7 @@ components:
           type: integer
           readOnly: true
           description: 在请求体中无效
-        productId:
+        productName:
           type: string
         teamId:
           type: integer
