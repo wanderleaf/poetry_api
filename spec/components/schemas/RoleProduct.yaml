@@ -6,5 +6,5 @@ properties:
     description: 在请求体中无效
   roleId:
     type: integer
-  productId:
+  productName:
     type: string

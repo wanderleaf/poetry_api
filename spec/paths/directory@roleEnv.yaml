@@ -16,9 +16,9 @@ post:
       description: "创建成功"
 get:
   parameters:
-  - name: productId
+  - name: productName
     in: query
-    description: 项目ID
+    description: 项目名称
     required: true
     schema:
       type: string
@@ -51,9 +51,9 @@ get:
               $ref: '#/components/schemas/RoleEnv'
 delete:
   parameters:
-  - name: productId
+  - name: productName
     in: query
-    description: 项目ID
+    description: 项目名称
     required: true
     schema:
       type: string

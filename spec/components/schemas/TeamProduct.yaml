@@ -4,7 +4,7 @@ properties:
     type: integer
     readOnly: true
     description: 在请求体中无效
-  productId:
+  productName:
     type: string
   teamId:
     type: integer

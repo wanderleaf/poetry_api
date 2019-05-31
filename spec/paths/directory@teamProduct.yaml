@@ -22,9 +22,9 @@ get:
     required: false
     schema:
       type: integer
-  - name: productId
+  - name: productName
     in: query
-    description: 项目ID
+    description: 项目名称
     required: false
     schema:
       type: string
@@ -51,9 +51,9 @@ delete:
     required: false
     schema:
       type: integer
-  - name: productId
+  - name: productName
     in: query
-    description: 项目ID
+    description: 项目名称
     required: false
     schema:
       type: string
