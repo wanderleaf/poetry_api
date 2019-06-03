@@ -200,10 +200,10 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - AnalysisCenter
-      summary: 查看所有质效洞察指标
+      summary: 查看所选的质效洞察指标数据
       responses:
         '200':
-          description: 质效洞察指标集合
+          description: 质效洞察指标数据（包括元数据计算值评分等级）
           content:
             application/json:
               schema:
@@ -215,15 +215,16 @@ paths:
         - ApiRootKeyAuth: []
       tags:
         - AnalysisCenter
-      summary: 查看所有质效洞察指标
+      summary: 查看用户所选的质效洞察指标
       responses:
         '200':
-          description: 质效洞察指标集合
+          description: 用户选过的指标
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MeasureInsightIndex'
-  /ac/measureInsight/modifyIndex:
+                type: array
+                items:
+                  type: string
     post:
       security:
         - ApiKeyAuth: []
@@ -245,6 +246,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionResult'
+  /ac/measureInsight/translation:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 查看所有质效洞察指标翻译对照表
+      responses:
+        '200':
+          description: 洞察指标翻译对照表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureInsightIndex'
   /ac/measures/byOrg:
     parameters:
       - name: orgId
