@@ -4,10 +4,10 @@ get:
     - ApiRootKeyAuth: []
   tags:
     - AnalysisCenter
-  summary: 查看所有质效洞察指标
+  summary: 查看所选的质效洞察指标数据
   responses:
     '200':
-      description: 质效洞察指标集合
+      description: 质效洞察指标数据（包括元数据计算值评分等级）
       content:
         application/json:
           schema:

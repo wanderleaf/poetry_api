@@ -4,11 +4,34 @@ get:
     - ApiRootKeyAuth: []
   tags:
     - AnalysisCenter
-  summary: 查看所有质效洞察指标
+  summary: 查看用户所选的质效洞察指标
   responses:
     '200':
-      description: 质效洞察指标集合
+      description: 用户选过的指标
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MeasureInsightIndex'
+            type: array
+            items:
+              type: string
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - AnalysisCenter
+  summary: 修改质效洞察所展示的指标
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModifyMeasureIndexAction'
+  responses:
+    '200':
+      description: 更新结果
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
