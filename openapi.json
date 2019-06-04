@@ -3693,6 +3693,43 @@
           }
         }
       },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "修改系统角色用户信息",
+        "requestBody": {
+          "description": "系统角色用户信息参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "isAdmin": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "创建成功"
+          }
+        }
+      },
       "get": {
         "parameters": [
           {
