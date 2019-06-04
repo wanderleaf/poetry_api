@@ -2910,6 +2910,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
+  '/spock/products/{productName}':
+    put:
+      parameters:
+        - name: productName
+          in: path
+          description: 产品名称
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 环境共享
+      requestBody:
+        description: 环境共享参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnv'
+      responses:
+        '200':
+          description: 更新成功
   /spock/reaperOS:
     get:
       tags:
@@ -3751,6 +3775,17 @@ components:
         authorName:
           type: string
           example: qu
+    ProductEnv:
+      type: object
+      properties:
+        roleIds:
+          type: array
+          items:
+            type: integer
+        isPublic:
+          type: boolean
+        envName:
+          type: string
     ProductMeasure:
       type: object
       properties:
