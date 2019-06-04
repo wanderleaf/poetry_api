@@ -903,6 +903,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TestMeasureInfo'
+  /dc/images:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+      - name: productName
+        in: query
+        description: 产品名称
+        required: false
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取镜像版本信息列表
+      responses:
+        '200':
+          description: 镜像版本信息参数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageInfo'
   /dc/products:
     parameters:
       - name: orgId
@@ -3625,6 +3655,15 @@ components:
           type: string
         theme:
           type: string
+    ImageInfo:
+      type: object
+      properties:
+        imageName:
+          type: string
+        versionInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionInfo'
     integrationMeasure:
       type: object
       properties:
@@ -4214,6 +4253,15 @@ components:
         id:
           type: integer
         name:
+          type: string
+    VersionInfo:
+      type: object
+      properties:
+        tagVersion:
+          type: string
+        deliveryVersion:
+          type: string
+        deliveryId:
           type: string
     Workflow:
       type: object
