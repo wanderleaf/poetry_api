@@ -1,0 +1,10 @@
+type: object
+properties:
+  roleIds:
+    type: array
+    items:
+      type: integer
+  isPublic:
+    type: boolean
+  envName:
+    type: string
