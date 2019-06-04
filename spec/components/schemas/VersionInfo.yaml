@@ -1,0 +1,8 @@
+type: object
+properties:
+  tagVersion:
+    type: string
+  deliveryVersion:
+    type: string
+  deliveryId:
+    type: string

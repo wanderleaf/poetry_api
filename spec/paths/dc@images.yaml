@@ -1,0 +1,29 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+  - name: productName
+    in: query
+    description: 产品名称
+    required: false
+    schema:
+      type: string
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 获取镜像版本信息列表
+  responses:
+    '200':
+      description: 镜像版本信息参数
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ImageInfo'
