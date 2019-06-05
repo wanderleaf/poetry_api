@@ -1,0 +1,49 @@
+parameters:
+  - name: id
+    in: path
+    description: 对象存储ID
+    required: true
+    schema:
+      type: integer
+get:
+  tags:
+    - spock
+  summary: 获取一个对象存储参数
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/S3Storage'
+    '404':
+      description: "没找到"
+put:
+  tags:
+    - spock
+  summary: 更新一个新的对象存储
+  requestBody:
+    description: 镜像仓库参数
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/S3Storage'
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/S3Storage'
+    '404':
+      description: "没找到"
+delete:
+  tags:
+    - spock
+  summary: 删除一个对象存储
+  responses:
+    '200':
+      description: 成功
+    '404':
+      description: "没找到"

@@ -1,0 +1,31 @@
+get:
+  tags:
+    - spock
+  summary: 获取对象存储列表
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/S3Storage'
+post:
+  tags:
+    - spock
+  summary: 创建一个新的对象存储
+  requestBody:
+    description: 创建一个新的镜像仓库
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/S3Storage'
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/S3Storage'

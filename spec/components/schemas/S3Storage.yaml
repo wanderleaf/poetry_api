@@ -1,0 +1,42 @@
+type: object
+properties:
+  id:
+    type: string
+    description: 对象存储的ID
+    readOnly: true
+  update_time:
+    type: integer
+    description: 更新时间
+    readOnly: true
+  updated_by:
+    type: string
+    description: 更新者
+    readOnly: true
+  ak:
+    type: string
+    description: access_key
+  sk:
+    type: string
+    description: secret_key
+  endpoint:
+    type: string 
+    description: s3协议地址
+  bucket:
+    type: string
+    description: 存储桶名称
+  subfolder:
+    type: string
+    description: 存储相对路径
+  insecure:
+    type: boolean
+    description: 是否非https
+  is_default:
+    type: boolean
+    description: 是否默认
+required:
+  - ak
+  - sk
+  - endpoint
+  - bucket
+  - insecure
+  - is_default
