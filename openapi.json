@@ -5080,6 +5080,37 @@
         }
       }
     },
+    "/spock/permission/engineerManager": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取工程管理权限",
+        "responses": {
+          "200": {
+            "description": "工程管理权限列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/spock/products/{productName}": {
       "put": {
         "parameters": [
