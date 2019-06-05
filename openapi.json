@@ -5255,6 +5255,138 @@
         }
       }
     },
+    "/spock/s3storage": {
+      "get": {
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取对象存储列表",
+        "responses": {
+          "200": {
+            "description": "成功获取",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/S3Storage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "spock"
+        ],
+        "summary": "创建一个新的对象存储",
+        "requestBody": {
+          "description": "创建一个新的镜像仓库",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/S3Storage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3Storage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spock/s3storage/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "对象存储ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取一个对象存储参数",
+        "responses": {
+          "200": {
+            "description": "成功获取",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3Storage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "没找到"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "spock"
+        ],
+        "summary": "更新一个新的对象存储",
+        "requestBody": {
+          "description": "镜像仓库参数",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/S3Storage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3Storage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "没找到"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "spock"
+        ],
+        "summary": "删除一个对象存储",
+        "responses": {
+          "200": {
+            "description": "成功"
+          },
+          "404": {
+            "description": "没找到"
+          }
+        }
+      }
+    },
     "/spock/workflow": {
       "post": {
         "tags": [
@@ -6798,6 +6930,62 @@
             }
           }
         }
+      },
+      "S3Storage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "对象存储的ID",
+            "readOnly": true
+          },
+          "update_time": {
+            "type": "integer",
+            "description": "更新时间",
+            "readOnly": true
+          },
+          "updated_by": {
+            "type": "string",
+            "description": "更新者",
+            "readOnly": true
+          },
+          "ak": {
+            "type": "string",
+            "description": "access_key"
+          },
+          "sk": {
+            "type": "string",
+            "description": "secret_key"
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "s3协议地址"
+          },
+          "bucket": {
+            "type": "string",
+            "description": "存储桶名称"
+          },
+          "subfolder": {
+            "type": "string",
+            "description": "存储相对路径"
+          },
+          "insecure": {
+            "type": "boolean",
+            "description": "是否非https"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否默认"
+          }
+        },
+        "required": [
+          "ak",
+          "sk",
+          "endpoint",
+          "bucket",
+          "insecure",
+          "is_default"
+        ]
       },
       "SecurityMeasureCount": {
         "type": "object",
