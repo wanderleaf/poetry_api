@@ -4545,6 +4545,14 @@
                           "type": "boolean"
                         }
                       }
+                    },
+                    "features": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "开启的特性列表",
+                        "example": "classic_pipeline"
+                      }
                     }
                   }
                 }
