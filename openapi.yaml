@@ -1308,6 +1308,12 @@ paths:
                   inited:
                     type: boolean
                     description: 系统是否已初始化
+                  features:
+                    type: array
+                    items:
+                      type: string
+                      description: 开启的特性列表
+                      example: classic_pipeline
   /directory/codehosts:
     parameters:
       - name: orgId
