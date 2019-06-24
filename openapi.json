@@ -3896,6 +3896,175 @@
         }
       }
     },
+    "/directory/sso": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "组织ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "创建sso信息",
+        "requestBody": {
+          "description": "sso参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "clientId",
+                  "secret",
+                  "redirect"
+                ],
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "secret": {
+                    "type": "string"
+                  },
+                  "redirect": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "创建成功"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "更新sso信息",
+        "requestBody": {
+          "description": "sso参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "clientId",
+                  "secret",
+                  "redirect"
+                ],
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "secret": {
+                    "type": "string"
+                  },
+                  "redirect": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "删除sso信息",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "删除成功"
+          }
+        }
+      }
+    },
+    "/directory/sso/orgId": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "组织ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "获取sso的信息",
+        "responses": {
+          "200": {
+            "description": "sso配置",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "secret": {
+                      "type": "string"
+                    },
+                    "redirect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/directory/team": {
       "parameters": [
         {
@@ -5088,6 +5257,59 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spock/dc/packages": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "二进制包管理",
+        "responses": {
+          "200": {
+            "description": "二进制包管理",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "versionInfo": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "fileVersion": {
+                              "type": "string"
+                            },
+                            "deliveryVersion": {
+                              "type": "string"
+                            },
+                            "deliveryId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
