@@ -1,0 +1,69 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建sso信息
+  requestBody:
+    description: sso参数
+    content:
+      application/json:
+        schema:
+          required: 
+            - "clientId"
+            - "secret"
+            - "redirect"
+          properties: 
+            clientId: 
+              type: "string"
+            secret: 
+              type: "string"
+            redirect: 
+              type: "string"
+  responses:
+    "200":
+      description: "创建成功"
+put:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 更新sso信息
+  requestBody:
+    description: sso参数
+    content:
+      application/json:
+        schema:
+          required: 
+            - "clientId"
+            - "secret"
+            - "redirect"
+          properties: 
+            clientId: 
+              type: "string"
+            secret: 
+              type: "string"
+            redirect: 
+              type: "string"
+  responses:
+    "200":
+      description: "更新成功"
+delete:
+  tags:
+    - Directory
+  summary: 删除sso信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功

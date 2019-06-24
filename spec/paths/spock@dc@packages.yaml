@@ -1,0 +1,30 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 二进制包管理
+  responses:
+    '200':
+      description: 二进制包管理
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: "object"
+              properties: 
+                fileName: 
+                  type: "string"
+                versionInfo: 
+                  type: "array"
+                  items: 
+                    type: "object"
+                    properties: 
+                      fileVersion: 
+                        type: "string"
+                      deliveryVersion: 
+                        type: "string"
+                      deliveryId: 
+                        type: "string"
