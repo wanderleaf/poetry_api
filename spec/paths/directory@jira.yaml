@@ -1,0 +1,64 @@
+parameters:
+  - name: orgId
+    in: query
+    description: 组织ID
+    required: true
+    schema:
+      type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取jira信息
+  responses:
+    '200':
+      description: 获取jira信息
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              host: 
+                type: "string"
+              user: 
+                type: "string"
+              accessToken: 
+                type: "string"
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 创建jira信息
+  requestBody:
+    description: jira参数
+    content:
+      application/json:
+        schema:
+          required: 
+            - "host"
+            - "user"
+            - "accessToken"
+          properties: 
+            host: 
+              type: "string"
+            user: 
+              type: "string"
+            accessToken: 
+              type: "string"
+  responses:
+    "200":
+      description: "创建成功"
+delete:
+  tags:
+    - Directory
+  summary: 删除jira信息
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  responses:
+    '200':
+      description: 删除成功
