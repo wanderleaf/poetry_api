@@ -1314,6 +1314,13 @@ paths:
                       type: string
                       description: 开启的特性列表
                       example: classic_pipeline
+                  ssoInfo:
+                    type: object
+                    properties:
+                      signIn:
+                        type: string
+                      signOut:
+                        type: string
   /directory/codehosts:
     parameters:
       - name: orgId
@@ -2263,6 +2270,27 @@ paths:
         required: true
         schema:
           type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取sso信息
+      responses:
+        '200':
+          description: 获取sso信息
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId:
+                    type: string
+                  secret:
+                    type: string
+                  redirect:
+                    type: string
     post:
       security:
         - ApiKeyAuth: []
@@ -2289,32 +2317,6 @@ paths:
       responses:
         '200':
           description: 创建成功
-    put:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - Directory
-      summary: 更新sso信息
-      requestBody:
-        description: sso参数
-        content:
-          application/json:
-            schema:
-              required:
-                - clientId
-                - secret
-                - redirect
-              properties:
-                clientId:
-                  type: string
-                secret:
-                  type: string
-                redirect:
-                  type: string
-      responses:
-        '200':
-          description: 更新成功
     delete:
       tags:
         - Directory
@@ -2325,34 +2327,6 @@ paths:
       responses:
         '200':
           description: 删除成功
-  /directory/sso/orgId:
-    parameters:
-      - name: orgId
-        in: query
-        description: 组织ID
-        required: true
-        schema:
-          type: integer
-    get:
-      security:
-        - ApiKeyAuth: []
-        - ApiRootKeyAuth: []
-      tags:
-        - Directory
-      summary: 获取sso的信息
-      responses:
-        '200':
-          description: sso配置
-          content:
-            application/json:
-              schema:
-                properties:
-                  clientId:
-                    type: string
-                  secret:
-                    type: string
-                  redirect:
-                    type: string
   /directory/team:
     parameters:
       - name: orgId
