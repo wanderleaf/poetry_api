@@ -19,3 +19,10 @@ get:
                   type: string
                   description: 开启的特性列表
                   example: 'classic_pipeline'
+              ssoInfo:
+                type: object
+                properties: 
+                  signIn: 
+                    type: "string"
+                  signOut: 
+                    type: "string"

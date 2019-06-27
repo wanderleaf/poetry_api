@@ -5,6 +5,27 @@ parameters:
     required: true
     schema:
       type: integer
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - Directory
+  summary: 获取sso信息
+  responses:
+    '200':
+      description: 获取sso信息
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              clientId: 
+                type: "string"
+              secret: 
+                type: "string"
+              redirect: 
+                type: "string"
 post:
   security:
     - ApiKeyAuth: []
@@ -31,32 +52,6 @@ post:
   responses:
     "200":
       description: "创建成功"
-put:
-  security:
-    - ApiKeyAuth: []
-    - ApiRootKeyAuth: []
-  tags:
-    - Directory
-  summary: 更新sso信息
-  requestBody:
-    description: sso参数
-    content:
-      application/json:
-        schema:
-          required: 
-            - "clientId"
-            - "secret"
-            - "redirect"
-          properties: 
-            clientId: 
-              type: "string"
-            secret: 
-              type: "string"
-            redirect: 
-              type: "string"
-  responses:
-    "200":
-      description: "更新成功"
 delete:
   tags:
     - Directory
