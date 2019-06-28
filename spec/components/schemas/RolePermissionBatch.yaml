@@ -12,3 +12,5 @@ properties:
     type: array
     items:
       type: string
+  productName:
+    type: string
