@@ -3498,6 +3498,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "当角色类型为项目角色时，项目名称不能为空",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "security": [
@@ -3552,6 +3561,15 @@
             "name": "permissionUUID",
             "in": "query",
             "description": "权限UUID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "当角色类型为项目角色时，项目名称不能为空",
             "required": false,
             "schema": {
               "type": "string"
@@ -3941,6 +3959,15 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "当角色类型为项目角色时，项目名称不能为空",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "security": [
@@ -3998,6 +4025,15 @@
             "required": false,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "当角色类型为项目角色时，项目名称不能为空",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -7186,6 +7222,9 @@
           },
           "roleType": {
             "type": "integer"
+          },
+          "productName": {
+            "type": "string"
           }
         }
       },
@@ -7208,6 +7247,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "productName": {
+            "type": "string"
           }
         }
       },
@@ -7243,6 +7285,9 @@
           },
           "userId": {
             "type": "integer"
+          },
+          "productName": {
+            "type": "string"
           }
         }
       },
@@ -7265,6 +7310,9 @@
             "items": {
               "type": "integer"
             }
+          },
+          "productName": {
+            "type": "string"
           }
         }
       },
@@ -7466,8 +7514,11 @@
           "teamId": {
             "type": "integer"
           },
-          "userId": {
-            "type": "integer"
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
           }
         }
       },

@@ -2026,6 +2026,12 @@ paths:
           required: false
           schema:
             type: string
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
+          required: false
+          schema:
+            type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -2058,6 +2064,12 @@ paths:
         - name: permissionUUID
           in: query
           description: 权限UUID
+          required: false
+          schema:
+            type: string
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
           required: false
           schema:
             type: string
@@ -2283,6 +2295,12 @@ paths:
           required: false
           schema:
             type: integer
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
+          required: false
+          schema:
+            type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -2318,6 +2336,12 @@ paths:
           required: false
           schema:
             type: integer
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
+          required: false
+          schema:
+            type: string
       tags:
         - Directory
       summary: 删除角色用户信息
@@ -4316,6 +4340,8 @@ components:
           type: string
         roleType:
           type: integer
+        productName:
+          type: string
     RolePermissionBatch:
       type: object
       properties:
@@ -4331,6 +4357,8 @@ components:
           type: array
           items:
             type: string
+        productName:
+          type: string
     RoleProduct:
       type: object
       properties:
@@ -4355,6 +4383,8 @@ components:
           type: integer
         userId:
           type: integer
+        productName:
+          type: string
     RoleUserBatch:
       type: object
       properties:
@@ -4370,6 +4400,8 @@ components:
           type: array
           items:
             type: integer
+        productName:
+          type: string
     S3Storage:
       type: object
       properties:
@@ -4510,8 +4542,10 @@ components:
           type: string
         teamId:
           type: integer
-        userId:
-          type: integer
+        userIds:
+          type: array
+          items:
+            type: integer
     TeamQualityGate:
       type: object
       properties:
