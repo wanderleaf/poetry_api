@@ -34,6 +34,12 @@ get:
     required: false
     schema:
       type: string
+  - name: productName
+    in: query
+    description: 当角色类型为项目角色时，项目名称不能为空
+    required: false
+    schema:
+      type: string
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []
@@ -66,6 +72,12 @@ delete:
   - name: permissionUUID
     in: query
     description: 权限UUID
+    required: false
+    schema:
+      type: string
+  - name: productName
+    in: query
+    description: 当角色类型为项目角色时，项目名称不能为空
     required: false
     schema:
       type: string

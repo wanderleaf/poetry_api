@@ -10,3 +10,5 @@ properties:
     type: integer
   userId:
     type: integer
+  productName:
+    type: string

@@ -10,3 +10,5 @@ properties:
     type: string
   roleType:
     type: integer
+  productName:
+    type: string
