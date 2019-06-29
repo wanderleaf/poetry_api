@@ -10,7 +10,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/RoleEnv'
+          properties: 
+            roleIds:
+              type: array
+              items:
+                type: integer
+            envName:
+              type: string
+            productName:
+              type: string
   responses:
     "200":
       description: "创建成功"
