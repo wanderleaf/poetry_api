@@ -6,7 +6,7 @@ post:
     - Directory
   summary: 创建角色权限信息
   requestBody:
-    description: 角色权限参数
+    description: 角色权限参数(当角色类型为项目角色时，项目名称不能为空)
     content:
       application/json:
         schema:
@@ -36,7 +36,7 @@ get:
       type: string
   - name: productName
     in: query
-    description: 当角色类型为项目角色时，项目名称不能为空
+    description: 项目名称
     required: false
     schema:
       type: string
