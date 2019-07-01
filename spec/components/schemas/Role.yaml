@@ -12,3 +12,6 @@ properties:
     type: string
   isDisabled:
     type: integer
+  updateBy:
+    type: string
+  
