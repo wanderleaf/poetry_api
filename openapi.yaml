@@ -4322,6 +4322,10 @@ components:
           type: string
         isDisabled:
           type: integer
+        updateBy:
+          type: string
+        updatedAt:
+          type: integer
     RoleEnv:
       type: object
       properties:

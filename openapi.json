@@ -7197,6 +7197,12 @@
           },
           "isDisabled": {
             "type": "integer"
+          },
+          "updateBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "integer"
           }
         }
       },
