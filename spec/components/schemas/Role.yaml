@@ -11,7 +11,7 @@ properties:
   desc:
     type: string
   isDisabled:
-    type: integer
+    type: bool
   updateBy:
     type: string
   updatedAt:
