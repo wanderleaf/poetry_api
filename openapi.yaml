@@ -3144,6 +3144,13 @@ paths:
                   $ref: '#/components/schemas/Tag'
   /spock/dc/packages:
     get:
+      parameters:
+        - name: productName
+          in: query
+          description: 产品名称
+          required: true
+          schema:
+            type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -4321,7 +4328,7 @@ components:
         desc:
           type: string
         isDisabled:
-          type: integer
+          type: boolean
         updateBy:
           type: string
         updatedAt:

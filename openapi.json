@@ -5384,6 +5384,17 @@
     },
     "/spock/dc/packages": {
       "get": {
+        "parameters": [
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "产品名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -7196,7 +7207,7 @@
             "type": "string"
           },
           "isDisabled": {
-            "type": "integer"
+            "type": "boolean"
           },
           "updateBy": {
             "type": "string"
