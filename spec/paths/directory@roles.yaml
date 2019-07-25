@@ -74,6 +74,12 @@ delete:
     required: true
     schema:
       type: integer
+  - name: productName
+    in: query
+    description: 产品名称(如果是项目角色则不能为空)
+    required: false
+    schema:
+      type: string
   tags:
     - Directory
   summary: 删除角色

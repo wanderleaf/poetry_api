@@ -30,7 +30,7 @@ put:
           properties:
             userId:
               type: integer
-            isAdmin:
+            isSuperUser:
               type: boolean
   responses:
     "200":
