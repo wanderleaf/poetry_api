@@ -10,6 +10,8 @@ properties:
     type: integer
   desc:
     type: string
+  productName(如果是项目角色不能为空):
+    type: string
   isDisabled:
     type: boolean
   updateBy:
