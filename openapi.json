@@ -3856,6 +3856,15 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productName",
+            "in": "query",
+            "description": "产品名称(如果是项目角色则不能为空)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "tags": [
@@ -3930,7 +3939,7 @@
                   "userId": {
                     "type": "integer"
                   },
-                  "isAdmin": {
+                  "isSuperUser": {
                     "type": "boolean"
                   }
                 }
@@ -7204,6 +7213,9 @@
             "type": "integer"
           },
           "desc": {
+            "type": "string"
+          },
+          "productName(如果是项目角色不能为空)": {
             "type": "string"
           },
           "isDisabled": {
