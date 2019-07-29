@@ -2724,10 +2724,6 @@ paths:
       responses:
         '200':
           description: 创建成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
   '/directory/user/{userId}':
     parameters:
       - name: userId
@@ -2766,10 +2762,6 @@ paths:
       responses:
         '200':
           description: 更新成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
     get:
       security:
         - ApiRootKeyAuth: []

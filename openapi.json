@@ -4693,14 +4693,7 @@
         },
         "responses": {
           "200": {
-            "description": "创建成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "创建成功"
           }
         }
       }
@@ -4768,14 +4761,7 @@
         },
         "responses": {
           "200": {
-            "description": "更新成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "更新成功"
           }
         }
       },
