@@ -1,0 +1,16 @@
+parameters:
+  - name: id
+    in: path
+    description: K8S集群ID
+    required: true
+    schema:
+      type: integer
+put:
+  tags:
+    - spock
+  summary: 断开一个K8S集群
+  responses:
+    '200':
+      description: 成功
+    '404':
+      description: "没找到"

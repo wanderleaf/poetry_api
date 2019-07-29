@@ -1,0 +1,31 @@
+get:
+  tags:
+    - spock
+  summary: 获取K8S集群列表
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/K8SCluster'
+post:
+  tags:
+    - spock
+  summary: 创建一个新的K8S集群
+  requestBody:
+    description: K8S集群参数
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/K8SCluster'
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/K8SCluster'

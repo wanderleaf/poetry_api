@@ -1,0 +1,55 @@
+type: object
+properties:
+  id:
+    type: string
+    description: 集群ID
+    readOnly: true
+  name:
+    type: string
+    description: 集群名称, 不能为空, uniq
+  tags:
+    type: array
+    items:
+      type: string
+    description: 标签
+  description:
+    type: string
+    description: 描述
+  info:
+    readOnly: true
+    type: object
+    description: 集群信息
+    properties:
+      nodes:
+        type: integer
+        description: 节点数
+      version:
+        type: string
+        description: k8s版本
+      cpu:
+        type: string
+        description: cpu占用情况
+      memory:
+        type: string
+        description: 内存占用情况
+  status:
+    readOnly: true
+    type: string
+    enum:
+      - disconnected
+      - pending
+      - normal
+      - abnormal
+  error:
+    readOnly: true
+    type: string
+    description: 错误明细
+  yaml:
+    readOnly: true
+    type: string
+    description: 用于安装的yaml链接
+required:
+- id
+- name
+- status
+- yaml

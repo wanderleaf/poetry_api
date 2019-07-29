@@ -18,7 +18,7 @@ get:
                 items:
                   type: string
                   description: 开启的特性列表
-                  example: 'classic_pipeline'
+                  example: 'classic_pipeline,cluster_manager'
               ssoInfo:
                 type: object
                 properties: 

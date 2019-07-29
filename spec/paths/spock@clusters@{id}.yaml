@@ -1,0 +1,55 @@
+parameters:
+  - name: id
+    in: path
+    description: K8S集群ID
+    required: true
+    schema:
+      type: integer
+get:
+  tags:
+    - spock
+  summary: 获取一个K8S集群
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/K8SCluster'
+    '404':
+      description: "没找到"
+put:
+  tags:
+    - spock
+  summary: 更新一个新的K8S集群
+  requestBody:
+    description: 镜像仓库参数
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/K8SCluster'
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/K8SCluster'
+    '404':
+      description: "没找到"
+delete:
+  tags:
+    - spock
+  summary: 删除一个K8S集群
+  responses:
+    '200':
+      description: 成功
+    '400':
+      description: "不能删除"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResult'
+    '404':
+      description: "没找到"
