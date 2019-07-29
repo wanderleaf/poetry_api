@@ -4640,6 +4640,71 @@
         }
       }
     },
+    "/directory/user": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "query",
+          "description": "组织ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Directory"
+        ],
+        "summary": "添加user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "isSuperUser": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "创建成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/directory/user/{userId}": {
       "parameters": [
         {
@@ -4690,13 +4755,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "oldPassword": {
                     "type": "string"
                   },
-                  "email": {
-                    "type": "string"
-                  },
-                  "phone": {
+                  "newPassword": {
                     "type": "string"
                   }
                 }
