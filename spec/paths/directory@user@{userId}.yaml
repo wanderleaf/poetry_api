@@ -28,11 +28,9 @@ put:
         schema:
           type: object
           properties:
-            name:
+            oldPassword:
               type: string
-            email:
-              type: string
-            phone:
+            newPassword:
               type: string
   responses:
     '200':
