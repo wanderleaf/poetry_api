@@ -7018,13 +7018,25 @@
             "readOnly": true,
             "type": "string",
             "description": "用于安装的yaml链接"
+          },
+          "createdAt": {
+            "readOnly": true,
+            "type": "integer",
+            "description": "创建时间"
+          },
+          "createdBy": {
+            "readOnly": true,
+            "type": "string",
+            "description": "创建者"
           }
         },
         "required": [
           "id",
           "name",
           "status",
-          "yaml"
+          "yaml",
+          "createdAt",
+          "createdBy"
         ]
       },
       "Measure": {
