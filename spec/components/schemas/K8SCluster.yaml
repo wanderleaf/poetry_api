@@ -56,6 +56,9 @@ properties:
     readOnly: true
     type: string
     description: 创建者
+  production:
+    type: boolean
+    description: 是否是生产集群
 required:
 - id
 - name
@@ -63,3 +66,4 @@ required:
 - yaml
 - createdAt
 - createdBy
+- production
