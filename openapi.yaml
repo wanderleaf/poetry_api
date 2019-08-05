@@ -4232,6 +4232,9 @@ components:
           readOnly: true
           type: string
           description: 创建者
+        production:
+          type: boolean
+          description: 是否是生产集群
       required:
         - id
         - name
@@ -4239,6 +4242,7 @@ components:
         - yaml
         - createdAt
         - createdBy
+        - production
     Measure:
       type: object
       properties:
