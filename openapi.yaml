@@ -3398,6 +3398,29 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ReaperOS'
+  /spock/registry/images:
+    get:
+      tags:
+        - spock
+      parameters:
+        - name: names
+          in: query
+          description: |
+            image列表, ","隔开, 如 "nginx,postgres". 如果为空，则尝试获取所有的镜像.
+            navtive registry不支持获取所有的镜像
+          required: false
+          schema:
+            type: string
+      summary: 获取镜像tag列表
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistryImageResponse'
   /spock/registry/namespaces:
     get:
       parameters:
@@ -3424,7 +3447,9 @@ paths:
         - spock
       summary: 创建一个新的镜像仓库
       requestBody:
-        description: 创建一个新的镜像仓库
+        description: |
+          创建一个新的镜像仓库,
+          当reg_provider为native时，access_key和secret_key为可选
         required: true
         content:
           application/json:
@@ -4464,6 +4489,10 @@ components:
           type: string
         reg_provider:
           type: string
+          enum:
+            - native
+            - tencent
+            - qiniu
         is_default:
           type: boolean
         namespace:
@@ -4478,6 +4507,23 @@ components:
         update_by:
           type: string
           readOnly: true
+    RegistryImageResponse:
+      type: object
+      properties:
+        host:
+          type: string
+        owner:
+          type: string
+          description: image的namespace
+        name:
+          type: string
+        tag:
+          type: string
+      required:
+        - host
+        - owner
+        - name
+        - tag
     RepoMeasure:
       type: object
       properties:
