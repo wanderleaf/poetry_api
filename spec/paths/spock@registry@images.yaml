@@ -1,0 +1,22 @@
+get:
+  tags:
+    - spock
+  parameters:
+    - name: names
+      in: query
+      description: |
+        image列表, ","隔开, 如 "nginx,postgres". 如果为空，则尝试获取所有的镜像.
+        navtive registry不支持获取所有的镜像
+      required: false
+      schema:
+        type: string
+  summary: 获取镜像tag列表
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RegistryImageResponse'

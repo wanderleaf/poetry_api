@@ -23,7 +23,9 @@ post:
     - spock
   summary: 创建一个新的镜像仓库
   requestBody:
-    description: 创建一个新的镜像仓库
+    description: |
+      创建一个新的镜像仓库,
+      当reg_provider为native时，access_key和secret_key为可选
     required: true
     content:
       application/json:

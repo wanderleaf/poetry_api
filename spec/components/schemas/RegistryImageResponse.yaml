@@ -1,0 +1,16 @@
+type: object
+properties:
+  host:
+    type: string
+  owner:
+    type: string
+    description: image的namespace
+  name:
+    type: string
+  tag:
+    type: string
+required:
+- host
+- owner
+- name
+- tag

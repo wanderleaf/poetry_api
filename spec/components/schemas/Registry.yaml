@@ -11,6 +11,10 @@ properties:
     type: string
   reg_provider:
     type: string
+    enum:
+    - native
+    - tencent
+    - qiniu
   is_default:
     type: boolean    
   namespace:
