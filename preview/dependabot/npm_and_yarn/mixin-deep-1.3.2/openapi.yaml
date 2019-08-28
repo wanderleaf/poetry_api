@@ -1,0 +1,5240 @@
+openapi: 3.0.0
+servers:
+  - description: Poetry API Auto Mocking
+    url: 'http://poetry.dev.8slan.com/api'
+info:
+  version: 1.0.0
+  title: Poetry api
+  description: 'Poetry api协议, 分页协议参考https://docs.gitlab.com/ee/api/#pagination-link-header'
+paths:
+  /ac/analyzeSonar:
+    parameters:
+      - name: repoId
+        in: query
+        schema:
+          type: string
+        description: 收集指定repo的sonar质量报告
+    post:
+      security:
+        - ApiOrgTokenAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 发送分析sonar指令
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ac/buildDetails/search:
+    parameters:
+      - name: reportId
+        in: query
+        description: report Id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出CI耗时详情
+      responses:
+        '200':
+          description: 报告详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BuildDetail'
+  /ac/codeCoverage/collect:
+    post:
+      security:
+        - ApiOrgTokenAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 收集覆盖率报告
+      requestBody:
+        description: 覆盖率报告以及其他信息
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                projectPath:
+                  type: string
+                namespace:
+                  type: string
+                coverage:
+                  type: string
+                  format: binary
+                langauge:
+                  type: string
+                  enum:
+                    - java
+                commitHash:
+                  type: string
+      responses:
+        '200':
+          description: 分析成功
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ac/codeCoverageDetails/search:
+    parameters:
+      - name: codeCoverageId
+        in: query
+        description: CodeCoverage的ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出覆盖率报告的详情
+      responses:
+        '200':
+          description: 覆盖率详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeCoverageDetail'
+  '/ac/codehosts/{id}/removeRepos':
+    parameters:
+      - name: id
+        in: path
+        description: codehost id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 删除codehost下的所有代码库
+      responses:
+        '200':
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  '/ac/codehosts/{id}/syncRepos':
+    parameters:
+      - name: id
+        in: path
+        description: codehost id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 同步某个codehost的代码库
+      responses:
+        '200':
+          description: 发送同步命令成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /ac/delivery/measureInfo:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取产品的交付任务质效信息
+      responses:
+        '200':
+          description: 产品的交付任务质效信息
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryMeasureInfo'
+  /ac/issueMeasures/search:
+    parameters:
+      - name: reportId
+        in: query
+        description: report id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出缺陷报告详情
+      responses:
+        '200':
+          description: 缺陷报告详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IssueMeasure'
+  /ac/measureInsight/data:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 查看所选的质效洞察指标数据
+      responses:
+        '200':
+          description: 质效洞察指标数据（包括元数据计算值评分等级）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureInsightData'
+  /ac/measureInsight/index:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 查看用户所选的质效洞察指标
+      responses:
+        '200':
+          description: 用户选过的指标
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 修改质效洞察所展示的指标
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ModifyMeasureIndexAction'
+      responses:
+        '200':
+          description: 更新结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /ac/measureInsight/translation:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 查看所有质效洞察指标翻译对照表
+      responses:
+        '200':
+          description: 洞察指标翻译对照表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureInsightIndex'
+  /ac/measures/byOrg:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织Id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出组织所有团队的质效列表
+      responses:
+        '200':
+          description: 团队质效列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamMeasure'
+  /ac/measures/byProduct:
+    parameters:
+      - name: product
+        in: query
+        description: 项目(产品)
+        required: true
+        schema:
+          type: string
+    get:
+      summary: 列出项目(product)的代码库质效
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      responses:
+        '200':
+          description: 代码库质效列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepoMeasure'
+  /ac/measures/byRepo:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织Id
+        required: true
+        schema:
+          type: integer
+    post:
+      summary: 列出指定代码库的质效
+      description: 若没有找到指定代码库，则不返回内容
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RepoSelector'
+      responses:
+        '200':
+          description: 代码库质效列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepoMeasure'
+  /ac/measures/byTeam:
+    parameters:
+      - name: teamId
+        in: query
+        description: 团队Id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: 列出团队的代码库质效
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      responses:
+        '200':
+          description: 代码库质效列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepoMeasure'
+  /ac/measuresHistory/byOrg:
+    parameters:
+      - in: query
+        name: orgId
+        description: 组织Id
+        required: true
+        schema:
+          type: integer
+      - in: query
+        name: startTime
+        description: 开始时间
+        schema:
+          type: string
+      - in: query
+        name: endTime
+        description: 结束时间
+        schema:
+          type: string
+    get:
+      summary: 列出组织质效历史记录
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      responses:
+        '200':
+          description: 组织质效历史列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measure'
+  /ac/measuresHistory/byRepo:
+    parameters:
+      - in: query
+        name: repoId
+        description: 代码库Id
+        required: true
+        schema:
+          type: integer
+      - in: query
+        name: startTime
+        description: 开始时间
+        schema:
+          type: string
+      - in: query
+        name: endTime
+        description: 结束时间
+        schema:
+          type: string
+    get:
+      summary: 列出代码库质效历史纪录
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      responses:
+        '200':
+          description: 代码库质效历史列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measure'
+  /ac/measuresHistory/byTeam:
+    parameters:
+      - in: query
+        name: teamId
+        description: 团队Id
+        required: true
+        schema:
+          type: integer
+      - in: query
+        name: startTime
+        description: 开始时间
+        schema:
+          type: string
+      - in: query
+        name: endTime
+        description: 结束时间
+        schema:
+          type: string
+    get:
+      summary: 列出团队质效历史纪录
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      responses:
+        '200':
+          description: 团队质效历史列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measure'
+  '/ac/product/{productName}/modifyRepositories':
+    parameters:
+      - name: productName
+        in: path
+        description: 项目名
+        required: true
+        schema:
+          type: string
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 向项目(product)添加/删除Repo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ModifyRepositoryAction'
+      responses:
+        '200':
+          description: 更新结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  '/ac/product/{productName}/repos':
+    parameters:
+      - name: productName
+        in: path
+        description: productName
+        required: true
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出项目(product)的所有Repo
+      responses:
+        '200':
+          description: 所有Repo详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+  /ac/product/measures/byOrg:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织Id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出组织产品纬度的代码质效列表
+      responses:
+        '200':
+          description: 团队质效列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductMeasure'
+  /ac/productQualityGates/search:
+    parameters:
+      - name: product
+        in: query
+        description: 项目名
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取项目质量门设置
+      responses:
+        '200':
+          description: 项目质量门设置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamQualityGate'
+  /ac/productQualityGates/update:
+    parameters:
+      - name: repoId
+        in: query
+        description: repo id
+        schema:
+          type: integer
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 更新项目(product)/Repo质量门设置
+      requestBody:
+        description: 质量门设置
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityGate'
+      responses:
+        '200':
+          description: 更新结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /ac/qualityGates/query:
+    post:
+      security:
+        - ApiOrgTokenAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取repository设置(用于CI脚本)
+      requestBody:
+        description: repository信息
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                projectPath:
+                  type: string
+                namespace:
+                  type: string
+                branch:
+                  type: string
+      responses:
+        '200':
+          description: |-
+            成功获取sample:coverageCheck=false/true
+            sonarSettings=xxxx
+            repoId=1
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ac/qualityGates/update:
+    parameters:
+      - name: teamId
+        in: query
+        description: team id
+        schema:
+          type: integer
+      - name: repoId
+        in: query
+        description: repo id
+        schema:
+          type: integer
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 更新团队/Repo质量门设置
+      requestBody:
+        description: 质量门设置
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityGate'
+      responses:
+        '200':
+          description: 更新结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /ac/repoNamespaces:
+    parameters:
+      - name: codehostId
+        in: query
+        description: Codehost Id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出该codehost下的所有的namesapce
+      responses:
+        '200':
+          description: namespace列表详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /ac/repositories/search:
+    parameters:
+      - name: codehostId
+        in: query
+        description: codehost id
+        required: false
+        schema:
+          type: integer
+      - name: namespaceName
+        in: query
+        description: namespace名称
+        required: false
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出某个namespace下的所有Repo
+      responses:
+        '200':
+          description: 所有Repo详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+  /ac/reposNotInCi:
+    parameters:
+      - name: orgId
+        in: query
+        description: org id
+        required: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出所有未纳入CI的Repo
+      responses:
+        '200':
+          description: 所有Repo详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+          headers:
+            X-Total:
+              $ref: '#/components/headers/X-Total'
+  '/ac/securityMeasureCount/{reportId}':
+    parameters:
+      - name: reportId
+        in: path
+        description: report id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出某代码库的安全扫描个数列表
+      responses:
+        '200':
+          description: 安全扫描个数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecurityMeasureCount'
+  /ac/securityMeasureDetails/search:
+    parameters:
+      - name: reportId
+        in: query
+        description: report Id
+        required: true
+        schema:
+          type: integer
+      - name: categorySlug
+        in: query
+        description: category slug
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出安全扫描报告详情
+      responses:
+        '200':
+          description: 报告详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecurityMeasureDetail'
+  '/ac/team/{teamId}/modifyRepositories':
+    parameters:
+      - name: teamId
+        in: path
+        description: team id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 向team添加Repo/从Team删除Repo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ModifyRepositoryAction'
+      responses:
+        '200':
+          description: 更新结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  '/ac/team/{teamId}/removeRepos':
+    parameters:
+      - name: teamId
+        in: path
+        description: team id
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 将team下的所有repo移出该team
+      responses:
+        '200':
+          description: 移除结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  '/ac/team/{teamId}/repos':
+    parameters:
+      - name: teamId
+        in: path
+        description: team id
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 列出团队的所有Repo
+      responses:
+        '200':
+          description: 所有Repo详情
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+  /ac/teamQualityGates/search:
+    parameters:
+      - name: teamId
+        in: query
+        description: team id
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取团队质量门设置
+      responses:
+        '200':
+          description: 团队质量门设置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamQualityGate'
+  /ac/tests/measureInfo:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - AnalysisCenter
+      summary: 获取产品的测试任务质效信息
+      responses:
+        '200':
+          description: 产品的测试任务质效信息
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestMeasureInfo'
+  /dc/images:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+      - name: productName
+        in: query
+        description: 产品名称
+        required: false
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取镜像版本信息列表
+      responses:
+        '200':
+          description: 镜像版本信息参数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageInfo'
+  /dc/products:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取产品信息列表
+      responses:
+        '200':
+          description: 产品信息参数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  '/dc/products/{releaseId}':
+    parameters:
+      - name: releaseId
+        in: path
+        description: 交付版本的ID
+        required: true
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取产品信息
+      responses:
+        '200':
+          description: 产品信息参数
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowProject'
+  /dc/releases:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+      - name: workflowName
+        in: query
+        description: 工作流的名称(新增时必须包含)
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: query
+        description: 工作流任务ID(新增时必须包含)
+        required: true
+        schema:
+          type: integer
+      - name: productName
+        in: query
+        description: 产品名称
+        required: false
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: 分页大小
+        schema:
+          type: integer
+        required: false
+      - name: page
+        in: query
+        description: 分页index
+        schema:
+          type: integer
+        required: false
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取版本信息列表
+      responses:
+        '200':
+          description: 版本信息参数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryRelease'
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 新增版本信息列表
+      requestBody:
+        description: 版本信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryVersion'
+      responses:
+        '200':
+          description: 版本信息添加成功
+  '/dc/releases/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: 版本信息ID
+        required: true
+        schema:
+          type: string
+    delete:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 删除版本信息
+      responses:
+        '200':
+          description: 删除成功
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 得到版本信息
+      responses:
+        '200':
+          description: 版本信息参数
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryVersionArgs'
+  /dc/securitys:
+    get:
+      parameters:
+        - name: imageId
+          in: query
+          description: 镜像ID
+          required: true
+          schema:
+            type: string
+        - name: security
+          in: query
+          description: 漏洞等级
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取镜像安全扫描详情信息
+      responses:
+        '200':
+          description: 镜像安全扫描参数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliverySecurity'
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 新增镜像安全扫描详情信息
+      requestBody:
+        description: 镜像安全扫描参数信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverySecurity'
+      responses:
+        '200':
+          description: 信息添加成功
+  /dc/securitys/stats:
+    parameters:
+      - name: imageId
+        in: query
+        description: 镜像ID
+        required: true
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - DeliveryCenter
+      summary: 获取镜像安全扫描统计数据
+      responses:
+        '200':
+          description: 镜像安全扫描参数
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverySecurityStatsInfo'
+  /directory/ad:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建一个新的AD配置
+      requestBody:
+        description: AD配置参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+  /directory/ad/default:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取企业的AD配置
+      responses:
+        '200':
+          description: AD配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+    put:
+      tags:
+        - Directory
+      summary: 更新企业的AD配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: AD配置参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+      responses:
+        '200':
+          description: Ad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+    delete:
+      tags:
+        - Directory
+      summary: 删除企业的AD配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/ads/sync:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: '测试AD设置,根据用户输入的用户名拉取域内的所有成员'
+      responses:
+        '200':
+          description: 测试结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '400':
+          description: |
+            错误码(resultCode):
+            10002:AD connect failed
+            400:username or password error
+            10004:query AD user failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/ads/test:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: '测试AD设置,发送联通测试和用户名密码验证'
+      responses:
+        '200':
+          description: 测试结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '400':
+          description: |
+            错误码(resultCode):
+            10002:AD connect failed
+            400:username or password error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/check:
+    get:
+      summary: 检查系统是否初始化成功（是否有至少一个组织）
+      tags:
+        - Directory
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inited:
+                    type: boolean
+                    description: 系统是否已初始化
+                  features:
+                    type: array
+                    items:
+                      type: string
+                      description: 开启的特性列表
+                      example: 'classic_pipeline,cluster_manager'
+                  ssoInfo:
+                    type: object
+                    properties:
+                      signIn:
+                        type: string
+                      signOut:
+                        type: string
+  /directory/codehosts:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建一个新的codehost
+      requestBody:
+        description: codehost 参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Codehost'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Codehost'
+  '/directory/codehosts/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: codehost Id
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - Directory
+      summary: 列出codehost详情
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: codehost详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Codehost'
+    delete:
+      tags:
+        - Directory
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      summary: 删除codehost
+      responses:
+        '200':
+          description: 删除成功k
+    put:
+      tags:
+        - Directory
+      summary: 更新codehost
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: codehost 参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Codehost'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Codehost'
+  /directory/codehosts/callback:
+    parameters:
+      - name: state
+        in: query
+        description: 回调参数
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: query
+        description: oauth2 code
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Directory
+      summary: codehost授权回调
+      responses:
+        '302':
+          description: 授权成功
+        '400':
+          description: '授权失败, 返回失败原因. 10006:用户拒绝了授权, 10007:appid或者secret不正确，授权失败'
+          content:
+            text/html:
+              schema:
+                type: string
+  '/directory/codehostss/{id}/auth':
+    parameters:
+      - name: id
+        in: path
+        description: codehost Id
+        required: true
+        schema:
+          type: integer
+      - name: redirect
+        in: query
+        description: 授权完成后回跳地址
+        required: true
+        schema:
+          type: string
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 跳转到指定codehost进行授权，授权完成后回跳到redirect地址，如成功，则传succeed=true，如失败，传errCode=someCode，errMessage=someMessage（优先使用errCode，无code用errMessage，无errMessage则界面显示未知错误）
+      responses:
+        '302':
+          description: 跳转
+  /directory/codehostss/search:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: 分页大小
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: 分页index
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 列出组织所有的codehost
+      responses:
+        '200':
+          description: codehost列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Codehost'
+  /directory/emailHosts:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建或者更新邮件主机配置
+      requestBody:
+        description: 邮件主机参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailHost'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailHost'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取邮件主机配置
+      responses:
+        '200':
+          description: 邮件服务配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailHost'
+    delete:
+      tags:
+        - Directory
+      summary: 删除企业的邮件主机配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/emailServices:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建或者更新邮件服务配置
+      requestBody:
+        description: 邮件服务参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailService'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailService'
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取邮件服务配置
+      responses:
+        '200':
+          description: 邮件服务配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailService'
+    delete:
+      tags:
+        - Directory
+      summary: 删除企业的邮件服务配置
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/emailServicess/send:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 发送邮件
+      requestBody:
+        description: 发送邮件参数
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EmailAction'
+      responses:
+        '200':
+          description: 发送成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '500':
+          description: 发送失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/github/codehosts:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建一个type为github的codehost
+      requestBody:
+        description: codehost 参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                installationID:
+                  type: integer
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Codehost'
+  /directory/jira:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取jira信息
+      responses:
+        '200':
+          description: 获取jira信息
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  host:
+                    type: string
+                  user:
+                    type: string
+                  accessToken:
+                    type: string
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建jira信息
+      requestBody:
+        description: jira参数
+        content:
+          application/json:
+            schema:
+              required:
+                - host
+                - user
+                - accessToken
+              properties:
+                host:
+                  type: string
+                user:
+                  type: string
+                accessToken:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+    delete:
+      tags:
+        - Directory
+      summary: 删除jira信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/notifyHistorys:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - Directory
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      summary: 列出通知历史
+      responses:
+        '200':
+          description: 所有通知历史
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotifyHistory'
+  /directory/organization:
+    post:
+      tags:
+        - Directory
+      summary: 创建一个新的组织
+      requestBody:
+        description: 组织注册信息
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                website:
+                  type: string
+                adminName:
+                  type: string
+                adminEmail:
+                  type: string
+                adminPhone:
+                  type: string
+                adminPassword:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: admin userToken
+                  organization:
+                    $ref: '#/components/schemas/Organization'
+  '/directory/organization/{orgId}':
+    parameters:
+      - name: orgId
+        in: path
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - Directory
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      summary: 获取一个组织信息
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+    put:
+      tags:
+        - Directory
+      summary: 更新组织信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: 组织信息
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                website:
+                  type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+  /directory/organizations/findByOrgToken:
+    parameters:
+      - name: orgToken
+        in: query
+        description: 组织Token
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Directory
+      summary: 用组织Token寻找企业信息
+      responses:
+        '200':
+          description: 查找成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: 查找失败
+  /directory/organizations/list:
+    get:
+      tags:
+        - Directory
+      security:
+        - ApiRootKeyAuth: []
+      summary: 列出所有组织信息
+      responses:
+        '200':
+          description: 所有组织信息
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+  /directory/orgToken:
+    put:
+      summary: 更新组织Token
+      tags:
+        - Directory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                originOrgToken:
+                  type: string
+                  description: 原来的组织Token
+      responses:
+        '200':
+          description: 查找成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: 查找失败
+  '/directory/role/{id}':
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色详情
+      responses:
+        '200':
+          description: 角色列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+  /directory/roleEnv:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建环境角色信息
+      requestBody:
+        description: 环境角色信息参数
+        content:
+          application/json:
+            schema:
+              properties:
+                roleIds:
+                  type: array
+                  items:
+                    type: integer
+                envName:
+                  type: string
+                productName:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: productName
+          in: query
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: envName
+          in: query
+          description: 环境名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取环境角色列表
+      responses:
+        '200':
+          description: 环境角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleEnv'
+    delete:
+      parameters:
+        - name: productName
+          in: query
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: envName
+          in: query
+          description: 环境名称
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除环境角色信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/rolePermission:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色权限信息
+      requestBody:
+        description: 角色权限参数(当角色类型为项目角色时，项目名称不能为空)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RolePermissionBatch'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: false
+          schema:
+            type: string
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色权限列表
+      responses:
+        '200':
+          description: 角色权限列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RolePermission'
+    delete:
+      parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: false
+          schema:
+            type: string
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除角色权限信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roleProduct:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建项目角色信息
+      requestBody:
+        description: 项目角色信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleProduct'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取项目角色列表
+      responses:
+        '200':
+          description: 项目角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleProduct'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除项目角色信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roles:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色
+      requestBody:
+        description: 角色参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+      responses:
+        '200':
+          description: 创建成功
+    put:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新角色
+      requestBody:
+        description: 角色参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+      responses:
+        '200':
+          description: 更新成功
+    get:
+      parameters:
+        - name: name
+          in: query
+          description: 角色名称
+          required: false
+          schema:
+            type: string
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色列表
+      responses:
+        '200':
+          description: 角色列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+    delete:
+      parameters:
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: true
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 产品名称(如果是项目角色则不能为空)
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除角色
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/roleUser:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建角色用户信息
+      requestBody:
+        description: 角色用户信息参数(当角色类型为项目角色时，项目名称不能为空)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleUserBatch'
+      responses:
+        '200':
+          description: 创建成功
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 修改系统角色用户信息
+      requestBody:
+        description: 系统角色用户信息参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                isSuperUser:
+                  type: boolean
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: userId
+          in: query
+          description: 用户ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取角色用户列表
+      responses:
+        '200':
+          description: 角色用户列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleUser'
+    delete:
+      parameters:
+        - name: roleType
+          in: query
+          description: 角色类型
+          required: true
+          schema:
+            type: integer
+        - name: roleId
+          in: query
+          description: 角色ID
+          required: false
+          schema:
+            type: integer
+        - name: userId
+          in: query
+          description: 用户ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 当角色类型为项目角色时，项目名称不能为空
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除角色用户信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/sso:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取sso信息
+      responses:
+        '200':
+          description: 获取sso信息
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId:
+                    type: string
+                  secret:
+                    type: string
+                  redirect:
+                    type: string
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建sso信息
+      requestBody:
+        description: sso参数
+        content:
+          application/json:
+            schema:
+              required:
+                - clientId
+                - secret
+                - redirect
+              properties:
+                clientId:
+                  type: string
+                secret:
+                  type: string
+                redirect:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+    delete:
+      tags:
+        - Directory
+      summary: 删除sso信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  /directory/team:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建一个新的team
+      requestBody:
+        description: team参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                leaders:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+  /directory/teamProduct:
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 创建项目团队信息
+      requestBody:
+        description: 项目团队信息参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamProduct'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      parameters:
+        - name: teamId
+          in: query
+          description: 团队ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取项目团队列表
+      responses:
+        '200':
+          description: 项目团队列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamProduct'
+    delete:
+      parameters:
+        - name: teamId
+          in: query
+          description: 团队ID
+          required: false
+          schema:
+            type: integer
+        - name: productName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      tags:
+        - Directory
+      summary: 删除项目团队信息
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 删除成功
+  '/directory/teams/{teamId}':
+    parameters:
+      - name: teamId
+        in: path
+        description: teamId
+        required: true
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取team详情
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新team
+      requestBody:
+        description: team参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                leaders:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+    delete:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 删除team
+      responses:
+        '200':
+          description: 删除成功
+  '/directory/teams/{teamId}/members/batch':
+    parameters:
+      - name: teamId
+        in: path
+        description: 团队ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新团队成员
+      requestBody:
+        description: 更新团队成员数据
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MemberAction'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新团队成员
+      requestBody:
+        description: 更新团队成员数据(新接口，不需要action参数)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MemberActions'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/teamss/search:
+    parameters:
+      - name: orgId
+        in: query
+        description: org Id
+        required: true
+        schema:
+          type: integer
+      - name: keyword
+        in: query
+        description: keyword
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: 分页大小
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: 分页index
+        schema:
+          type: integer
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取team列表
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+  /directory/user:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 添加user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                isSuperUser:
+                  type: boolean
+                name:
+                  type: string
+                phone:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+  '/directory/user/{userId}':
+    parameters:
+      - name: userId
+        in: path
+        description: user ID
+        required: true
+        schema:
+          type: integer
+    delete:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 删除user
+      responses:
+        '200':
+          description: 删除成功
+    put:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 更新user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        '200':
+          description: 更新成功
+    get:
+      security:
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取user
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  '/directory/user/{userId}/team/batch':
+    parameters:
+      - name: userId
+        in: path
+        description: 用户ID
+        required: true
+        schema:
+          type: integer
+    post:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 批量更新用户所属组
+      requestBody:
+        description: 批量更新用户所属组数据
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/user/detail:
+    get:
+      tags:
+        - Directory
+      security:
+        - ApiKeyAuth: []
+      summary: 获取user详情
+      responses:
+        '200':
+          description: user详情
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  info:
+                    $ref: '#/components/schemas/User'
+                  teams:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          description: 团队名称
+                        isTeamLeader:
+                          type: boolean
+                  organization:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                        description: 组织名称
+                      isAdmin:
+                        type: boolean
+                  features:
+                    type: array
+                    items:
+                      type: string
+                      description: 开启的特性列表
+                      example: classic_pipeline
+  /directory/user/generateToken:
+    get:
+      security:
+        - ApiKeyAuth: []
+      summary: 生成jwt的Token
+      tags:
+        - Directory
+      responses:
+        '200':
+          description: 生成成功
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: 生成失败
+  /directory/user/login:
+    parameters:
+      - name: orgId
+        in: query
+        description: '组织ID, 如果为空, 则只限管理员登录'
+        required: false
+        schema:
+          type: integer
+    post:
+      tags:
+        - Directory
+      summary: 用户登录
+      requestBody:
+        description: 'email,密码'
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: admin userToken
+                  user:
+                    $ref: '#/components/schemas/User'
+                  org:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  permissionUUIDs:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: 用户名或密码错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '500':
+          description: 服务不可用
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+  /directory/user/logout:
+    post:
+      tags:
+        - Directory
+      summary: 退出登录（该接口由proxy实现，清除用户的客户端cookie）
+      responses:
+        '200':
+          description: 成功
+  /directory/userPermissionRelation:
+    get:
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+        - name: permissionUUID
+          in: query
+          description: 权限UUID
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: query
+          description: '权限类型 1.系统权限,2.项目权限'
+          required: true
+          schema:
+            type: integer
+        - name: projectName
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - Directory
+      summary: 获取用户权限关系
+      responses:
+        '200':
+          description: 用户是否有某个权限
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /directory/userss/search:
+    parameters:
+      - name: orgId
+        in: query
+        description: 组织ID
+        schema:
+          type: integer
+      - name: teamId
+        in: query
+        description: team ID
+        schema:
+          type: integer
+      - name: excludeTeamId
+        in: query
+        description: '排除在指定team(id={excludeTeamId})里面的user'
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: 分页大小
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: 分页index
+        schema:
+          type: integer
+      - name: keyword
+        in: query
+        description: keyword
+        schema:
+          type: string
+    get:
+      tags:
+        - Directory
+      summary: '列出某组织/团队的成员, orgId和teamId必须有一个'
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /spock/clusters:
+    get:
+      tags:
+        - spock
+      summary: 获取K8S集群列表
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/K8SCluster'
+    post:
+      tags:
+        - spock
+      summary: 创建一个新的K8S集群
+      requestBody:
+        description: K8S集群参数
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/K8SCluster'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/K8SCluster'
+  '/spock/clusters/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: K8S集群ID
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - spock
+      summary: 获取一个K8S集群
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/K8SCluster'
+        '404':
+          description: 没找到
+    put:
+      tags:
+        - spock
+      summary: 更新一个新的K8S集群
+      requestBody:
+        description: 镜像仓库参数
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/K8SCluster'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/K8SCluster'
+        '404':
+          description: 没找到
+    delete:
+      tags:
+        - spock
+      summary: 删除一个K8S集群
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: 不能删除
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '404':
+          description: 没找到
+  '/spock/clusters/{id}/disconnect':
+    parameters:
+      - name: id
+        in: path
+        description: K8S集群ID
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+        - spock
+      summary: 断开一个K8S集群
+      responses:
+        '200':
+          description: 成功
+        '404':
+          description: 没找到
+  '/spock/clusters/{id}/reconnect':
+    parameters:
+      - name: id
+        in: path
+        description: K8S集群ID
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+        - spock
+      summary: 重新连接一个K8S集群
+      responses:
+        '200':
+          description: 重连结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionResult'
+        '404':
+          description: 没找到
+  '/spock/codehost/{codehostId}/namespaces':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+    get:
+      tags:
+        - spock
+      summary: 查询代码源下所有namespace
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Namespace'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace
+    get:
+      tags:
+        - spock
+      summary: 查询代码源namespace下所有仓库
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/branches':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有分支
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/prs':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+      - name: targetBranch
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 查找的目标分支
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有PR
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PR'
+  '/spock/codehost/{codehostId}/namespaces/{namespace}/projects/{projectId}/tags':
+    parameters:
+      - name: codehostId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: 需要查询的codehost ID
+      - name: projectId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的project Name
+      - name: namespace
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 需要查询的namespace Path
+    get:
+      tags:
+        - spock
+      summary: 查询仓库下所有分支
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+  /spock/dc/packages:
+    get:
+      parameters:
+        - name: productName
+          in: query
+          description: 产品名称
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 二进制包管理
+      responses:
+        '200':
+          description: 二进制包管理
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    fileName:
+                      type: string
+                    versionInfo:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          fileVersion:
+                            type: string
+                          deliveryVersion:
+                            type: string
+                          deliveryId:
+                            type: string
+  /spock/permission/engineerManager:
+    get:
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取工程管理权限
+      responses:
+        '200':
+          description: 工程管理权限列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  '/spock/products/{productName}':
+    put:
+      parameters:
+        - name: productName
+          in: path
+          description: 产品名称
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 环境共享
+      requestBody:
+        description: 环境共享参数
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductEnv'
+      responses:
+        '200':
+          description: 更新成功
+  /spock/reaperOS:
+    get:
+      tags:
+        - spock
+      summary: 列出构建系统OS
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReaperOS'
+  /spock/registry/images:
+    get:
+      tags:
+        - spock
+      parameters:
+        - name: names
+          in: query
+          description: |
+            image列表, ","隔开, 如 "nginx,postgres". 如果为空，则尝试获取所有的镜像.
+            navtive registry不支持获取所有的镜像
+          required: false
+          schema:
+            type: string
+      summary: 获取镜像tag列表
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistryImageResponse'
+  /spock/registry/namespaces:
+    get:
+      parameters:
+        - name: orgID
+          in: query
+          description: 组织ID
+          required: true
+          schema:
+            type: integer
+      tags:
+        - spock
+      summary: 查询镜像仓库列表
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registry'
+    post:
+      tags:
+        - spock
+      summary: 创建一个新的镜像仓库
+      requestBody:
+        description: |
+          创建一个新的镜像仓库,
+          当reg_provider为native时，access_key和secret_key为可选
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registry'
+      responses:
+        '200':
+          description: 成功
+  '/spock/registry/namespaces/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: 镜像仓库ID
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - spock
+      summary: 更新镜像仓库
+      requestBody:
+        description: 更新镜像仓库
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registry'
+      responses:
+        '200':
+          description: 成功
+    delete:
+      tags:
+        - spock
+      summary: 删除镜像仓库
+      responses:
+        '200':
+          description: 成功
+  /spock/s3storage:
+    get:
+      tags:
+        - spock
+      summary: 获取对象存储列表
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/S3Storage'
+    post:
+      tags:
+        - spock
+      summary: 创建一个新的对象存储
+      requestBody:
+        description: 创建一个新的镜像仓库
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/S3Storage'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/S3Storage'
+  '/spock/s3storage/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: 对象存储ID
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - spock
+      summary: 获取一个对象存储参数
+      responses:
+        '200':
+          description: 成功获取
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/S3Storage'
+        '404':
+          description: 没找到
+    put:
+      tags:
+        - spock
+      summary: 更新一个新的对象存储
+      requestBody:
+        description: 镜像仓库参数
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/S3Storage'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/S3Storage'
+        '404':
+          description: 没找到
+    delete:
+      tags:
+        - spock
+      summary: 删除一个对象存储
+      responses:
+        '200':
+          description: 成功
+        '404':
+          description: 没找到
+  /spock/workflow:
+    post:
+      tags:
+        - spock
+      summary: 创建工作流
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: 工作流内容
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+      responses:
+        '200':
+          description: 成功
+    put:
+      tags:
+        - spock
+      summary: 更新工作流
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      requestBody:
+        description: 工作流内容
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+      responses:
+        '200':
+          description: 成功
+components:
+  schemas:
+    ActionResult:
+      type: object
+      properties:
+        resultCode:
+          type: integer
+          description: '0 is good, other is bad'
+        errorMsg:
+          type: string
+    Ad:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        type:
+          type: string
+          enum:
+            - ad
+            - ldap
+        address:
+          type: string
+        port:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+          description: 在响应体隐藏
+        dn:
+          type: string
+    Branch:
+      type: object
+      properties:
+        name:
+          type: string
+          example: master
+        protected:
+          type: boolean
+          example: true
+        merged:
+          type: boolean
+          example: true
+    BuildDetail:
+      type: object
+      properties:
+        link:
+          type: string
+        succeed:
+          type: boolean
+        duration:
+          type: integer
+        time:
+          type: string
+        id:
+          type: integer
+    BuildReport:
+      type: object
+      properties:
+        noBuild:
+          type: integer
+        noBuildSucceed:
+          type: integer
+        duration:
+          type: integer
+        time:
+          type: string
+        id:
+          type: integer
+    CodeCoverage:
+      type: object
+      properties:
+        id:
+          type: integer
+        noStmt:
+          type: integer
+        noMissedStmt:
+          type: integer
+        value:
+          type: integer
+        score:
+          type: integer
+        grade:
+          type: string
+          enum:
+            - A
+            - B
+            - C
+            - D
+    CodeCoverageDetail:
+      type: object
+      properties:
+        packageName:
+          type: string
+        noStmt:
+          type: integer
+        noMissedStmt:
+          type: integer
+    Codehost:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 请求体中无效
+        orgId:
+          type: string
+          description: 组织ID
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - gitlab
+        address:
+          type: string
+          description: gitlab地址
+        ready:
+          type: boolean
+          description: 是否已经授权完毕
+        accessToken:
+          type: string
+          description: 请求体中无效
+        refreshToken:
+          type: string
+          description: 请求体中无效
+        namespace:
+          type: string
+          description: 代码库的命名空间(对应gitlab里的user或者group)
+        applicationId:
+          type: string
+        clientSecret:
+          type: string
+    DeliveryBuild:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        serviceName:
+          type: string
+        imageInfo:
+          $ref: '#/components/schemas/DeliveryImage'
+        packageInfo:
+          $ref: '#/components/schemas/DeliveryPackage'
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryIssueObject'
+        commits:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryCommitObject'
+    DeliveryCommitObject:
+      type: object
+      properties:
+        branch:
+          type: string
+        checkoutPath:
+          type: string
+        commitId:
+          type: string
+        isPrimary:
+          type: boolean
+        remoteName:
+          type: string
+        repoName:
+          type: string
+        repoOwner:
+          type: string
+    DeliveryConfigObject:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        createTime:
+          type: integer
+    DeliveryDeploy:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        serviceName:
+          type: string
+        containerName:
+          type: string
+        yamlContents:
+          type: array
+          items:
+            type: string
+        envs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEnvObject2'
+        orderedServices:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+    DeliveryDistribute:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        serviceName:
+          type: string
+        registryName:
+          type: string
+        namespace:
+          type: string
+    DeliveryEnvObject:
+      type: object
+      properties:
+        envName:
+          type: string
+        envContent:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEnvObject2'
+    DeliveryEnvObject2:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    DeliveryImage:
+      type: object
+      properties:
+        repoName:
+          type: string
+        tagName:
+          type: string
+        imageSize:
+          type: integer
+        imageDigest:
+          type: string
+        author:
+          type: string
+        architecture:
+          type: string
+        dockerVersion:
+          type: string
+        os:
+          type: string
+        creationTime:
+          type: string
+        updateTime:
+          type: string
+    DeliveryIssueObject:
+      type: object
+      properties:
+        assignee:
+          type: string
+        creator:
+          type: string
+        id:
+          type: string
+        key:
+          type: string
+        priority:
+          type: string
+        reporter:
+          type: string
+        summary:
+          type: string
+        url:
+          type: string
+    deliveryMeasure:
+      type: object
+      properties:
+        testTimes:
+          type: string
+        testAverageTime:
+          type: string
+        testSuccessRate:
+          type: string
+        deployFrequency:
+          type: string
+        deployTimes:
+          type: string
+    DeliveryMeasureInfo:
+      type: object
+      properties:
+        productName:
+          type: string
+        noProductWeeks:
+          type: integer
+        noDeliveryFrequency:
+          type: integer
+        noTotalTime:
+          type: integer
+        noTaskTotalTime:
+          type: integer
+        noSuccessTask:
+          type: integer
+        noTask:
+          type: integer
+    DeliveryPackage:
+      type: object
+      properties:
+        packageUrl:
+          type: string
+        packageName:
+          type: string
+        packageSize:
+          type: integer
+        packageDigest:
+          type: string
+    DeliveryProduct:
+      type: object
+      properties:
+        productName:
+          type: string
+    DeliveryRelease:
+      type: object
+      properties:
+        versionInfo:
+          $ref: '#/components/schemas/DeliveryVersionArgs'
+        buildInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryBuild'
+        deployInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryDeploy'
+        testInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryTest'
+        distributeInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryDistribute'
+        securityStatsInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverySecurityStats'
+    DeliverySecurity:
+      type: object
+      properties:
+        imageId:
+          type: string
+        imageName:
+          type: string
+        layerId:
+          type: string
+        vulnerability:
+          $ref: '#/components/schemas/DeliverySecurityVulnerability'
+        feature:
+          $ref: '#/components/schemas/DeliverySecurityFeature'
+        severity:
+          type: string
+    DeliverySecurityFeature:
+      type: object
+      properties:
+        name:
+          type: string
+        namespaceName:
+          type: string
+        versionFormat:
+          type: string
+        version:
+          type: string
+        vulnerabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverySecurityVulnerability'
+        addedBy:
+          type: string
+    DeliverySecurityStats:
+      type: object
+      properties:
+        imageName:
+          type: string
+        deliverySecurityStatsInfo:
+          $ref: '#/components/schemas/DeliverySecurityStatsInfo'
+    DeliverySecurityStatsInfo:
+      type: object
+      properties:
+        Total:
+          type: integer
+        Unkown:
+          type: integer
+        Negligible:
+          type: integer
+        Medium:
+          type: integer
+        Low:
+          type: integer
+        High:
+          type: integer
+        Critical:
+          type: integer
+    DeliverySecurityVulnerability:
+      type: object
+      properties:
+        name:
+          type: string
+        namespaceName:
+          type: string
+        description:
+          type: string
+        link:
+          type: string
+        severity:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            key: Hello!
+            value: world!
+        fixedBy:
+          type: string
+        fixedIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverySecurityFeature'
+    DeliveryTest:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        releaseId:
+          type: string
+          readOnly: true
+        testReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryTestObject'
+    DeliveryTestObject:
+      type: object
+      properties:
+        testResultPath:
+          type: string
+        workflowName:
+          type: string
+        taskId:
+          type: integer
+        testName:
+          type: string
+    DeliveryVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        version:
+          type: string
+        desc:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    DeliveryVersionArgs:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        version:
+          type: string
+        orgId:
+          type: integer
+        productName:
+          type: string
+        workflowName:
+          type: string
+        taskId:
+          type: string
+        createdBy:
+          type: string
+        desc:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    deploymentMeasure:
+      type: object
+      properties:
+        deliveryTimes:
+          type: string
+        deliveryFrequency:
+          type: string
+        developTime:
+          type: string
+        cdAverageTime:
+          type: string
+        cdPassingRate:
+          type: string
+    EmailAction:
+      type: object
+      properties:
+        email:
+          type: string
+    EmailHost:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        name:
+          type: string
+        port:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+          description: 在响应体隐藏
+        isTlS:
+          type: boolean
+    EmailService:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        name:
+          type: string
+        address:
+          type: string
+        displayName:
+          type: string
+        theme:
+          type: string
+    ImageInfo:
+      type: object
+      properties:
+        imageName:
+          type: string
+        versionInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionInfo'
+    integrationMeasure:
+      type: object
+      properties:
+        codeCoverage:
+          type: string
+        codeIssue:
+          type: string
+        codeSecurity:
+          type: string
+        ciPassingRate:
+          type: string
+        ciAverageTime:
+          type: string
+    IssueMeasure:
+      type: object
+      properties:
+        file:
+          type: string
+        line:
+          type: integer
+        description:
+          type: string
+    IssueReport:
+      type: object
+      properties:
+        noIssue:
+          type: integer
+        time:
+          type: string
+        id:
+          type: integer
+    K8SCluster:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 集群ID
+          readOnly: true
+        name:
+          type: string
+          description: '集群名称, 不能为空, uniq'
+        tags:
+          type: array
+          items:
+            type: string
+          description: 标签
+        description:
+          type: string
+          description: 描述
+        info:
+          readOnly: true
+          type: object
+          description: 集群信息
+          properties:
+            nodes:
+              type: integer
+              description: 节点数
+            version:
+              type: string
+              description: k8s版本
+            cpu:
+              type: string
+              description: cpu占用情况
+            memory:
+              type: string
+              description: 内存占用情况
+        status:
+          readOnly: true
+          type: string
+          enum:
+            - disconnected
+            - pending
+            - normal
+            - abnormal
+        error:
+          readOnly: true
+          type: string
+          description: 错误明细
+        yaml:
+          readOnly: true
+          type: string
+          description: 用于安装的yaml链接
+        createdAt:
+          readOnly: true
+          type: integer
+          description: 创建时间
+        createdBy:
+          readOnly: true
+          type: string
+          description: 创建者
+        production:
+          type: boolean
+          description: 是否是生产集群
+      required:
+        - id
+        - name
+        - status
+        - yaml
+        - createdAt
+        - createdBy
+        - production
+    Measure:
+      type: object
+      properties:
+        codeCoverage:
+          $ref: '#/components/schemas/CodeCoverage'
+        securityReport:
+          $ref: '#/components/schemas/SecurityReport'
+        issueReport:
+          $ref: '#/components/schemas/IssueReport'
+        buildReport:
+          $ref: '#/components/schemas/BuildReport'
+    MeasureInsightData:
+      type: object
+      properties:
+        product:
+          type: string
+        measures:
+          type: object
+          properties:
+            codeCoverage:
+              $ref: '#/components/schemas/CodeCoverage'
+    MeasureInsightIndex:
+      type: object
+      properties:
+        integrationMeasure:
+          $ref: '#/components/schemas/integrationMeasure'
+        deploymentMeasure:
+          $ref: '#/components/schemas/deploymentMeasure'
+        deliveryMeasure:
+          $ref: '#/components/schemas/deliveryMeasure'
+    MemberAction:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: user id
+        isTeamleader:
+          type: boolean
+        action:
+          type: string
+    MemberActions:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: user id
+        isTeamleader:
+          type: boolean
+    ModifyMeasureIndexAction:
+      type: object
+      properties:
+        index:
+          type: array
+          items:
+            type: string
+            enum:
+              - delivery_times
+              - delivery_frequency
+              - develop_time
+              - cd_pipeline_average_time
+        action:
+          type: string
+          enum:
+            - add
+            - remove
+    ModifyRepositoryAction:
+      type: object
+      properties:
+        repositoryId:
+          type: integer
+        action:
+          type: string
+          enum:
+            - add
+            - remove
+    Namespace:
+      type: object
+      properties:
+        name:
+          type: string
+          example: odf
+        path:
+          type: string
+          example: odf
+        kind:
+          type: string
+          example: group
+    NotifyHistory:
+      properties:
+        id:
+          type: integer
+          description: 在请求体中无效
+        type:
+          type: string
+          enum:
+            - email
+            - sms
+            - wechat
+        title:
+          type: string
+        content:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        status:
+          type: string
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        website:
+          type: string
+        orgToken:
+          type: string
+    PR:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        targetBranch:
+          type: string
+          example: master
+        sourceBranch:
+          type: string
+          example: dev
+        projectId:
+          type: string
+          example: 1
+        title:
+          type: string
+          example: new-feature
+        authorName:
+          type: string
+          example: qu
+    ProductEnv:
+      type: object
+      properties:
+        roleIds:
+          type: array
+          items:
+            type: integer
+        isPublic:
+          type: boolean
+        envName:
+          type: string
+    ProductMeasure:
+      type: object
+      properties:
+        product:
+          type: string
+        measures:
+          $ref: '#/components/schemas/Measure'
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+          example: koderover
+        description:
+          type: string
+          example: 发布系统
+        defaultBranch:
+          type: string
+          example: master
+    QualityGate:
+      type: object
+      properties:
+        codeScan:
+          type: boolean
+        shouldReport:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/QualityGateRule'
+    QualityGateRule:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          enum:
+            - CCT
+            - CCBTL
+        intValue:
+          type: integer
+    ReaperOS:
+      type: object
+      properties:
+        value:
+          type: string
+          example: trusty
+          description: 唯一ID
+        label:
+          type: string
+          description: 描述信息
+          example: ubuntu 14.04
+      required:
+        - value
+        - label
+    Registry:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        org_id:
+          type: string
+        reg_addr:
+          type: string
+        reg_type:
+          type: string
+        reg_provider:
+          type: string
+          enum:
+            - native
+            - tencent
+            - qiniu
+        is_default:
+          type: boolean
+        namespace:
+          type: string
+        access_key:
+          type: string
+        secret_key:
+          type: string
+        update_time:
+          type: integer
+          readOnly: true
+        update_by:
+          type: string
+          readOnly: true
+    RegistryImageResponse:
+      type: object
+      properties:
+        host:
+          type: string
+        owner:
+          type: string
+          description: image的namespace
+        name:
+          type: string
+        tag:
+          type: string
+      required:
+        - host
+        - owner
+        - name
+        - tag
+    RepoMeasure:
+      type: object
+      properties:
+        repo:
+          $ref: '#/components/schemas/Repository'
+        measures:
+          $ref: '#/components/schemas/Measure'
+    RepoQualityGate:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/QualityGate'
+        repo:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+    RepoSelector:
+      type: object
+      properties:
+        name:
+          type: string
+        namespace:
+          type: string
+        branch:
+          type: string
+        codehostId:
+          type: integer
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        namespace:
+          type: string
+        mainBranch:
+          type: string
+        branches:
+          type: array
+          items:
+            type: string
+        codehostId:
+          type: integer
+        productName:
+          type: string
+        url:
+          type: string
+        team:
+          $ref: '#/components/schemas/Team'
+        withStats:
+          type: boolean
+          description: 是否有CI数据
+        ciBranch:
+          type: string
+          description: CI数据上报分支
+        codehost:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        name:
+          type: string
+        roleType:
+          type: integer
+        desc:
+          type: string
+        productName(如果是项目角色不能为空):
+          type: string
+        isDisabled:
+          type: boolean
+        updateBy:
+          type: string
+        updatedAt:
+          type: integer
+    RoleEnv:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        envName:
+          type: string
+        productName:
+          type: string
+    RolePermission:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        permissionUUID:
+          type: string
+        roleType:
+          type: integer
+        productName:
+          type: string
+    RolePermissionBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        roleType:
+          type: integer
+        permissionUUIDs:
+          type: array
+          items:
+            type: string
+        productName:
+          type: string
+    RoleProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        productName:
+          type: string
+    RoleUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        roleType:
+          type: integer
+        userId:
+          type: integer
+        productName:
+          type: string
+    RoleUserBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        roleId:
+          type: integer
+        roleType:
+          type: integer
+        userIds:
+          type: array
+          items:
+            type: integer
+        productName:
+          type: string
+    S3Storage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 对象存储的ID
+          readOnly: true
+        update_time:
+          type: integer
+          description: 更新时间
+          readOnly: true
+        updated_by:
+          type: string
+          description: 更新者
+          readOnly: true
+        ak:
+          type: string
+          description: access_key
+        sk:
+          type: string
+          description: secret_key
+        endpoint:
+          type: string
+          description: s3协议地址
+        bucket:
+          type: string
+          description: 存储桶名称
+        subfolder:
+          type: string
+          description: 存储相对路径
+        insecure:
+          type: boolean
+          description: 是否非https
+        is_default:
+          type: boolean
+          description: 是否默认
+      required:
+        - ak
+        - sk
+        - endpoint
+        - bucket
+        - insecure
+        - is_default
+    SecurityMeasureCount:
+      type: object
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+        category:
+          type: string
+          enum:
+            - owasp-a1
+            - owasp-a2
+            - owasp-a3
+            - owasp-a4
+            - owasp-a5
+            - owasp-a6
+            - owasp-a7
+            - owasp-a8
+            - owasp-a9
+            - owasp-a10
+    SecurityMeasureDetail:
+      type: object
+      properties:
+        detail:
+          type: object
+          properties:
+            line:
+              type: integer
+            file:
+              type: string
+            detail:
+              type: string
+        category:
+          type: string
+    SecurityReport:
+      type: object
+      properties:
+        count:
+          type: integer
+        time:
+          type: string
+        id:
+          type: integer
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+          example: v0.1
+        message:
+          type: string
+          example: change sth...
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        leaders:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        desc:
+          type: string
+        orgId:
+          type: integer
+    TeamLite:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    TeamMeasure:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/Team'
+        measures:
+          $ref: '#/components/schemas/Measure'
+    TeamProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: 在请求体中无效
+        productName:
+          type: string
+        teamId:
+          type: integer
+        userIds:
+          type: array
+          items:
+            type: integer
+    TeamQualityGate:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/QualityGate'
+        repos:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepoQualityGate'
+    TestMeasureInfo:
+      type: object
+      properties:
+        productName:
+          type: string
+        noTotalFrequency:
+          type: integer
+        noTotalTime:
+          type: integer
+        noSuccess:
+          type: integer
+        noDeployFrequency:
+          type: integer
+        noProductWeek:
+          type: integer
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        isAdmin:
+          type: boolean
+          description: 是否组织管理员
+        isSuperUser:
+          type: boolean
+        isTeamLeader:
+          type: boolean
+          description: 仅当根据teamId搜索时有意义
+        teams:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        lastLogin:
+          type: integer
+        directory:
+          type: string
+          description: 可以是 system 或者 AD的名称
+    UserLite:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    VersionInfo:
+      type: object
+      properties:
+        tagVersion:
+          type: string
+        deliveryVersion:
+          type: string
+        deliveryId:
+          type: string
+    Workflow:
+      type: object
+      properties:
+        name:
+          type: string
+          example: build-poetry
+        enabled:
+          type: boolean
+          example: true
+        product_tmpl_name:
+          type: string
+          example: poetry
+        description:
+          type: string
+          example: 构建poetry工作流
+        updated_by:
+          type: string
+          example: allen
+          readOnly: true
+        created_by:
+          type: string
+          example: bob
+          readOnly: true
+        update_time:
+          type: integer
+          example: 0
+          readOnly: true
+        create_time:
+          type: integer
+          example: 0
+          readOnly: true
+        schedules:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  number:
+                    type: integer
+                    example: 30
+                    description: 'minutes区间最小值为30,其他>0'
+                  frequency:
+                    type: string
+                    description: '任务周期. type=timing 支持day(每天),monday-sunday, type=gap 支持 hours, minutes'
+                    enum:
+                      - day
+                      - monday
+                      - tuesday
+                      - wednesday
+                      - thursday
+                      - friday
+                      - saturday
+                      - sunday
+                      - hours
+                      - minutes
+                  time:
+                    type: string
+                    example: '12:24'
+                    description: '任务运行时间，可以和 day, monday to sunday 配合使用, type必须为timing'
+                  type:
+                    type: string
+                    enum:
+                      - timing
+                      - gap
+                  workflow_args:
+                    $ref: '#/components/schemas/WorkflowArgsInTrigger'
+        build_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            modules:
+              type: array
+              items:
+                type: object
+                properties:
+                  target:
+                    type: string
+                    example: poetry-portal
+                  build_module_ver:
+                    type: string
+                    example: stable
+                    description: 目前必须为stable
+        test_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            test_names:
+              type: array
+              items:
+                type: string
+        security_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        distribute_stage:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            image_repo:
+              type: string
+            distributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  target:
+                    type: string
+                  image_distribute:
+                    type: boolean
+        hook_ctl:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  main_repo:
+                    allOf:
+                      - $ref: '#/components/schemas/WorkflowArgsRepo'
+                      - type: object
+                        properties:
+                          match_folders:
+                            type: array
+                            items:
+                              type: string
+                              example: /
+                              description: '匹配规则 / 表示匹配所有，!表示排除目标文件, 如 /,!.md,.go'
+                          events:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - push
+                                - pull_request
+                  workflow_args:
+                    $ref: '#/components/schemas/WorkflowArgsInTrigger'
+    WorkflowArgsInTrigger:
+      type: object
+      properties:
+        namespace:
+          type: string
+          example: dev
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: poetry-portal
+              build:
+                type: object
+                properties:
+                  repos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowArgsRepo'
+              version:
+                type: string
+                example: stable
+              deploy:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    env:
+                      type: string
+                      example: pac-cronjob/pac-django
+                    type:
+                      type: string
+                      example: k8s
+        tests:
+          type: array
+          items:
+            type: object
+            properties:
+              test_module_name:
+                type: string
+                example: test_poetry
+              builds:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowArgsRepo'
+        is_demo:
+          type: boolean
+    WorkflowArgsRepo:
+      type: object
+      properties:
+        repo_owner:
+          type: string
+          example: odf
+        repo_name:
+          type: string
+          example: koderover
+        branch:
+          type: string
+          example: master
+        codehost_id:
+          type: integer
+          example: 1
+    WorkflowProject:
+      type: object
+      properties:
+        id:
+          type: string
+        product_name:
+          type: string
+        create_time:
+          type: number
+        update_time:
+          type: number
+        status:
+          type: string
+        revision:
+          type: number
+        enabled:
+          type: boolean
+        env_name:
+          type: string
+        update_by:
+          type: string
+        visibility:
+          type: string
+        enable_stcov:
+          type: boolean
+        services:
+          type: array
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                service_name:
+                  type: string
+                type:
+                  type: string
+                revision:
+                  type: number
+                containers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      image:
+                        type: string
+        render:
+          properties:
+            name:
+              type: string
+            revision:
+              type: number
+            product_tmpl:
+              type: string
+            description:
+              type: string
+          type: object
+        error:
+          type: string
+        vars:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+              alias:
+                type: string
+              state:
+                type: string
+              services:
+                type: array
+                items:
+                  type: string
+  parameters:
+    page:
+      name: page
+      in: query
+      description: 分页index
+      schema:
+        type: integer
+    per_page:
+      name: per_page
+      in: query
+      description: 分页大小
+      schema:
+        type: integer
+  headers:
+    X-Total:
+      description: 总数
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: '普通用户使用的API-KEY, 如 X-API-KEY 01234567890abcdefg'
+    ApiOrgTokenAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: '企业TOKEN, 如 X-ORG-TOKEN 01234567890abcdefg'
+    ApiRootKeyAuth:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'root权限使用的API-KEY, 如X-ROOT-API-KEY 0123456789abcdefg'
