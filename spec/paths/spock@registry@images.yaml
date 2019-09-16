@@ -1,16 +1,18 @@
 get:
   tags:
     - spock
-  parameters:
-    - name: names
-      in: query
-      description: |
-        image列表, ","隔开, 如 "nginx,postgres". 如果为空，则尝试获取所有的镜像.
-        navtive registry不支持获取所有的镜像
-      required: false
-      schema:
-        type: string
-  summary: 获取镜像tag列表
+  summary: 获取一批镜像的tag列表
+  description: 
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            names:
+              type: array
+              items: string
+              description: repo列表, 如 ["mysql", "postgres"]
   responses:
     '200':
       description: 成功获取
