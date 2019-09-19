@@ -33,6 +33,9 @@ get:
                 type:
                   type: string
                   example: workflow
+                duration:
+                  type: integer
+                  example: 300
                 createTime:
                   type: integer
                   example: 1568788762
