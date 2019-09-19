@@ -3602,7 +3602,7 @@ paths:
                 items:
                   type: object
                   properties:
-                    day:
+                    date:
                       type: string
                       example: '2019-09-04'
                     averageDuration:
@@ -3639,7 +3639,7 @@ paths:
                 items:
                   type: object
                   properties:
-                    day:
+                    date:
                       type: string
                       example: '2019-09-04'
                     success:

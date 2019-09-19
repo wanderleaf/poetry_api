@@ -6129,7 +6129,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "day": {
+                      "date": {
                         "type": "string",
                         "example": "2019-09-04"
                       },
@@ -6190,7 +6190,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "day": {
+                      "date": {
                         "type": "string",
                         "example": "2019-09-04"
                       },
