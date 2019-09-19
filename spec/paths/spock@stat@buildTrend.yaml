@@ -1,0 +1,54 @@
+get:
+  parameters:
+  - name: startDate
+    in: query
+    description: 开始时间
+    required: true
+    schema:
+      type: integer
+  - name: endDate
+    in: query
+    description: 结束时间
+    required: true
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的构建趋势
+  responses:
+    '200':
+      description: 构建趋势
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              currentDay: 
+                properties: 
+                  success: 
+                    type: integer
+                  failure: 
+                    type: integer
+                  timeout: 
+                    type: integer
+                type: "object"
+              sum: 
+                type: "array"
+                items: 
+                  type: "object"
+                  properties: 
+                    day: 
+                      type: integer
+                      default: 7
+                    data: 
+                      properties: 
+                        success: 
+                          type: integer
+                        failure: 
+                          type: integer
+                        timeout: 
+                          type: integer
+                      type: "object"

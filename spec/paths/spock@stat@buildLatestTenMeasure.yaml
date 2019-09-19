@@ -1,0 +1,39 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取最近十次的构建
+  responses:
+    '200':
+      description: 最近十次的构建
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                taskId:
+                  type: integer
+                  example: 1
+                productName:
+                  type: string
+                  example: open-store
+                pipelineName:
+                  type: string
+                  example: open-store-pipeline
+                status:
+                  type: string
+                  example: passed
+                taskCreator:
+                  type: string
+                  example: dyliu
+                type:
+                  type: string
+                  example: workflow
+                createTime:
+                  type: integer
+                  example: 1568788762
+
