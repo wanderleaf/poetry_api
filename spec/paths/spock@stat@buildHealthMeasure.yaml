@@ -32,3 +32,4 @@ get:
               totalFailure: 
                 type: integer
                 example: 10
+                
