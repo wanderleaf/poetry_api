@@ -42,7 +42,7 @@ get:
                   properties: 
                     day: 
                       type: integer
-                      default: 7
+                      example: 7
                     data: 
                       properties: 
                         success: 
