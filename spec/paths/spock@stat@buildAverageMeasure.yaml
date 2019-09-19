@@ -34,4 +34,3 @@ get:
                 averageDuration:
                   type: integer
                   example: 30
-                  
