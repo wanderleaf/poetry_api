@@ -6254,10 +6254,12 @@
                   "type": "object",
                   "properties": {
                     "totalSuccess": {
-                      "type": "integer"
+                      "type": "integer",
+                      "example": 1000
                     },
                     "totalFailure": {
-                      "type": "integer"
+                      "type": "integer",
+                      "example": 10
                     }
                   }
                 }
@@ -6452,7 +6454,7 @@
                         "properties": {
                           "day": {
                             "type": "integer",
-                            "default": 7
+                            "example": 7
                           },
                           "data": {
                             "properties": {

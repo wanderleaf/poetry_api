@@ -3679,8 +3679,10 @@ paths:
                 properties:
                   totalSuccess:
                     type: integer
+                    example: 1000
                   totalFailure:
                     type: integer
+                    example: 10
   /spock/stat/buildLatestTenMeasure:
     get:
       security:
@@ -3804,7 +3806,7 @@ paths:
                       properties:
                         day:
                           type: integer
-                          default: 7
+                          example: 7
                         data:
                           properties:
                             success:
