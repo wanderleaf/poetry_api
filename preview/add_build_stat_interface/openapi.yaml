@@ -3807,15 +3807,12 @@ paths:
                         day:
                           type: integer
                           example: 7
-                        data:
-                          properties:
-                            success:
-                              type: integer
-                            failure:
-                              type: integer
-                            timeout:
-                              type: integer
-                          type: object
+                        success:
+                          type: integer
+                        failure:
+                          type: integer
+                        timeout:
+                          type: integer
   /spock/workflow:
     post:
       tags:
