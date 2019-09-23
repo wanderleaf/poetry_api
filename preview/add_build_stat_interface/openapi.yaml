@@ -3804,6 +3804,8 @@ paths:
                         type: integer
                       timeout:
                         type: integer
+                      cancle:
+                        type: integer
                     type: object
                   sum:
                     type: array

@@ -6451,6 +6451,9 @@
                         },
                         "timeout": {
                           "type": "integer"
+                        },
+                        "cancle": {
+                          "type": "integer"
                         }
                       },
                       "type": "object"
