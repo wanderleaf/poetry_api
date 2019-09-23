@@ -3804,7 +3804,7 @@ paths:
                         type: integer
                       timeout:
                         type: integer
-                      cancle:
+                      cancel:
                         type: integer
                     type: object
                   sum:
@@ -3821,7 +3821,7 @@ paths:
                           type: integer
                         timeout:
                           type: integer
-                        cancle:
+                        cancel:
                           type: integer
   /spock/workflow:
     post:
