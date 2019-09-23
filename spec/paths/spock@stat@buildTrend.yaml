@@ -49,3 +49,5 @@ get:
                       type: integer
                     timeout: 
                       type: integer
+                    cancle:
+                      type: integer
