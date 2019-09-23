@@ -34,7 +34,7 @@ get:
                     type: integer
                   timeout: 
                     type: integer
-                  cancle:
+                  cancel:
                     type: integer
                 type: "object"
               sum: 
@@ -51,5 +51,5 @@ get:
                       type: integer
                     timeout: 
                       type: integer
-                    cancle:
+                    cancel:
                       type: integer
