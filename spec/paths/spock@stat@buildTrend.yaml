@@ -34,8 +34,6 @@ get:
                     type: integer
                   timeout: 
                     type: integer
-                  cancel:
-                    type: integer
                 type: "object"
               sum: 
                 type: "array"
@@ -50,6 +48,4 @@ get:
                     failure: 
                       type: integer
                     timeout: 
-                      type: integer
-                    cancel:
                       type: integer
