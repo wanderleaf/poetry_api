@@ -3819,6 +3819,8 @@ paths:
                           type: integer
                         timeout:
                           type: integer
+                        cancle:
+                          type: integer
   /spock/workflow:
     post:
       tags:

@@ -6472,6 +6472,9 @@
                           },
                           "timeout": {
                             "type": "integer"
+                          },
+                          "cancle": {
+                            "type": "integer"
                           }
                         }
                       }
