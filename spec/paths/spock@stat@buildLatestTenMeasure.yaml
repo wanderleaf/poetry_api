@@ -1,4 +1,13 @@
 get:
+  parameters:
+  - name: productNames
+    in: query
+    description: 项目名称
+    required: false
+    schema:
+      type: array
+      items:
+        type: string
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []
