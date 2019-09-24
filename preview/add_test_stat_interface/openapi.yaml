@@ -3586,6 +3586,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3623,6 +3631,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3663,6 +3679,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3685,6 +3709,15 @@ paths:
                     example: 10
   /spock/stat/buildLatestTenMeasure:
     get:
+      parameters:
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3727,6 +3760,15 @@ paths:
                       example: 1568788762
   /spock/stat/buildTenDurationMeasure:
     get:
+      parameters:
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3782,6 +3824,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3834,6 +3884,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3871,6 +3929,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3908,6 +3974,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3945,6 +4019,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3980,6 +4062,14 @@ paths:
           required: true
           schema:
             type: integer
+        - name: productNames
+          in: query
+          description: 项目名称
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []

@@ -6105,6 +6105,18 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "security": [
@@ -6165,6 +6177,18 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -6231,6 +6255,18 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "security": [
@@ -6271,6 +6307,20 @@
     },
     "/spock/stat/buildLatestTenMeasure": {
       "get": {
+        "parameters": [
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -6336,6 +6386,20 @@
     },
     "/spock/stat/buildTenDurationMeasure": {
       "get": {
+        "parameters": [
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -6418,6 +6482,18 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -6504,6 +6580,18 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "security": [
@@ -6564,6 +6652,18 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -6626,6 +6726,18 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "security": [
@@ -6687,6 +6799,18 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "security": [
@@ -6744,6 +6868,18 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "productNames",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
