@@ -1,0 +1,34 @@
+get:
+  parameters:
+  - name: startDate
+    in: query
+    description: 开始时间
+    required: true
+    schema:
+      type: integer
+  - name: endDate
+    in: query
+    description: 结束时间
+    required: true
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的构建健康度
+  responses:
+    '200':
+      description: 构建健康度
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              totalSuccess: 
+                type: integer
+                example: 1000
+              totalFailure: 
+                type: integer
+                example: 10

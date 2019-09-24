@@ -1,0 +1,41 @@
+get:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取最近十次耗时最长的构建
+  responses:
+    '200':
+      description: 最近十次耗时最长的构建
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                taskId:
+                  type: integer
+                  example: 1
+                productName:
+                  type: string
+                  example: open-store
+                pipelineName:
+                  type: string
+                  example: open-store-pipeline
+                status:
+                  type: string
+                  example: passed
+                taskCreator:
+                  type: string
+                  example: dyliu
+                type:
+                  type: string
+                  example: workflow
+                duration:
+                  type: integer
+                  example: 300
+                createTime:
+                  type: integer
+                  example: 1568788762

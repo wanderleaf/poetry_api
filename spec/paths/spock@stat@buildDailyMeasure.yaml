@@ -1,0 +1,39 @@
+get:
+  parameters:
+  - name: startDate
+    in: query
+    description: 开始时间
+    required: true
+    schema:
+      type: integer
+  - name: endDate
+    in: query
+    description: 结束时间
+    required: true
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的日构建频次
+  responses:
+    '200':
+      description: 日构建频次
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: "2019-09-04"
+                success: 
+                  type: integer
+                  example: 50
+                failure: 
+                  type: integer
+                  example: 10

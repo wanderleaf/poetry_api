@@ -2,7 +2,6 @@ get:
   tags:
     - spock
   summary: 获取一批镜像的tag列表
-  description: 
   requestBody:
     content:
       application/json:
@@ -11,8 +10,9 @@ get:
           properties:
             names:
               type: array
-              items: string
-              description: repo列表, 如 ["mysql", "postgres"]
+              items: 
+                type: string
+                description: repo列表, 如 ["mysql", "postgres"]
   responses:
     '200':
       description: 成功获取
