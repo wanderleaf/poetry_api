@@ -6086,39 +6086,31 @@
       }
     },
     "/spock/stat/buildAverageMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6159,39 +6151,31 @@
       }
     },
     "/spock/stat/buildDailyMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6236,39 +6220,31 @@
       }
     },
     "/spock/stat/buildHealthMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6306,21 +6282,25 @@
       }
     },
     "/spock/stat/buildLatestTenMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6385,21 +6365,25 @@
       }
     },
     "/spock/stat/buildTenDurationMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6464,39 +6448,31 @@
       }
     },
     "/spock/stat/buildTrend": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6561,39 +6537,31 @@
       }
     },
     "/spock/stat/testAverageMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6634,39 +6602,31 @@
       }
     },
     "/spock/stat/testCaseMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6707,39 +6667,31 @@
       }
     },
     "/spock/stat/testDeliveryDeploy": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6780,39 +6732,31 @@
       }
     },
     "/spock/stat/testHealthMeasure": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
@@ -6850,39 +6794,31 @@
       }
     },
     "/spock/stat/testTrend": {
-      "get": {
-        "parameters": [
-          {
-            "name": "startDate",
-            "in": "query",
-            "description": "开始时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "description": "结束时间",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "productNames",
-            "in": "query",
-            "description": "项目名称",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  },
+                  "productNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        ],
+        },
         "security": [
           {
             "ApiKeyAuth": []
