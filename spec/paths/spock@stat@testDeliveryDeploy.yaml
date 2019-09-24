@@ -1,0 +1,36 @@
+get:
+  parameters:
+  - name: startDate
+    in: query
+    description: 开始时间
+    required: true
+    schema:
+      type: integer
+  - name: endDate
+    in: query
+    description: 结束时间
+    required: true
+    schema:
+      type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的测试交付部署次数
+  responses:
+    '200':
+      description: 测试交付部署次数
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                day:
+                  type: integer
+                  example: 7
+                deliveryDeploy:
+                  type: integer
+                  example: 30
