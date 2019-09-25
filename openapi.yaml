@@ -3572,20 +3572,22 @@ paths:
         '404':
           description: 没找到
   /spock/stat/buildAverageMeasure:
-    get:
-      parameters:
-        - name: startDate
-          in: query
-          description: 开始时间
-          required: true
-          schema:
-            type: integer
-        - name: endDate
-          in: query
-          description: 结束时间
-          required: true
-          schema:
-            type: integer
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3609,20 +3611,22 @@ paths:
                       type: integer
                       example: 30
   /spock/stat/buildDailyMeasure:
-    get:
-      parameters:
-        - name: startDate
-          in: query
-          description: 开始时间
-          required: true
-          schema:
-            type: integer
-        - name: endDate
-          in: query
-          description: 结束时间
-          required: true
-          schema:
-            type: integer
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3649,20 +3653,22 @@ paths:
                       type: integer
                       example: 10
   /spock/stat/buildHealthMeasure:
-    get:
-      parameters:
-        - name: startDate
-          in: query
-          description: 开始时间
-          required: true
-          schema:
-            type: integer
-        - name: endDate
-          in: query
-          description: 结束时间
-          required: true
-          schema:
-            type: integer
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3684,7 +3690,18 @@ paths:
                     type: integer
                     example: 10
   /spock/stat/buildLatestTenMeasure:
-    get:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3726,7 +3743,18 @@ paths:
                       type: integer
                       example: 1568788762
   /spock/stat/buildTenDurationMeasure:
-    get:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3768,20 +3796,22 @@ paths:
                       type: integer
                       example: 1568788762
   /spock/stat/buildTrend:
-    get:
-      parameters:
-        - name: startDate
-          in: query
-          description: 开始时间
-          required: true
-          schema:
-            type: integer
-        - name: endDate
-          in: query
-          description: 结束时间
-          required: true
-          schema:
-            type: integer
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
       security:
         - ApiKeyAuth: []
         - ApiRootKeyAuth: []
@@ -3791,6 +3821,214 @@ paths:
       responses:
         '200':
           description: 构建趋势
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentDay:
+                    properties:
+                      success:
+                        type: integer
+                      failure:
+                        type: integer
+                      timeout:
+                        type: integer
+                    type: object
+                  sum:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        day:
+                          type: integer
+                          example: 7
+                        success:
+                          type: integer
+                        failure:
+                          type: integer
+                        timeout:
+                          type: integer
+  /spock/stat/testAverageMeasure:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取所选时间段内的日平均测试时长
+      responses:
+        '200':
+          description: 日平均测试时长
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      example: '2019-09-04'
+                    averageDuration:
+                      type: integer
+                      example: 30
+  /spock/stat/testCaseMeasure:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取所选时间段内的测试用例数
+      responses:
+        '200':
+          description: 测试用例数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    day:
+                      type: integer
+                      example: 7
+                    testCase:
+                      type: integer
+                      example: 30
+  /spock/stat/testDeliveryDeploy:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取所选时间段内的测试交付部署次数
+      responses:
+        '200':
+          description: 测试交付部署次数
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    day:
+                      type: integer
+                      example: 7
+                    deliveryDeploy:
+                      type: integer
+                      example: 30
+  /spock/stat/testHealthMeasure:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取所选时间段内的测试健康度
+      responses:
+        '200':
+          description: 测试健康度
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalSuccess:
+                    type: integer
+                    example: 1000
+                  totalFailure:
+                    type: integer
+                    example: 10
+  /spock/stat/testTrend:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: integer
+                endDate:
+                  type: integer
+                productNames:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - ApiKeyAuth: []
+        - ApiRootKeyAuth: []
+      tags:
+        - spock
+      summary: 获取所选时间段内的测试趋势
+      responses:
+        '200':
+          description: 测试趋势
           content:
             application/json:
               schema:
