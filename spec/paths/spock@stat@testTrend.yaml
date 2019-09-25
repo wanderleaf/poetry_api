@@ -19,10 +19,10 @@ post:
     - ApiRootKeyAuth: []
   tags:
     - spock
-  summary: 获取所选时间段内的构建趋势
+  summary: 获取所选时间段内的测试趋势
   responses:
     '200':
-      description: 构建趋势
+      description: 测试趋势
       content:
         application/json:
           schema:

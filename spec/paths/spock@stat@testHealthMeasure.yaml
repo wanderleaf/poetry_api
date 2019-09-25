@@ -19,20 +19,18 @@ post:
     - ApiRootKeyAuth: []
   tags:
     - spock
-  summary: 获取所选时间段内的日平均构建时长
+  summary: 获取所选时间段内的测试健康度
   responses:
     '200':
-      description: 日平均构建时长
+      description: 测试健康度
       content:
         application/json:
           schema:
-            type: array
-            items:
-              type: object
-              properties:
-                date:
-                  type: string
-                  example: "2019-09-04"
-                averageDuration:
-                  type: integer
-                  example: 30
+            type: object
+            properties: 
+              totalSuccess: 
+                type: integer
+                example: 1000
+              totalFailure: 
+                type: integer
+                example: 10

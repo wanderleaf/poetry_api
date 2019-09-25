@@ -1,17 +1,19 @@
-get:
-  parameters:
-  - name: startDate
-    in: query
-    description: 开始时间
+post:
+  requestBody:
     required: true
-    schema:
-      type: integer
-  - name: endDate
-    in: query
-    description: 结束时间
-    required: true
-    schema:
-      type: integer
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+            productNames:
+              type: array
+              items:
+                type: string
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []

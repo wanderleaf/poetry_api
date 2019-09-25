@@ -1,4 +1,15 @@
-get:
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            productNames:
+              type: array
+              items:
+                type: string
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []
