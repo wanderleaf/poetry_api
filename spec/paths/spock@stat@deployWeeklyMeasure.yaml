@@ -1,0 +1,41 @@
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+            productNames:
+              type: array
+              items:
+                type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的微服务周部署频次
+  responses:
+    '200':
+      description: 微服务周部署频次
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: "2019-09-25"
+                totalSuccess: 
+                  type: integer
+                  example: 1000
+                totalFailure: 
+                  type: integer
+                  example: 10

@@ -1,0 +1,41 @@
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+            productNames:
+              type: array
+              items:
+                type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的部署较高次数的微服务
+  responses:
+    '200':
+      description: 部署较高次数的微服务
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                serviceName:
+                  type: string
+                  example: "helloworld"
+                totalSuccess:
+                  type: integer
+                  example: 300
+                totalFailure:
+                  type: integer
+                  example: 30

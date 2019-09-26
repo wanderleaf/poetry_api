@@ -1,0 +1,36 @@
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+            productNames:
+              type: array
+              items:
+                type: string
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取所选时间段内的工作流健康度
+  responses:
+    '200':
+      description: 工作流健康度
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              totalSuccess: 
+                type: integer
+                example: 1000
+              totalFailure: 
+                type: integer
+                example: 10
