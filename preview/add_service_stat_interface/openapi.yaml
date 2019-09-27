@@ -3961,9 +3961,12 @@ paths:
                     serviceName:
                       type: string
                       example: helloworld
-                    deploy:
+                    totalSuccess:
                       type: integer
                       example: 300
+                    totalFailure:
+                      type: integer
+                      example: 30
   /spock/stat/deployWeeklyMeasure:
     post:
       requestBody:
