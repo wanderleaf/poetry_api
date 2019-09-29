@@ -6646,6 +6646,10 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "productName": {
+                        "type": "string",
+                        "example": "helloworld"
+                      },
                       "serviceName": {
                         "type": "string",
                         "example": "helloworld"
@@ -6780,9 +6784,9 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "date": {
-                        "type": "string",
-                        "example": "2019-09-25"
+                      "day": {
+                        "type": "integer",
+                        "example": 7
                       },
                       "totalSuccess": {
                         "type": "integer",
