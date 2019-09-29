@@ -30,6 +30,9 @@ post:
             items:
               type: object
               properties:
+                productName:
+                  type: string
+                  example: "helloworld"
                 serviceName:
                   type: string
                   example: "helloworld"
