@@ -22,6 +22,7 @@ get:
             properties: 
               name: 
                 type: "string"
+                example: "image"
               type: 
                 type: "string"
               created_by: 

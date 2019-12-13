@@ -50,6 +50,7 @@ get:
                   type: "string"
                 type: 
                   type: "string"
+                  example: "image"
                 created_by: 
                   type: "string"
                 created_time:
@@ -90,6 +91,12 @@ get:
                         example: 1555580536
                       end_time: 
                         type: "integer"
+                        example: 1555580836
+                      created_by: 
+                        type: "string"
+                        example: "dyliu"
+                      created_time:
+                        type: integer
                         example: 1555580836
 post:
   security:
