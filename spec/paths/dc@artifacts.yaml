@@ -20,13 +20,13 @@ get:
       type: string
   - name: per_page
     in: query
-    description: 分页大小
+    description: 分页大小，可以为空，默认为20
     schema:
       type: integer
     required: false
   - name: page
     in: query
-    description: 分页index
+    description: 分页index，可以为空，默认为1
     schema:
       type: integer
     required: false
