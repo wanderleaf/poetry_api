@@ -1796,7 +1796,7 @@
                     },
                     "architecture": {
                       "type": "string",
-                      "description": "镜像框架，当type为image时必填项"
+                      "description": "镜像架构，当type为image时必填项"
                     },
                     "os": {
                       "type": "string",
