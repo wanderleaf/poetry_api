@@ -147,7 +147,7 @@ post:
                 description: "镜像大小，当type为image时必填项"
               architecture:
                 type: string
-                description: "镜像框架，当type为image时必填项"
+                description: "镜像架构，当type为image时必填项"
               os:
                 type: string
                 description: "镜像平台，当type为image时必填项"
