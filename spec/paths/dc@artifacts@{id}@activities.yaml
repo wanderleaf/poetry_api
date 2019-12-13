@@ -1,6 +1,6 @@
 parameters:
   - name: id
-    in: query
+    in: path
     description: 交付物ID
     required: true
     schema:
