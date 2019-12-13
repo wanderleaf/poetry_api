@@ -42,7 +42,20 @@ get:
               docker_file:
                 type: string
               layers:
-                type: string
+                type: array
+                items: 
+                  type: "object"
+                  properties: 
+                    MediaType: 
+                      type: "string"
+                    Size: 
+                      type: "number"
+                    digest: 
+                      type: "string"
+                    urls: 
+                      type: "array"
+                      items: 
+                        type: "string"
               activity_infos: 
                 type: "array"
                 items: 
