@@ -65,3 +65,9 @@ get:
                     end_time: 
                       type: "integer"
                       example: 1555580836
+                    created_by: 
+                      type: "string"
+                      example: "dyliu"
+                    created_time:
+                      type: integer
+                      example: 1555580836
