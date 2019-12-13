@@ -23,13 +23,13 @@ get:
     description: 分页大小
     schema:
       type: integer
-    required: true
+    required: false
   - name: page
     in: query
     description: 分页index
     schema:
       type: integer
-    required: true
+    required: false
   security:
     - ApiKeyAuth: []
     - ApiRootKeyAuth: []
