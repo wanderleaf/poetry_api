@@ -1650,7 +1650,8 @@
                         "type": "string"
                       },
                       "type": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "image"
                       },
                       "created_by": {
                         "type": "string"
@@ -1705,6 +1706,14 @@
                               "example": 1555580536
                             },
                             "end_time": {
+                              "type": "integer",
+                              "example": 1555580836
+                            },
+                            "created_by": {
+                              "type": "string",
+                              "example": "dyliu"
+                            },
+                            "created_time": {
                               "type": "integer",
                               "example": 1555580836
                             }
@@ -1854,7 +1863,8 @@
                   "type": "object",
                   "properties": {
                     "name": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "image"
                     },
                     "type": {
                       "type": "string"
