@@ -1132,6 +1132,12 @@ paths:
                         end_time:
                           type: integer
                           example: 1555580836
+                        created_by:
+                          type: string
+                          example: dyliu
+                        created_time:
+                          type: integer
+                          example: 1555580836
   '/dc/artifacts/{id}/activities':
     parameters:
       - name: id
@@ -1181,6 +1187,8 @@ paths:
                   end_time:
                     type: integer
                     description: 当type为build/deploy/test/publish时必填项，事件结束时间
+                  created_by:
+                    type: string
       responses:
         '200':
           description: 添加成功
