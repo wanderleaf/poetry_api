@@ -1638,7 +1638,7 @@
         "summary": "获取交付物列表",
         "responses": {
           "200": {
-            "description": "交付物列表",
+            "description": "交付物列表，activities数据为所有事件混合倒叙排列，sortedActivities为按照事件分类倒叙排序",
             "content": {
               "application/json": {
                 "schema": {
@@ -1987,7 +1987,7 @@
         "summary": "获取交付物详情",
         "responses": {
           "200": {
-            "description": "获取交付物详情",
+            "description": "获取交付物详情，activities数据为所有事件混合倒叙排列，sortedActivities为按照事件分类倒叙排序",
             "content": {
               "application/json": {
                 "schema": {
