@@ -72,9 +72,9 @@ get:
                   items: 
                     type: "object"
                     properties: 
-                      MediaType: 
+                      media_type: 
                         type: "string"
-                      Size: 
+                      size: 
                         type: "number"
                       digest: 
                         type: "string"
@@ -159,9 +159,9 @@ post:
                 items: 
                   type: "object"
                   properties: 
-                    MediaType: 
+                    media_type: 
                       type: "string"
-                    Size: 
+                    size: 
                       type: "number"
                     digest: 
                       type: "string"
