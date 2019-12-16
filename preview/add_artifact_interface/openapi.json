@@ -1701,6 +1701,46 @@
                         }
                       },
                       "activities": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "description": "这里以build为例",
+                              "example": "build"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "http://poetry.admin.8slan.com/workflows/all/taskdetail/multi/koderover-staging-pipeline/1898"
+                            },
+                            "commits": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "example": "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                              }
+                            },
+                            "start_time": {
+                              "type": "integer",
+                              "example": 1555580536
+                            },
+                            "end_time": {
+                              "type": "integer",
+                              "example": 1555580836
+                            },
+                            "created_by": {
+                              "type": "string",
+                              "example": "dyliu"
+                            },
+                            "created_time": {
+                              "type": "integer",
+                              "example": 1555580836
+                            }
+                          }
+                        }
+                      },
+                      "sortedActivities": {
                         "properties": {
                           "build": {
                             "type": "array",
@@ -2008,6 +2048,46 @@
                       }
                     },
                     "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "这里以build为例",
+                            "example": "build"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "http://poetry.admin.8slan.com/workflows/all/taskdetail/multi/koderover-staging-pipeline/1898"
+                          },
+                          "commits": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                            }
+                          },
+                          "start_time": {
+                            "type": "integer",
+                            "example": 1555580536
+                          },
+                          "end_time": {
+                            "type": "integer",
+                            "example": 1555580836
+                          },
+                          "created_by": {
+                            "type": "string",
+                            "example": "dyliu"
+                          },
+                          "created_time": {
+                            "type": "integer",
+                            "example": 1555580836
+                          }
+                        }
+                      }
+                    },
+                    "sortedActivities": {
                       "properties": {
                         "build": {
                           "type": "array",
