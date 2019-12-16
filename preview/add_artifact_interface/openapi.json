@@ -1700,7 +1700,7 @@
                           }
                         }
                       },
-                      "activity_infos": {
+                      "activities": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -1838,7 +1838,7 @@
                       "type": "string",
                       "description": "存储的url，当type为package时必填项"
                     },
-                    "activity_infos": {
+                    "activities": {
                       "type": "array",
                       "items": {
                         "type": "object",
@@ -1980,7 +1980,7 @@
                         }
                       }
                     },
-                    "activity_infos": {
+                    "activities": {
                       "type": "array",
                       "items": {
                         "type": "object",
