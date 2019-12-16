@@ -82,7 +82,7 @@ get:
                         type: "array"
                         items: 
                           type: "string"
-                activity_infos: 
+                activities: 
                   type: "array"
                   items: 
                     type: "object"
@@ -176,7 +176,7 @@ post:
               package_storage_uri: 
                 type: "string"
                 description: "存储的url，当type为package时必填项"
-              activity_infos: 
+              activities: 
                 type: "array"
                 items: 
                   type: "object"
