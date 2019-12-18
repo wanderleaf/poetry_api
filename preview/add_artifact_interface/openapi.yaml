@@ -1338,6 +1338,31 @@ paths:
                     items:
                       type: string
                     description: 当type为build时，有关联的issue相关信息时，非必填项
+                  namespace:
+                    type: string
+                    description: 当type为deploy时，指定的部署的namespace
+                  env_name:
+                    type: string
+                    description: 当type为deploy时，指定的部署的环境名称
+                  publish_hosts:
+                    type: array
+                    items:
+                      type: string
+                    description: 当type为publish的image时，发布的host列表
+                  publish_namespaces:
+                    type: array
+                    items:
+                      type: string
+                    description: 当type为publish的image时，发布的namespace列表
+                  remote_file_key:
+                    type: string
+                    description: 当type为publish的file时，key
+                  dist_storage_url:
+                    type: string
+                    description: 当type为publish的file时，目标目录
+                  src_storage_url:
+                    type: string
+                    description: 当type为publish的file时，源目录
                   start_time:
                     type: integer
                     description: 当type为build/deploy/test/publish时必填项，事件开始时间
