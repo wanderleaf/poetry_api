@@ -1075,89 +1075,87 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    description: 交付物名称，必填项
-                  type:
-                    type: string
-                    description: 交付物类型，目前仅支持image/package，必填项
-                  created_by:
-                    type: string
-                    description: 创建人，必填项
-                  image_tag:
-                    type: string
-                    description: 镜像标签，当type为image时必填项
-                  image_digest:
-                    type: string
-                    description: 镜像摘要，当type为image时必填项
-                  image_size:
-                    type: integer
-                    description: 镜像大小，当type为image时必填项
-                  architecture:
-                    type: string
-                    description: 镜像架构，当type为image时必填项
-                  os:
-                    type: string
-                    description: 镜像平台，当type为image时必填项
-                  docker_file:
-                    type: string
-                    description: dockerfile，当type为image时必填项
-                  layers:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        media_type:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 交付物名称，必填项
+                type:
+                  type: string
+                  description: 交付物类型，目前仅支持image/package，必填项
+                created_by:
+                  type: string
+                  description: 创建人，必填项
+                image_tag:
+                  type: string
+                  description: 镜像标签，当type为image时必填项
+                image_digest:
+                  type: string
+                  description: 镜像摘要，当type为image时必填项
+                image_size:
+                  type: integer
+                  description: 镜像大小，当type为image时必填项
+                architecture:
+                  type: string
+                  description: 镜像架构，当type为image时必填项
+                os:
+                  type: string
+                  description: 镜像平台，当type为image时必填项
+                docker_file:
+                  type: string
+                  description: dockerfile，当type为image时必填项
+                layers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      media_type:
+                        type: string
+                      size:
+                        type: number
+                      digest:
+                        type: string
+                      urls:
+                        type: array
+                        items:
                           type: string
-                        size:
-                          type: number
-                        digest:
+                  description: 镜像层，当type为image时必填项
+                package_file_location:
+                  type: string
+                  description: 存储的文件地址，当type为package时必填项
+                package_storage_uri:
+                  type: string
+                  description: 存储的url，当type为package时必填项
+                activities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: 事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项
+                      content:
+                        type: string
+                        description: 当type为comment/label/tag时的内容时必填项
+                      url:
+                        type: string
+                        description: 当type为build/deploy/test/publish时必填项，具体为task的url地址
+                      commits:
+                        type: array
+                        items:
                           type: string
-                        urls:
-                          type: array
-                          items:
-                            type: string
-                    description: 镜像层，当type为image时必填项
-                  package_file_location:
-                    type: string
-                    description: 存储的文件地址，当type为package时必填项
-                  package_storage_uri:
-                    type: string
-                    description: 存储的url，当type为package时必填项
-                  activities:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        type:
+                        description: 当type为build时的必填项，具体为本次commit的url地址
+                      issues:
+                        type: array
+                        items:
                           type: string
-                          description: 事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项
-                        content:
-                          type: string
-                          description: 当type为comment/label/tag时的内容时必填项
-                        url:
-                          type: string
-                          description: 当type为build/deploy/test/publish时必填项，具体为task的url地址
-                        commits:
-                          type: array
-                          items:
-                            type: string
-                          description: 当type为build时的必填项，具体为本次commit的url地址
-                        issues:
-                          type: array
-                          items:
-                            type: string
-                          description: 当type为build时，有关联的issue相关信息时，非必填项
-                        start_time:
-                          type: integer
-                          description: 当type为build/deploy/test/publish时必填项，事件开始时间
-                        end_time:
-                          type: integer
-                          description: 当type为build/deploy/test/publish时必填项，事件结束时间
+                        description: 当type为build时，有关联的issue相关信息时，非必填项
+                      start_time:
+                        type: integer
+                        description: 当type为build/deploy/test/publish时必填项，事件开始时间
+                      end_time:
+                        type: integer
+                        description: 当type为build/deploy/test/publish时必填项，事件结束时间
       responses:
         '200':
           description: 添加成功
@@ -1315,62 +1313,60 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  type:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: 事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项
+                content:
+                  type: string
+                  description: 当type为comment/label/tag时的内容时必填项
+                url:
+                  type: string
+                  description: 当type为build/deploy/test/publish时必填项，具体为task的url地址
+                commits:
+                  type: array
+                  items:
                     type: string
-                    description: 事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项
-                  content:
+                  description: 当type为build时的必填项，具体为本次commit的url地址
+                issues:
+                  type: array
+                  items:
                     type: string
-                    description: 当type为comment/label/tag时的内容时必填项
-                  url:
+                  description: 当type为build时，有关联的issue相关信息时，非必填项
+                namespace:
+                  type: string
+                  description: 当type为deploy时，指定的部署的namespace
+                env_name:
+                  type: string
+                  description: 当type为deploy时，指定的部署的环境名称
+                publish_hosts:
+                  type: array
+                  items:
                     type: string
-                    description: 当type为build/deploy/test/publish时必填项，具体为task的url地址
-                  commits:
-                    type: array
-                    items:
-                      type: string
-                    description: 当type为build时的必填项，具体为本次commit的url地址
-                  issues:
-                    type: array
-                    items:
-                      type: string
-                    description: 当type为build时，有关联的issue相关信息时，非必填项
-                  namespace:
+                  description: 当type为publish的image时，发布的host列表
+                publish_namespaces:
+                  type: array
+                  items:
                     type: string
-                    description: 当type为deploy时，指定的部署的namespace
-                  env_name:
-                    type: string
-                    description: 当type为deploy时，指定的部署的环境名称
-                  publish_hosts:
-                    type: array
-                    items:
-                      type: string
-                    description: 当type为publish的image时，发布的host列表
-                  publish_namespaces:
-                    type: array
-                    items:
-                      type: string
-                    description: 当type为publish的image时，发布的namespace列表
-                  remote_file_key:
-                    type: string
-                    description: 当type为publish的file时，key
-                  dist_storage_url:
-                    type: string
-                    description: 当type为publish的file时，目标目录
-                  src_storage_url:
-                    type: string
-                    description: 当type为publish的file时，源目录
-                  start_time:
-                    type: integer
-                    description: 当type为build/deploy/test/publish时必填项，事件开始时间
-                  end_time:
-                    type: integer
-                    description: 当type为build/deploy/test/publish时必填项，事件结束时间
-                  created_by:
-                    type: string
+                  description: 当type为publish的image时，发布的namespace列表
+                remote_file_key:
+                  type: string
+                  description: 当type为publish的file时，key
+                dist_storage_url:
+                  type: string
+                  description: 当type为publish的file时，目标目录
+                src_storage_url:
+                  type: string
+                  description: 当type为publish的file时，源目录
+                start_time:
+                  type: integer
+                  description: 当type为build/deploy/test/publish时必填项，事件开始时间
+                end_time:
+                  type: integer
+                  description: 当type为build/deploy/test/publish时必填项，事件结束时间
+                created_by:
+                  type: string
       responses:
         '200':
           description: 添加成功
