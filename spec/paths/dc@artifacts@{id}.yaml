@@ -71,8 +71,28 @@ get:
                     commits: 
                       type: "array"
                       items: 
-                        type: "string"
-                        example: "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                        type: "object"
+                        properties: 
+                          address: 
+                            type: "string"
+                          source: 
+                            type: "string"
+                          repo_owner: 
+                            type: "string"
+                          repo_name: 
+                            type: "string"
+                          branch: 
+                            type: "string"
+                          pr: 
+                            type: "string"
+                          tag: 
+                            type: "string"
+                          commit_id: 
+                            type: "string"
+                          commit_message: 
+                            type: "string"
+                          author_name: 
+                            type: "string"
                     start_time: 
                       type: "integer"
                       example: 1555580536

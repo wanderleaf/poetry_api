@@ -31,8 +31,28 @@ post:
             commits: 
               type: "array"
               items: 
-                type: "string"
-              description: "当type为build时的必填项，具体为本次commit的url地址"
+                type: "object"
+                properties: 
+                  address: 
+                    type: "string"
+                  source: 
+                    type: "string"
+                  repo_owner: 
+                    type: "string"
+                  repo_name: 
+                    type: "string"
+                  branch: 
+                    type: "string"
+                  pr: 
+                    type: "string"
+                  tag: 
+                    type: "string"
+                  commit_id: 
+                    type: "string"
+                  commit_message: 
+                    type: "string"
+                  author_name: 
+                    type: "string"
             issues: 
               type: "array"
               items: 
