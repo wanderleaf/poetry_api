@@ -1579,15 +1579,6 @@
       "get": {
         "parameters": [
           {
-            "name": "name",
-            "in": "query",
-            "description": "交付物名称",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "type",
             "in": "query",
             "description": "交付物类型",
@@ -1597,9 +1588,36 @@
             }
           },
           {
-            "name": "label",
+            "name": "name",
             "in": "query",
-            "description": "交付物标签",
+            "description": "交付物名称(支持模糊查询)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "imageTag",
+            "in": "query",
+            "description": "镜像标签",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "镜像全称(可在版本管理直接链接查询)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "branch",
+            "in": "query",
+            "description": "代码库分支",
             "required": false,
             "schema": {
               "type": "string"
@@ -1717,8 +1735,39 @@
                             "commits": {
                               "type": "array",
                               "items": {
-                                "type": "string",
-                                "example": "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                                "type": "object",
+                                "properties": {
+                                  "address": {
+                                    "type": "string"
+                                  },
+                                  "source": {
+                                    "type": "string"
+                                  },
+                                  "repo_owner": {
+                                    "type": "string"
+                                  },
+                                  "repo_name": {
+                                    "type": "string"
+                                  },
+                                  "branch": {
+                                    "type": "string"
+                                  },
+                                  "pr": {
+                                    "type": "string"
+                                  },
+                                  "tag": {
+                                    "type": "string"
+                                  },
+                                  "commit_id": {
+                                    "type": "string"
+                                  },
+                                  "commit_message": {
+                                    "type": "string"
+                                  },
+                                  "author_name": {
+                                    "type": "string"
+                                  }
+                                }
                               }
                             },
                             "start_time": {
@@ -1759,8 +1808,39 @@
                                 "commits": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string",
-                                    "example": "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                                    "type": "object",
+                                    "properties": {
+                                      "address": {
+                                        "type": "string"
+                                      },
+                                      "source": {
+                                        "type": "string"
+                                      },
+                                      "repo_owner": {
+                                        "type": "string"
+                                      },
+                                      "repo_name": {
+                                        "type": "string"
+                                      },
+                                      "branch": {
+                                        "type": "string"
+                                      },
+                                      "pr": {
+                                        "type": "string"
+                                      },
+                                      "tag": {
+                                        "type": "string"
+                                      },
+                                      "commit_id": {
+                                        "type": "string"
+                                      },
+                                      "commit_message": {
+                                        "type": "string"
+                                      },
+                                      "author_name": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "start_time": {
@@ -1923,9 +2003,40 @@
                         "commits": {
                           "type": "array",
                           "items": {
-                            "type": "string"
-                          },
-                          "description": "当type为build时的必填项，具体为本次commit的url地址"
+                            "type": "object",
+                            "properties": {
+                              "address": {
+                                "type": "string"
+                              },
+                              "source": {
+                                "type": "string"
+                              },
+                              "repo_owner": {
+                                "type": "string"
+                              },
+                              "repo_name": {
+                                "type": "string"
+                              },
+                              "branch": {
+                                "type": "string"
+                              },
+                              "pr": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "commit_id": {
+                                "type": "string"
+                              },
+                              "commit_message": {
+                                "type": "string"
+                              },
+                              "author_name": {
+                                "type": "string"
+                              }
+                            }
+                          }
                         },
                         "issues": {
                           "type": "array",
@@ -2061,8 +2172,39 @@
                           "commits": {
                             "type": "array",
                             "items": {
-                              "type": "string",
-                              "example": "https://gitlab.8slan.com/odf/koderover/merge_requests/754"
+                              "type": "object",
+                              "properties": {
+                                "address": {
+                                  "type": "string"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "repo_owner": {
+                                  "type": "string"
+                                },
+                                "repo_name": {
+                                  "type": "string"
+                                },
+                                "branch": {
+                                  "type": "string"
+                                },
+                                "pr": {
+                                  "type": "string"
+                                },
+                                "tag": {
+                                  "type": "string"
+                                },
+                                "commit_id": {
+                                  "type": "string"
+                                },
+                                "commit_message": {
+                                  "type": "string"
+                                },
+                                "author_name": {
+                                  "type": "string"
+                                }
+                              }
                             }
                           },
                           "start_time": {
@@ -2206,9 +2348,40 @@
                   "commits": {
                     "type": "array",
                     "items": {
-                      "type": "string"
-                    },
-                    "description": "当type为build时的必填项，具体为本次commit的url地址"
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "repo_owner": {
+                          "type": "string"
+                        },
+                        "repo_name": {
+                          "type": "string"
+                        },
+                        "branch": {
+                          "type": "string"
+                        },
+                        "pr": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "commit_id": {
+                          "type": "string"
+                        },
+                        "commit_message": {
+                          "type": "string"
+                        },
+                        "author_name": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   },
                   "issues": {
                     "type": "array",
