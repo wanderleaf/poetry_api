@@ -7439,12 +7439,14 @@
           "type": {
             "type": "string",
             "enum": [
-              "gitlab"
+              "gitlab",
+              "github",
+              "gerrit"
             ]
           },
           "address": {
             "type": "string",
-            "description": "gitlab地址"
+            "description": "服务地址, 比如 http://gitlab.example.com"
           },
           "ready": {
             "type": "boolean",
@@ -7467,6 +7469,14 @@
           },
           "clientSecret": {
             "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名, 只有type=gerrit时有效"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码, 只有type=gerrit时有效"
           }
         }
       },
