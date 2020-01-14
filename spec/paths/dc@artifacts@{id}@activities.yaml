@@ -1,0 +1,96 @@
+parameters:
+  - name: id
+    in: path
+    description: 交付物ID
+    required: true
+    schema:
+      type: string
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 添加交付物事件
+  requestBody:
+    description: 添加交付物事件
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties: 
+            type: 
+              type: "string"
+              description: "事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项"
+            content: 
+              type: "string"
+              description: "当type为comment/label/tag时的内容时必填项"
+            url: 
+              type: "string"
+              description: "当type为build/deploy/test/publish时必填项，具体为task的url地址"
+            commits: 
+              type: "array"
+              items: 
+                type: "object"
+                properties: 
+                  address: 
+                    type: "string"
+                  source: 
+                    type: "string"
+                  repo_owner: 
+                    type: "string"
+                  repo_name: 
+                    type: "string"
+                  branch: 
+                    type: "string"
+                  pr: 
+                    type: "string"
+                  tag: 
+                    type: "string"
+                  commit_id: 
+                    type: "string"
+                  commit_message: 
+                    type: "string"
+                  author_name: 
+                    type: "string"
+            issues: 
+              type: "array"
+              items: 
+                type: "string"
+              description: "当type为build时，有关联的issue相关信息时，非必填项"
+            namespace:
+              type: string
+              description: "当type为deploy时，指定的部署的namespace"
+            env_name:
+              type: string
+              description: "当type为deploy时，指定的部署的环境名称"
+            publish_hosts: 
+              type: "array"
+              items: 
+                type: "string"
+              description: "当type为publish的image时，发布的host列表"
+            publish_namespaces: 
+              type: "array"
+              items: 
+                type: "string"
+              description: "当type为publish的image时，发布的namespace列表"
+            remote_file_key:
+              type: string
+              description: "当type为publish的file时，key"
+            dist_storage_url:
+              type: string
+              description: "当type为publish的file时，目标目录"
+            src_storage_url:
+              type: string
+              description: "当type为publish的file时，源目录"
+            start_time: 
+              type: "integer"
+              description: "当type为build/deploy/test/publish时必填项，事件开始时间"
+            end_time: 
+              type: "integer"
+              description: "当type为build/deploy/test/publish时必填项，事件结束时间"
+            created_by: 
+              type: "string"
+  responses:
+    '200':
+      description: 添加成功

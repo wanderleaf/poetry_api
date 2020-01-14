@@ -1,0 +1,327 @@
+get:
+  parameters:
+  - name: type
+    in: query
+    description: 交付物类型
+    required: false
+    schema:
+      type: string
+  - name: name
+    in: query
+    description: 交付物名称(支持模糊查询)
+    required: false
+    schema:
+      type: string
+  - name: imageTag
+    in: query
+    description: 镜像标签
+    required: false
+    schema:
+      type: string
+  - name: image
+    in: query
+    description: 镜像全称(可在版本管理直接链接查询)
+    required: false
+    schema:
+      type: string
+  - name: branch
+    in: query
+    description: 代码库分支
+    required: false
+    schema:
+      type: string
+  - name: per_page
+    in: query
+    description: 分页大小，可以为空，默认为20
+    schema:
+      type: integer
+    required: false
+  - name: page
+    in: query
+    description: 分页index，可以为空，默认为1
+    schema:
+      type: integer
+    required: false
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 获取交付物列表
+  responses:
+    '200':
+      description: 交付物列表，activities数据为所有事件混合倒叙排列，sortedActivities为按照事件分类倒叙排序
+      content:
+        application/json:
+          schema:
+            type: array
+            items: 
+              type: "object"
+              properties: 
+                name: 
+                  type: "string"
+                type: 
+                  type: "string"
+                  example: "image"
+                created_by: 
+                  type: "string"
+                created_time:
+                  type: integer
+                image_tag: 
+                  type: "string"
+                image_digest:
+                  type: "string"
+                image_size:
+                  type: integer
+                architecture:
+                  type: string
+                os:
+                  type: string
+                docker_file:
+                  type: string
+                layers:
+                  type: array
+                  items: 
+                    type: "object"
+                    properties: 
+                      media_type: 
+                        type: "string"
+                      size: 
+                        type: "number"
+                      digest: 
+                        type: "string"
+                      urls: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                activities: 
+                  type: "array"
+                  items: 
+                    type: "object"
+                    properties: 
+                      type: 
+                        type: "string"
+                        description: "这里以build为例"
+                        example: "build"
+                      url: 
+                        type: "string"
+                        example: "http://poetry.admin.8slan.com/workflows/all/taskdetail/multi/koderover-staging-pipeline/1898"
+                      commits: 
+                        type: "array"
+                        items: 
+                          type: "object"
+                          properties: 
+                            address: 
+                              type: "string"
+                            source: 
+                              type: "string"
+                            repo_owner: 
+                              type: "string"
+                            repo_name: 
+                              type: "string"
+                            branch: 
+                              type: "string"
+                            pr: 
+                              type: "string"
+                            tag: 
+                              type: "string"
+                            commit_id: 
+                              type: "string"
+                            commit_message: 
+                              type: "string"
+                            author_name: 
+                              type: "string"
+                      start_time: 
+                        type: "integer"
+                        example: 1555580536
+                      end_time: 
+                        type: "integer"
+                        example: 1555580836
+                      created_by: 
+                        type: "string"
+                        example: "dyliu"
+                      created_time:
+                        type: integer
+                        example: 1555580836
+                sortedActivities: 
+                  properties:
+                    build: 
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties: 
+                          type: 
+                            type: "string"
+                            description: "这里以build为例"
+                            example: "build"
+                          url: 
+                            type: "string"
+                            example: "http://poetry.admin.8slan.com/workflows/all/taskdetail/multi/koderover-staging-pipeline/1898"
+                          commits: 
+                            type: "array"
+                            items: 
+                              type: "object"
+                              properties: 
+                                address: 
+                                  type: "string"
+                                source: 
+                                  type: "string"
+                                repo_owner: 
+                                  type: "string"
+                                repo_name: 
+                                  type: "string"
+                                branch: 
+                                  type: "string"
+                                pr: 
+                                  type: "string"
+                                tag: 
+                                  type: "string"
+                                commit_id: 
+                                  type: "string"
+                                commit_message: 
+                                  type: "string"
+                                author_name: 
+                                  type: "string"
+                          start_time: 
+                            type: "integer"
+                            example: 1555580536
+                          end_time: 
+                            type: "integer"
+                            example: 1555580836
+                          created_by: 
+                            type: "string"
+                            example: "dyliu"
+                          created_time:
+                            type: integer
+                            example: 1555580836
+                    comment: 
+                      type: "array"
+                      items: 
+                        type: "object"
+                        properties: 
+                          artifact_id: 
+                            type: "string"
+                          type: 
+                            type: "string"
+                          content: 
+                            type: "string"
+                          created_by: 
+                            type: "string"
+                          created_time: 
+                            type: "number"
+post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - DeliveryCenter
+  summary: 添加交付物
+  requestBody:
+    description: 添加交付物一些具体参数
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties: 
+            name: 
+              type: "string"
+              description: "交付物名称，必填项"
+            type: 
+              type: "string"
+              description: "交付物类型，目前仅支持image/package，必填项"
+            created_by: 
+              type: "string"
+              description: "创建人，必填项"
+            image_tag: 
+              type: "string"
+              description: "镜像标签，当type为image时必填项"
+            image_digest:
+              type: "string"
+              description: "镜像摘要，当type为image时必填项"
+            image_size:
+              type: integer
+              description: "镜像大小，当type为image时必填项"
+            architecture:
+              type: string
+              description: "镜像架构，当type为image时必填项"
+            os:
+              type: string
+              description: "镜像平台，当type为image时必填项"
+            docker_file:
+              type: string
+              description: "dockerfile，当type为image时必填项"
+            layers:
+              type: array
+              items: 
+                type: "object"
+                properties: 
+                  media_type: 
+                    type: "string"
+                  size: 
+                    type: "number"
+                  digest: 
+                    type: "string"
+                  urls: 
+                    type: "array"
+                    items: 
+                      type: "string"
+              description: "镜像层，当type为image时必填项"
+            package_file_location: 
+              type: "string"
+              description: "存储的文件地址，当type为package时必填项"
+            package_storage_uri: 
+              type: "string"
+              description: "存储的url，当type为package时必填项"
+            activities: 
+              type: "array"
+              items: 
+                type: "object"
+                properties: 
+                  type: 
+                    type: "string"
+                    description: "事件类型，目前仅支持 build/deploy/test/publish/comment/label/tag，必填项"
+                  content: 
+                    type: "string"
+                    description: "当type为comment/label/tag时的内容时必填项"
+                  url: 
+                    type: "string"
+                    description: "当type为build/deploy/test/publish时必填项，具体为task的url地址"
+                  commits: 
+                    type: "array"
+                    items: 
+                      type: "object"
+                      properties: 
+                        address: 
+                          type: "string"
+                        source: 
+                          type: "string"
+                        repo_owner: 
+                          type: "string"
+                        repo_name: 
+                          type: "string"
+                        branch: 
+                          type: "string"
+                        pr: 
+                          type: "string"
+                        tag: 
+                          type: "string"
+                        commit_id: 
+                          type: "string"
+                        commit_message: 
+                          type: "string"
+                        author_name: 
+                          type: "string"
+                  issues: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                    description: "当type为build时，有关联的issue相关信息时，非必填项"
+                  start_time: 
+                    type: "integer"
+                    description: "当type为build/deploy/test/publish时必填项，事件开始时间"
+                  end_time: 
+                    type: "integer"
+                    description: "当type为build/deploy/test/publish时必填项，事件结束时间"
+  responses:
+    '200':
+      description: 添加成功
