@@ -1,0 +1,50 @@
+parameters:
+  - name: serviceName
+    in: path
+    description: 测试名称
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - spock
+  summary: 获取最近一次的测试报告
+  responses:
+    '200':
+      description: 成功获取
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+              productName:
+                type: "string"
+              pipelineName:
+                type: "string"
+              taskId:
+                type: "number"
+              tests: 
+                type: "number"
+              failures: 
+                type: "number"
+              skips: 
+                type: "number"
+              errors: 
+                type: "number"
+              time: 
+                type: "number"
+              testcase: 
+                type: "array"
+                items: 
+                  type: "object"
+                  properties: 
+                    tc_name: 
+                      type: "string"
+                    classname: 
+                      type: "string"
+                    time: 
+                      type: "number"
+                    failure: 
+                      type: "string"
+                    system_out: 
+                      type: "string"

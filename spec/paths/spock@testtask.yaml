@@ -1,0 +1,58 @@
+post:
+  tags:
+    - spock
+  summary: '创建测试工作流任务'
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  requestBody:
+    description: 测试工作流参数
+    required: true
+    content:
+      application/json:
+        schema:
+          type: "object"
+          properties: 
+            product_name: 
+              type: "string"
+            tests: 
+              properties: 
+                test_module_name: 
+                  type: "string"
+                envs: 
+                  type: "array"
+                  items: 
+                    type: "object"
+                    properties: 
+                      key:
+                        type: "string"
+                      value:
+                        type: "string"
+                      is_credential:
+                        type: "boolean"
+                builds: 
+                  type: "array"
+                  items: 
+                    type: "object"
+                    properties: 
+                      repo_owner: 
+                        type: "string"
+                      repo_name: 
+                        type: "string"
+                      remote_name: 
+                        type: "string"
+                      branch: 
+                        type: "string"
+                      is_primary: 
+                        type: "boolean"
+                      codehost_id: 
+                        type: "number"
+                      oauth_token: 
+                        type: "string"
+                      address: 
+                        type: "string"
+                      tag: 
+                        type: "string"
+  responses:
+    '200':
+      description: 成功
