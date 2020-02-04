@@ -6578,7 +6578,7 @@
         }
       }
     },
-    "/spock/itreport/latest/{serviceName}": {
+    "/spock/itreport/latest/service/{serviceName}": {
       "parameters": [
         {
           "name": "serviceName",
