@@ -6603,15 +6603,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "productName": {
-                      "type": "string"
-                    },
-                    "pipelineName": {
-                      "type": "string"
-                    },
-                    "taskId": {
-                      "type": "number"
-                    },
                     "tests": {
                       "type": "number"
                     },
