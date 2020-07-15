@@ -22,33 +22,24 @@ post:
       content:
         application/json:
           schema:
-            type: "object"
-            properties:
-              "develop.koderover.com":
-                type: "array"
-                items: 
-                  type: "object"
-                  properties: 
-                    date: 
-                      type: string
-                      example: "2020-07-15"
-                    hour: 
-                      type: integer
-                      example: 1
-                    viewCount:
-                      type: integer
-                      example: 100
-              "onboarding.koderover.com":
-                type: "array"
-                items: 
-                  type: "object"
-                  properties: 
-                    date: 
-                      type: string
-                      example: "2020-07-15"
-                    hour: 
-                      type: integer
-                      example: 1
-                    viewCount:
-                      type: integer
-                      example: 200
+            type: array
+            items:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  example: "dev.koderover.com"
+                data:
+                  type: "array"
+                  items: 
+                    type: "object"
+                    properties: 
+                      date: 
+                        type: string
+                        example: "2020-07-15"
+                      hour:
+                        type: integer
+                        example: 12
+                      viewCount:
+                        type: integer
+                        example: 200

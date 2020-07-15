@@ -1,4 +1,7 @@
 post:
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
   tags:
     - spock
   summary: 添加用户浏览记录
@@ -14,8 +17,8 @@ post:
               type: string
             username:
               type: string
-            viewCount:
-              type: integer
+            url:
+              type: string
             createdAt:
               type: integer
   responses:
