@@ -1,0 +1,48 @@
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取分域名日浏览量统计
+  responses:
+    '200':
+      description: 获取分域名日浏览量统计
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              "develop.koderover.com":
+                type: "array"
+                items: 
+                  type: "object"
+                  properties: 
+                    date: 
+                      type: string
+                      example: "2020-07-15"
+                    viewCount:
+                      type: integer
+                      example: 200
+              "onboarding.koderover.com":
+                type: "array"
+                items: 
+                  type: "object"
+                  properties: 
+                    date: 
+                      type: string
+                      example: "2020-07-15"
+                    viewCount:
+                      type: integer
+                      example: 400

@@ -1,0 +1,23 @@
+post:
+  tags:
+    - spock
+  summary: 添加用户浏览记录
+  requestBody:
+    description: 添加用户浏览记录
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            domain:
+              type: string
+            username:
+              type: string
+            viewCount:
+              type: integer
+            createdAt:
+              type: integer
+  responses:
+    '200':
+      description: 成功
