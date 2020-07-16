@@ -1,0 +1,37 @@
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            startDate:
+              type: integer
+            endDate:
+              type: integer
+  security:
+    - ApiKeyAuth: []
+    - ApiRootKeyAuth: []
+  tags:
+    - spock
+  summary: 获取分域名用户量统计
+  responses:
+    '200':
+      description: 获取分域名用户量统计
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  example: "dev.koderover.com"
+                userTotal: 
+                  type: integer
+                  example: 20
+                viewCount:
+                  type: integer
+                  example: 200
