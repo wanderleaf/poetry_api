@@ -7677,6 +7677,261 @@
         }
       }
     },
+    "/spock/stat/operation": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "添加用户浏览记录",
+        "requestBody": {
+          "description": "添加用户浏览记录",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "domain": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/spock/stat/operationDay": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取分域名日浏览量统计",
+        "responses": {
+          "200": {
+            "description": "获取分域名日浏览量统计",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "domain": {
+                        "type": "string",
+                        "example": "dev.koderover.com"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "date": {
+                              "type": "string",
+                              "example": "2020-07-15"
+                            },
+                            "viewCount": {
+                              "type": "integer",
+                              "example": 200
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spock/stat/operationHour": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取分域名分时浏览量统计",
+        "responses": {
+          "200": {
+            "description": "获取分域名分时浏览量统计",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "domain": {
+                        "type": "string",
+                        "example": "dev.koderover.com"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "date": {
+                              "type": "string",
+                              "example": "2020-07-15"
+                            },
+                            "hour": {
+                              "type": "integer",
+                              "example": 12
+                            },
+                            "viewCount": {
+                              "type": "integer",
+                              "example": 200
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spock/stat/operationUser": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "integer"
+                  },
+                  "endDate": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "ApiRootKeyAuth": []
+          }
+        ],
+        "tags": [
+          "spock"
+        ],
+        "summary": "获取分域名用户量统计",
+        "responses": {
+          "200": {
+            "description": "获取分域名用户量统计",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "domain": {
+                        "type": "string",
+                        "example": "dev.koderover.com"
+                      },
+                      "userTotal": {
+                        "type": "integer",
+                        "example": 20
+                      },
+                      "viewCount": {
+                        "type": "integer",
+                        "example": 200
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/spock/stat/pipelineHealthMeasure": {
       "post": {
         "requestBody": {
